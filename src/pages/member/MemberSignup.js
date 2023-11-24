@@ -9,12 +9,9 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMonth, getYear } from "date-fns";
-import { ko } from "date-fns/esm/locale";
 import axios from "axios";
 
 export function MemberSignup() {
@@ -26,83 +23,6 @@ export function MemberSignup() {
   const [birthDate, setBirthDate] = useState(new Date());
 
   const navigate = useNavigate();
-
-  const Calendar = () => {
-    const [startDate, setStartDate] = useState(new Date());
-    const startYear = require("lodash");
-
-    const years = startYear.range(1900, getYear(new Date()) + 1, 1);
-    const months = [
-      "1월",
-      "2월",
-      "3월",
-      "4월",
-      "5월",
-      "6월",
-      "7월",
-      "8월",
-      "9월",
-      "10월",
-      "11월",
-      "12월",
-    ];
-    return (
-      <DatePicker
-        renderCustomHeader={({
-          date,
-          changeYear,
-          changeMonth,
-          decreaseMonth,
-          increaseMonth,
-          prevMonthButtonDisabled,
-          nextMonthButtonDisabled,
-        }) => (
-          <div
-            style={{
-              margin: 10,
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-              {"<"}
-            </button>
-            <select
-              value={getYear(date)}
-              onChange={({ target: { value } }) => changeYear(value)}
-            >
-              {years.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={months[getMonth(date)]}
-              onChange={({ target: { value } }) =>
-                changeMonth(months.indexOf(value))
-              }
-            >
-              {months.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-
-            <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-              {">"}
-            </button>
-          </div>
-        )}
-        dateFormat={"yyyy.MM.dd"}
-        locale={ko}
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-      />
-    );
-  };
 
   function handleSubmit() {
     axios
@@ -150,7 +70,8 @@ export function MemberSignup() {
       </FormControl>
       <FormControl>
         <FormLabel>생년월일</FormLabel>
-        <Calendar
+        <Input
+          type="date"
           value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}
         />
