@@ -16,10 +16,13 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.1",
+    "date-fns": "^2.30.0",
     "framer-motion": "^10.16.4",
     "immer": "^10.0.3",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
+    "react-calendar": "^4.6.1",
+    "react-datepicker": "^4.23.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.18.0",
     "react-scripts": "5.0.1",
@@ -50,5 +53,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:8081",
+  "devDependencies": {
+    "@types/react-datepicker": "^4.19.3"
+  }
 }
