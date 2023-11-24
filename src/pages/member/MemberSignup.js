@@ -49,7 +49,11 @@ export function MemberSignup() {
       </FormControl>
       <FormControl>
         <FormLabel>비밀번호</FormLabel>
-        <Input value={password} onChange={(e) => setPassword(e.target.value)} />
+        <Input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+        />
       </FormControl>
       <FormControl>
         <FormLabel>E-Mail</FormLabel>
