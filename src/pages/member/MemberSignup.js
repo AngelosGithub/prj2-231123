@@ -22,7 +22,13 @@ export function MemberSignup() {
   const [phone, setPhone] = useState("");
   const [birthDate, setBirthDate] = useState(new Date());
 
+  let submitAvailable = true;
+
   const navigate = useNavigate();
+
+  if (password.length <= 5) {
+    submitAvailable = false;
+  }
 
   function handleSubmit() {
     axios
@@ -36,7 +42,7 @@ export function MemberSignup() {
       })
       .then(() => console.log("good"))
       .catch(() => console.log("bad"))
-      .finally(() => console.log("end"));
+      .finally(() => console.log("done"));
   }
 
   return (
@@ -47,7 +53,7 @@ export function MemberSignup() {
         <Input value={id} onChange={(e) => setId(e.target.value)} />
         <Button>중복확인</Button>
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={password.length <= 5}>
         <FormLabel>비밀번호</FormLabel>
         <Input
           value={password}
@@ -80,7 +86,9 @@ export function MemberSignup() {
           onChange={(e) => setBirthDate(e.target.value)}
         />
       </FormControl>
-      <Button onClick={handleSubmit}>가입</Button>
+      <Button onClick={handleSubmit} isDisabled={!submitAvailable}>
+        가입
+      </Button>
       <Button onClick={() => navigate("/")}>취소</Button>
     </Box>
   );
