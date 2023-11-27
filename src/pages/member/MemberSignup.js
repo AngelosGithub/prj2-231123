@@ -20,7 +20,7 @@ export function MemberSignup() {
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
-  const [birthDate, setBirthDate] = useState(new Date());
+  const [birthDate, setBirthDate] = useState("");
 
   let submitAvailable = true;
 
