@@ -9,6 +9,7 @@ export function NavBar() {
       <Button>리뷰</Button>
       <Button>맛집 찾기</Button>
       <Button onClick={() => navigate("/signup")}>회원 가입</Button>
+      <Button onClick={() => navigate("/login")}>로그인</Button>
     </Box>
   );
 }

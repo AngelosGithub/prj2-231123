@@ -7,11 +7,13 @@ import {
 } from "react-router-dom";
 import { MainLayout } from "./layout/MainLayout";
 import { MemberSignup } from "./pages/member/MemberSignup";
+import { MemberLogin } from "./pages/member/MemberLogin";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
       <Route path="signup" element={<MemberSignup />} />
+      <Route path="login" element={<MemberLogin />} />
     </Route>,
   ),
 );
