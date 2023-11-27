@@ -21,10 +21,15 @@ export function MemberSignup() {
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const [idAvailable, setIdAvailable] = useState(false);
 
   let submitAvailable = true;
 
   const navigate = useNavigate();
+
+  if (!idAvailable) {
+    submitAvailable = false;
+  }
 
   if (password.length <= 5) {
     submitAvailable = false;
@@ -45,13 +50,29 @@ export function MemberSignup() {
       .finally(() => console.log("done"));
   }
 
+  function handleCheckId() {
+    const searchParam = new URLSearchParams();
+    searchParam.set("id", id);
+
+    axios
+      .get("/api/member/check?" + searchParam.toString())
+      .then(() => {
+        setIdAvailable(false);
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          setIdAvailable(true);
+        }
+      });
+  }
+
   return (
     <Box>
       <Text>회원가입</Text>
       <FormControl>
         <FormLabel>ID</FormLabel>
         <Input value={id} onChange={(e) => setId(e.target.value)} />
-        <Button>중복확인</Button>
+        <Button onClick={handleCheckId}>중복확인</Button>
       </FormControl>
       <FormControl isInvalid={password.length <= 5}>
         <FormLabel>비밀번호</FormLabel>
