@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Flex,
-  Image,
-  Input,
-  Select,
   SimpleGrid,
   Spinner,
 } from "@chakra-ui/react";
@@ -17,7 +11,10 @@ import {
 import axios from "axios";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { DetailedSelect } from "./DetailedSelect";
+
 import { Pagination } from "./Pagination";
+import RestaurantImage from "./RestaurantImage";
+import { SearchComponent } from "./SearchComponent";
 
 function RestaurantList(props) {
   const [restaurant, setRestaurant] = useState(null);
@@ -39,21 +36,12 @@ function RestaurantList(props) {
 
   return (
     <Box>
-      <Flex>
-        <Select>
-          <option>전체</option>
-          <option>제목</option>
-          <option>내용</option>
-        </Select>
-
-        <Input placeholder="검색창" />
-        <Button>검색 버튼</Button>
-      </Flex>
-
+      <SearchComponent />
       {/*상세 조건 컴포넌트  */}
       <DetailedSelect />
       {/*리뷰 썸네일  */}
       <SimpleGrid
+        marginTop={5}
         spacing={"10px"}
         columns={{ base: 2, md: 3, lg: 3, "2xl": 3 }}
       >
@@ -64,20 +52,14 @@ function RestaurantList(props) {
             key={restaurant.no}
             border={"1px solid black"}
           >
-            {restaurant.files.length > 0 &&
-              restaurant.files.map((file) => (
-                <CardHeader border={"1px solid black"} w="100%" h="200px">
-                  <Image
-                    border={"1px solid black"}
-                    h="100%"
-                    src={file.url}
-                    alt={file.fileName}
-                  />
-                </CardHeader>
-              ))}
+            <RestaurantImage restaurant={restaurant} />
 
-            <CardBody>{restaurant.info}</CardBody>
-            <CardFooter>{restaurant.address}</CardFooter>
+            <CardBody mt={8} border={"1px solid blue"}>
+              {restaurant.place}
+            </CardBody>
+            <CardFooter border={"1px solid black"}>
+              {restaurant.address}
+            </CardFooter>
           </Card>
         ))}
       </SimpleGrid>

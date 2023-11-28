@@ -149,30 +149,27 @@ export function RestaurantEdit() {
       });
     }
   };
-  console.log(restaurant);
 
   if (restaurant !== null && restaurant.address !== null) {
-    console.log(kakao.maps);
-    console.log(kakao.maps.services);
-    // 주소-좌표 변환 객체를 생성합니다
-    var geocoder = new kakao.maps.services.Geocoder();
+    kakao.maps.load(() => {
+      // 주소-좌표 변환 객체를 생성합니다
+      var geocoder = new kakao.maps.services.Geocoder();
 
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(restaurant.address, function (result, status) {
-      // 정상적으로 검색이 완료됐으면
-      if (status === kakao.maps.services.Status.OK) {
-        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+      // 주소로 좌표를 검색합니다
+      geocoder.addressSearch(restaurant.address, function (result, status) {
+        // 정상적으로 검색이 완료됐으면
+        if (status === kakao.maps.services.Status.OK) {
+          const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-        updateRestaurant((draft) => {
-          draft.x = coords.Ma;
-          console.log(draft.x);
-        });
+          updateRestaurant((draft) => {
+            draft.x = coords.Ma;
+          });
 
-        updateRestaurant((draft) => {
-          draft.y = coords.La;
-          console.log(draft.y);
-        });
-      }
+          updateRestaurant((draft) => {
+            draft.y = coords.La;
+          });
+        }
+      });
     });
   }
 
@@ -189,6 +186,7 @@ export function RestaurantEdit() {
       // removeFileIds에서 삭제
     }
   }
+  console.log(removeFileIds);
 
   function handleCheckBox(e) {
     if (e.target.checked) {
@@ -322,7 +320,10 @@ export function RestaurantEdit() {
 
             <FormControl>
               <FormLabel>음식 요소</FormLabel>
-              <Select onChange={(e) => setRestaurantTypeName(e.target.value)}>
+              <Select
+                defaultValue={"한식"}
+                onChange={(e) => setRestaurantTypeName(e.target.value)}
+              >
                 {restaurantTypesList.map((type) => (
                   <option value={type.name} key={type.no}>
                     {type.name}

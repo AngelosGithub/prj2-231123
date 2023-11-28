@@ -11,8 +11,7 @@ import RestaurantList from "./page/restaurant/RestaurantList";
 
 import { RestaurantView } from "./page/restaurant/RestaurantView";
 import { RestaurantEdit } from "./page/restaurant/RestaurantEdit";
-import ImageSlide from "./component/ImageSlide";
-import KakaoMap from "./component/KakaoMap";
+
 import axios from "axios";
 
 const router = createBrowserRouter(
@@ -23,7 +22,6 @@ const router = createBrowserRouter(
       <Route path="restaurant/view/:no" element={<RestaurantView />} />
       <Route path="restaurantForm" element={<RestaurantForm />} />
       <Route path="restaurant/edit/:no" element={<RestaurantEdit />} />
-      <Route path="imgae" element={<ImageSlide />} />
     </Route>,
   ),
 );

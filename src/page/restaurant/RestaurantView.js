@@ -28,6 +28,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { ReviewContainer } from "./ReviewContainer";
 import KakaoMap from "../../component/KakaoMap";
+import RestaurantImage from "./RestaurantImage";
 
 export function RestaurantView() {
   const [restaurant, setRestaurant] = useState(null);
@@ -56,7 +57,7 @@ export function RestaurantView() {
           status: "success",
           duration: 1000,
         });
-        navigate("/");
+        navigate("/restaurantList");
       })
       .catch((error) => {
         toast({
@@ -84,18 +85,8 @@ export function RestaurantView() {
 
             <FormControl>
               <FormLabel>이미지</FormLabel>
-              {restaurant.files.map((file) => (
-                <Card key={file.no} mb={5}>
-                  <CardBody>
-                    <Image
-                      width="100%"
-                      height="300px"
-                      src={file.url}
-                      alt={file.fileName}
-                    />
-                  </CardBody>
-                </Card>
-              ))}
+
+              <RestaurantImage restaurant={restaurant} />
             </FormControl>
 
             <FormControl>
