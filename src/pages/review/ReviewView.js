@@ -1,11 +1,28 @@
-import { Box, Button, Heading, Spinner, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Spinner,
+  Text,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 export function ReviewView() {
   const [review, setReview] = useState(null);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const navigate = useNavigate();
 
   const { no } = useParams();
@@ -22,15 +39,21 @@ export function ReviewView() {
 
   function handleDelete() {
     axios
-      .delete("/api/review/remove" + no)
+      .delete("/api/review/remove/" + no)
       .then((response) => {
-        console.log("delete");
-        navigate("/");
+        toast({
+          description: no + "번 게시물이 삭제되었습니다.",
+          status: "success",
+        });
+        navigate("/review");
       })
       .catch((error) => {
-        console.log("error");
+        toast({
+          description: "삭제 중 문제가 발생하였습니다.",
+          status: "error",
+        });
       })
-      .finally(() => console.log("done"));
+      .finally(() => onClose());
   }
 
   return (
@@ -41,8 +64,27 @@ export function ReviewView() {
       <Text>내용 : {review.content}</Text>
       <Text>작성자 : {review.writer}</Text>
       <Text>작성일 : {review.inserted}</Text>
-      <Button>수정</Button>
-      <Button onClick={handleDelete}>삭제</Button>
+      <Button colorScheme="blue">수정</Button>
+      <Button onClick={onOpen} colorScheme="red">
+        삭제
+      </Button>
+
+      {/* 삭제 모달 */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>삭제 확인</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>삭제 하시겠습니까?</ModalBody>
+
+          <ModalFooter>
+            <Button onClick={onClose}>닫기</Button>
+            <Button onClick={handleDelete} colorScheme="red">
+              삭제
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
