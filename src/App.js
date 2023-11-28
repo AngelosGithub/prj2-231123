@@ -12,6 +12,7 @@ import { MemberInfo } from "./pages/member/MemberInfo";
 import { ReviewList } from "./pages/review/ReviewList";
 import { ReviewWrite } from "./pages/review/ReviewWrite";
 import { ReviewView } from "./pages/review/ReviewView";
+import { ReviewEdit } from "./pages/review/ReviewEdit";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const routes = createBrowserRouter(
       <Route path="member" element={<MemberInfo />} />
       <Route path="review" element={<ReviewList />} />
       <Route path="review/:no" element={<ReviewView />} />
+      <Route path="edit/:no" element={<ReviewEdit />} />
       <Route path="write" element={<ReviewWrite />} />
     </Route>,
   ),
