@@ -42,7 +42,11 @@ export function ReviewList() {
               <Spinner />
             ) : (
               reviewList.map((review) => (
-                <Tr>
+                <Tr
+                  key={review.no}
+                  _hover={{ cursor: "pointer" }}
+                  onClick={() => navigate("/review/" + review.no)}
+                >
                   <Td>{review.no}</Td>
                   <Td>{review.title}</Td>
                   <Td>{review.writer}</Td>
