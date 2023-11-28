@@ -8,6 +8,7 @@ import {
   Input,
   Spinner,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
@@ -18,6 +19,7 @@ export function ReviewEdit() {
   const [review, updateReview] = useImmer(null);
 
   const navigate = useNavigate();
+  const toast = useToast();
   const { no } = useParams();
 
   useEffect(() => {
@@ -32,9 +34,28 @@ export function ReviewEdit() {
 
   function handleSubmit() {
     axios
-      .put("/api/review/edit/", review)
-      .then(() => console.log("good"))
-      .catch(() => console.log("bad"))
+      .put("/api/review/edit", review)
+      .then(() => {
+        toast({
+          description: review.no + "번 게시글이 수정되었습니다.",
+          status: "success",
+        });
+
+        navigate("/review/" + no);
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          toast({
+            description: "요청이 잘못되었습니다.",
+            status: "error",
+          });
+        } else {
+          toast({
+            description: "수정 중에 문제가 발생하였습니다.",
+            status: "error",
+          });
+        }
+      })
       .finally(() => console.log("done"));
   }
 
