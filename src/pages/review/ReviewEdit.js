@@ -9,7 +9,7 @@ import {
   Spinner,
   Textarea,
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useEffect } from "react";
 import axios from "axios";
@@ -17,7 +17,7 @@ import axios from "axios";
 export function ReviewEdit() {
   const [review, updateReview] = useImmer(null);
 
-  const navigate = new Navigator();
+  const navigate = useNavigate();
   const { no } = useParams();
 
   useEffect(() => {
@@ -28,6 +28,14 @@ export function ReviewEdit() {
 
   if (review === null) {
     return <Spinner />;
+  }
+
+  function handleSubmit() {
+    axios
+      .put("/api/review/edit/", review)
+      .then(() => console.log("good"))
+      .catch(() => console.log("bad"))
+      .finally(() => console.log("done"));
   }
 
   return (
@@ -69,19 +77,12 @@ export function ReviewEdit() {
           }}
         />
       </FormControl>
-      <FormControl>
-        <FormLabel>작성자</FormLabel>
-        <Input
-          value={review.writer}
-          onChange={(e) => {
-            updateReview((draft) => {
-              draft.writer = e.target.value;
-            });
-          }}
-        />
-      </FormControl>
-      <Button>수정</Button>
-      <Button onClick={() => navigate(-1)}>취소</Button>
+      <Button colorScheme="blue" onClick={handleSubmit}>
+        수정
+      </Button>
+      <Button onClick={() => navigate(-1)} colorScheme="red">
+        취소
+      </Button>
     </Box>
   );
 }
