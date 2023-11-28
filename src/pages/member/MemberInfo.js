@@ -6,6 +6,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  Spinner,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -22,12 +23,16 @@ export function MemberInfo() {
       .then((response) => setMember(response.data));
   }, []);
 
+  if (member === null) {
+    return <Spinner />;
+  }
+
   return (
     <Box>
       <Heading>{member.id}님 정보</Heading>
       <FormControl>
         <FormLabel>닉네임</FormLabel>
-        <Input type="text" value={member.nickName} readOnly />
+        <Input value={member.nickName} readOnly />
       </FormControl>
       <FormControl>
         <FormLabel>비밀번호</FormLabel>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export function NavBar() {
   const navigate = useNavigate();
+
   return (
     <Box>
       <Button onClick={() => navigate("/")}>홈으로</Button>
