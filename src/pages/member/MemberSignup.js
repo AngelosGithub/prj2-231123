@@ -9,6 +9,7 @@ import {
   RadioGroup,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
@@ -27,6 +28,7 @@ export function MemberSignup() {
   let submitAvailable = true;
 
   const navigate = useNavigate();
+  const toast = useToast();
 
   if (!idAvailable) {
     submitAvailable = false;
@@ -59,10 +61,18 @@ export function MemberSignup() {
       .get("/api/member/check?" + searchParam.toString())
       .then(() => {
         setIdAvailable(false);
+        toast({
+          description: "이미 사용중인 아이디입니다",
+          status: "warning",
+        });
       })
       .catch((error) => {
         if (error.response.status === 404) {
           setIdAvailable(true);
+          toast({
+            description: "사용 가능합니다",
+            status: "success",
+          });
         }
       });
   }
