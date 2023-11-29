@@ -78,7 +78,10 @@ export function MemberEdit() {
         <Input
           type="text"
           value={nickName}
-          onChange={(e) => setNickName(e.target.value)}
+          onChange={(e) => {
+            setNickName(e.target.value);
+            setNickAvailable(false);
+          }}
         />
         <Button isDisabled={checkedNickname} onClick={handleCheckNickname}>
           중복확인
