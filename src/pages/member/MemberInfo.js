@@ -39,14 +39,6 @@ export function MemberInfo() {
     return <Spinner />;
   }
 
-  function handleEdit() {
-    axios
-      .post("/api/member/edit?" + params.toString())
-      .then(() => console.log("good"))
-      .catch(() => console.log("bad"))
-      .finally(() => console.log("done"));
-  }
-
   function handleDelete() {
     axios
       .delete("/api/member?" + params.toString())
@@ -90,7 +82,9 @@ export function MemberInfo() {
         <Input value={member.birthDate} readOnly />
       </FormControl>
       <Flex>
-        <Button onClick={handleEdit}>수정</Button>
+        <Button onClick={() => navigate("/member/edit?" + params.toString())}>
+          수정
+        </Button>
         <Button onClick={onOpen}>탈퇴</Button>
         <Button onClick={() => navigate(-1)}>취소</Button>
       </Flex>
