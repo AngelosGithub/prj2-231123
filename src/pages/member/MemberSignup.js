@@ -34,7 +34,7 @@ export function MemberSignup() {
     submitAvailable = false;
   }
 
-  if (password.length <= 5) {
+  if (password.length < 6) {
     submitAvailable = false;
   }
 
@@ -85,16 +85,14 @@ export function MemberSignup() {
         <Input value={id} onChange={(e) => setId(e.target.value)} />
         <Button onClick={handleCheckId}>중복확인</Button>
       </FormControl>
-      <FormControl isInvalid={password.length <= 5}>
+      <FormControl isInvalid={password.length < 6}>
         <FormLabel>비밀번호</FormLabel>
         <Input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
         />
-        <FormErrorMessage>
-          비밀번호는 6글자 이상으로 입력해 주세요
-        </FormErrorMessage>
+        <FormErrorMessage>비밀번호는 6글자 이상 입력해 주세요</FormErrorMessage>
       </FormControl>
       <FormControl>
         <FormLabel>E-Mail</FormLabel>
