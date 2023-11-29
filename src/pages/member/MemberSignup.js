@@ -48,7 +48,7 @@ export function MemberSignup() {
         phone,
         birthDate,
       })
-      .then(() => console.log("good"))
+      .then(() => navigate("/"))
       .catch(() => console.log("bad"))
       .finally(() => console.log("done"));
   }
