@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   Radio,
@@ -81,6 +82,9 @@ export function MemberSignup() {
           onChange={(e) => setPassword(e.target.value)}
           type="password"
         />
+        <FormErrorMessage>
+          비밀번호는 6글자 이상으로 입력해 주세요
+        </FormErrorMessage>
       </FormControl>
       <FormControl>
         <FormLabel>E-Mail</FormLabel>
