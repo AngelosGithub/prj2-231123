@@ -17,13 +17,18 @@ import axios from "axios";
 export function ReviewList() {
   const [reviewList, setReviewList] = useState(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get("/api/review/list")
       .then((response) => setReviewList(response.data));
   }, []);
 
-  const navigate = useNavigate();
+  if (reviewList === null) {
+    return <Spinner />;
+  }
+
   return (
     <Box>
       <Heading>리뷰 보기</Heading>
@@ -38,22 +43,18 @@ export function ReviewList() {
             </Tr>
           </Thead>
           <Tbody>
-            {reviewList === null ? (
-              <Spinner />
-            ) : (
-              reviewList.map((review) => (
-                <Tr
-                  key={review.no}
-                  _hover={{ cursor: "pointer" }}
-                  onClick={() => navigate("/review/" + review.no)}
-                >
-                  <Td>{review.no}</Td>
-                  <Td>{review.title}</Td>
-                  <Td>{review.writer}</Td>
-                  <Td>{review.inserted}</Td>
-                </Tr>
-              ))
-            )}
+            {reviewList.map((review) => (
+              <Tr
+                key={review.no}
+                _hover={{ cursor: "pointer" }}
+                onClick={() => navigate("/review/" + review.no)}
+              >
+                <Td>{review.no}</Td>
+                <Td>{review.title}</Td>
+                <Td>{review.writer}</Td>
+                <Td>{review.inserted}</Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </Box>
