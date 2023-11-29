@@ -6,16 +6,28 @@ import {
   FormLabel,
   Heading,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 export function MemberInfo() {
   const [member, setMember] = useState(null);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const [params] = useSearchParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -25,6 +37,33 @@ export function MemberInfo() {
 
   if (member === null) {
     return <Spinner />;
+  }
+
+  function handleEdit() {
+    axios
+      .post("/api/member/edit?" + params.toString())
+      .then(() => console.log("good"))
+      .catch(() => console.log("bad"))
+      .finally(() => console.log("done"));
+  }
+
+  function handleDelete() {
+    axios
+      .delete("/api/member?" + params.toString())
+      .then((response) => {
+        toast({
+          description: "탈퇴 되었습니다.",
+          status: "success",
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        toast({
+          description: "탈퇴 중 문제가 발생하였습니다.",
+          status: "error",
+        });
+      })
+      .finally(() => onClose());
   }
 
   return (
@@ -51,9 +90,27 @@ export function MemberInfo() {
         <Input value={member.birthDate} readOnly />
       </FormControl>
       <Flex>
-        <Button>수정</Button>
-        <Button>탈퇴</Button>
+        <Button onClick={handleEdit}>수정</Button>
+        <Button onClick={onOpen}>탈퇴</Button>
+        <Button onClick={() => navigate(-1)}>취소</Button>
       </Flex>
+
+      {/* 탈퇴 모달 */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>탈퇴 확인</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>탈퇴 하시겠습니까?</ModalBody>
+
+          <ModalFooter>
+            <Button onClick={onClose}>닫기</Button>
+            <Button onClick={handleDelete} colorScheme="red">
+              탈퇴
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
