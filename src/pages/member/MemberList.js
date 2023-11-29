@@ -10,9 +10,12 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function MemberList() {
   const [memberList, setMemberList] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -22,6 +25,13 @@ export function MemberList() {
 
   if (memberList === null) {
     return <Spinner />;
+  }
+
+  function handleMemberClick(id) {
+    const params = new URLSearchParams();
+    params.set("id", id);
+
+    navigate("/member?" + params.toString());
   }
 
   return (
@@ -37,7 +47,11 @@ export function MemberList() {
         </Thead>
         <Tbody>
           {memberList.map((member) => (
-            <Tr key={member.id}>
+            <Tr
+              key={member.id}
+              onClick={() => handleMemberClick(member.id)}
+              _hover={{ cursor: "pointer" }}
+            >
               <Td>{member.id}</Td>
               <Td>{member.nickName}</Td>
               <Td>{member.email}</Td>
