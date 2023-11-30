@@ -18,6 +18,7 @@ export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [password, setPassword] = useState("");
   const [nickName, setNickName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [nickAvailable, setNickAvailable] = useState(false);
 
@@ -29,6 +30,7 @@ export function MemberEdit() {
     axios.get("/api/member?" + params.toString()).then((response) => {
       setMember(response.data);
       setNickName(response.data.nickName);
+      setPhone(response.data.phone);
       setEmail(response.data.email);
     });
   }, []);
@@ -62,7 +64,15 @@ export function MemberEdit() {
     return <Spinner />;
   }
 
-  function handleSubmit() {}
+  function handleSubmit() {
+    axios.put("/api/member/edit", {
+      id: member.id,
+      password,
+      nickName,
+      phone,
+      email,
+    });
+  }
 
   function handleCheckNickname() {
     const searchParam = new URLSearchParams();
@@ -125,6 +135,14 @@ export function MemberEdit() {
             비밀번호는 6글자 이상 입력해 주세요
           </FormErrorMessage>
         )}
+      </FormControl>
+      <FormControl>
+        <FormLabel>전화번호</FormLabel>
+        <Input
+          type="text"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
       </FormControl>
       <FormControl>
         <FormLabel>이메일</FormLabel>
