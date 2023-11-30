@@ -13,7 +13,6 @@ import axios from "axios";
 export function ReviewWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [writer, setWriter] = useState("");
   const [recommend, setRecommend] = useState("");
   const [restaurantId, setRestaurantId] = useState();
 
@@ -23,7 +22,6 @@ export function ReviewWrite() {
         title,
         recommend,
         content,
-        writer,
         restaurantId,
       })
       .then(() => console.log("잘됨"))
@@ -52,10 +50,6 @@ export function ReviewWrite() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-      </FormControl>
-      <FormControl>
-        <FormLabel>작성자</FormLabel>
-        <Input value={writer} onChange={(e) => setWriter(e.target.value)} />
       </FormControl>
       <FormControl>
         <FormLabel>임시 맛집id</FormLabel>
