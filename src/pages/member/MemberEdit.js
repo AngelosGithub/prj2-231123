@@ -7,11 +7,19 @@ import {
   FormLabel,
   Heading,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export function MemberEdit() {
@@ -25,6 +33,7 @@ export function MemberEdit() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     axios.get("/api/member?" + params.toString()).then((response) => {
@@ -65,13 +74,35 @@ export function MemberEdit() {
   }
 
   function handleSubmit() {
-    axios.put("/api/member/edit", {
-      id: member.id,
-      password,
-      nickName,
-      phone,
-      email,
-    });
+    axios
+      .put("/api/member/edit", {
+        id: member.id,
+        password,
+        nickName,
+        phone,
+        email,
+      })
+      .then(() => {
+        toast({
+          description: "회원정보가 수정되었습니다",
+          status: "success",
+        });
+        navigate(-1);
+      })
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
+          toast({
+            description: "권한이 없습니다",
+            status: "error",
+          });
+        } else {
+          toast({
+            description: "문제가 발생했습니다",
+            status: "error",
+          });
+        }
+      })
+      .finally(() => console.log("done"));
   }
 
   function handleCheckNickname() {
@@ -154,13 +185,31 @@ export function MemberEdit() {
       </FormControl>
       <Flex>
         <Button
-          onClick={handleSubmit}
+          colorScheme="blue"
+          onClick={onOpen}
           isDisabled={!checkedNickname || !passwordChecked}
         >
           완료
         </Button>
         <Button onClick={() => navigate(-1)}>취소</Button>
       </Flex>
+
+      {/* 탈퇴 모달 */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>수정 확인</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>수정 하시겠습니까?</ModalBody>
+
+          <ModalFooter>
+            <Button onClick={handleSubmit} colorScheme="blue">
+              수정
+            </Button>
+            <Button onClick={onClose}>닫기</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

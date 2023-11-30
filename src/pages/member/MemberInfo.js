@@ -89,10 +89,15 @@ export function MemberInfo() {
         <Input value={member.birthDate} readOnly />
       </FormControl>
       <Flex>
-        <Button onClick={() => navigate("/member/edit?" + params.toString())}>
+        <Button
+          colorScheme="blue"
+          onClick={() => navigate("/member/edit?" + params.toString())}
+        >
           수정
         </Button>
-        <Button onClick={onOpen}>탈퇴</Button>
+        <Button colorScheme="red" onClick={onOpen}>
+          탈퇴
+        </Button>
         <Button onClick={() => navigate(-1)}>취소</Button>
       </Flex>
 
