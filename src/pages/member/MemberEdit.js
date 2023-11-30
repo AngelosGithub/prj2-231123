@@ -194,7 +194,7 @@ export function MemberEdit() {
         <Button onClick={() => navigate(-1)}>취소</Button>
       </Flex>
 
-      {/* 탈퇴 모달 */}
+      {/* 수정 모달 */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
