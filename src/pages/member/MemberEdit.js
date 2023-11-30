@@ -18,6 +18,7 @@ export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [password, setPassword] = useState("");
   const [nickName, setNickName] = useState("");
+  const [email, setEmail] = useState("");
   const [nickAvailable, setNickAvailable] = useState(false);
 
   const [params] = useSearchParams();
@@ -28,16 +29,22 @@ export function MemberEdit() {
     axios.get("/api/member?" + params.toString()).then((response) => {
       setMember(response.data);
       setNickName(response.data.nickName);
+      setEmail(response.data.email);
     });
   }, []);
 
   const id = params.get("id");
   // 기존 닉네임과 같은지
   let sameBeforeNickname = false;
+  let nickBlank = false;
   let passwordChecked = false;
 
   if (member !== null) {
     sameBeforeNickname = member.nickName === nickName;
+  }
+
+  if (nickName === "") {
+    nickBlank = true;
   }
 
   if (password.length === 0) {
@@ -94,7 +101,10 @@ export function MemberEdit() {
             setNickAvailable(false);
           }}
         />
-        <Button isDisabled={checkedNickname} onClick={handleCheckNickname}>
+        <Button
+          isDisabled={checkedNickname || nickBlank}
+          onClick={handleCheckNickname}
+        >
           중복확인
         </Button>
       </FormControl>
@@ -118,7 +128,11 @@ export function MemberEdit() {
       </FormControl>
       <FormControl>
         <FormLabel>이메일</FormLabel>
-        <Input type="text" />
+        <Input
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </FormControl>
       <Flex>
         <Button
