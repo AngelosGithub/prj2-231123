@@ -19,7 +19,7 @@ export function MemberLogin() {
   function handleLogin() {
     axios
       .post("/api/member/login", { id, password })
-      .then(() => console.log("good"))
+      .then(() => navigate("/"))
       .catch(() => console.log("bad"))
       .finally(() => console.log("done"));
   }
