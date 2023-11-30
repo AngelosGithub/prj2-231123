@@ -32,6 +32,7 @@ export function ReviewList() {
   return (
     <Box>
       <Heading>리뷰 보기</Heading>
+      <Button onClick={() => navigate("/write")}>리뷰 쓰기</Button>
       <Box>
         <Table>
           <Thead>
@@ -58,7 +59,6 @@ export function ReviewList() {
           </Tbody>
         </Table>
       </Box>
-      <Button onClick={() => navigate("/write")}>리뷰 쓰기</Button>
     </Box>
   );
 }

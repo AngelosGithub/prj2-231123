@@ -9,12 +9,15 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function ReviewWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [recommend, setRecommend] = useState("");
   const [restaurantId, setRestaurantId] = useState();
+
+  const navigate = useNavigate();
 
   function handleSubmit() {
     axios
@@ -24,7 +27,7 @@ export function ReviewWrite() {
         content,
         restaurantId,
       })
-      .then(() => console.log("잘됨"))
+      .then(() => navigate("/review"))
       .catch(() => console.log("bad"))
       .finally(() => console.log("end"));
   }
