@@ -1,19 +1,78 @@
-import { Box, Button, Center, Flex } from "@chakra-ui/react";
-import React from "react";
+import {
+  Box,
+  Center,
+  Checkbox,
+  CheckboxGroup,
+  Flex,
+  Radio,
+  RadioGroup,
+  SimpleGrid,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react";
 
-export function DetailedSelect() {
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
+export function DetailedSelect({
+  restaurantType,
+  restaurantPurpose,
+  handleCheckBox,
+  handleClickType,
+  checkBoxIds,
+}) {
   return (
     <Center>
-      <Flex gap={1} marginTop={5}>
-        <Box>
-          <Button>한식</Button>
-          <Button>중식</Button>
-          <Button>일식</Button>
-          <Button>레스토랑</Button>
-          <Button>씨푸드</Button>
-          <Button>카페</Button>
-        </Box>
-      </Flex>
+      <Box>
+        <Tabs>
+          <TabList>
+            <Tab>음식 요소</Tab>
+            <Tab>음식 테마</Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel>
+              <Flex gap={1}>
+                <RadioGroup onChange={handleClickType}>
+                  <SimpleGrid
+                    spacing={"10px"}
+                    columns={{ base: 4, md: 4, lg: 6, "2xl": 6 }}
+                  >
+                    {restaurantType.map((type) => (
+                      <Radio size={"3xl"} key={type.no} value={type.no}>
+                        {type.name}
+                      </Radio>
+                    ))}
+                  </SimpleGrid>
+                </RadioGroup>
+              </Flex>
+            </TabPanel>
+            <TabPanel>
+              <Flex gap={1}>
+                <CheckboxGroup onChange={handleCheckBox} value={checkBoxIds}>
+                  <SimpleGrid
+                    spacing={"10px"}
+                    columns={{ base: 4, md: 4, lg: 6, "2xl": 6 }}
+                  >
+                    {restaurantPurpose.map((purpose) => (
+                      <Checkbox
+                        size={"3xl"}
+                        key={purpose.no}
+                        value={purpose.name}
+                      >
+                        {purpose.name}
+                      </Checkbox>
+                    ))}
+                  </SimpleGrid>
+                </CheckboxGroup>
+              </Flex>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
     </Center>
   );
 }

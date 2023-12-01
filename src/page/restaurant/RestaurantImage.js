@@ -1,7 +1,7 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import React from "react";
-import { Styled_Slide } from "../../component/Styled_Slide";
+
 import Slider from "react-slick";
 import { Card, CardBody, Container, Image } from "@chakra-ui/react";
 
@@ -46,12 +46,5 @@ export default function RestaurantImage({ restaurant }) {
           </Card>
         ))}
     </Slider>
-
-    // <Styled_Slide {...settings}>
-    //   {restaurant.files.length > 0 &&
-    //     restaurant.files.map((file) => (
-    //       <img key={file.no} src={file.url} alt="stay slide" />
-    //     ))}
-    // </Styled_Slide>
   );
 }

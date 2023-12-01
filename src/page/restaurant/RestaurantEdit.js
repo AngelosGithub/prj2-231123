@@ -64,7 +64,7 @@ export function RestaurantEdit() {
   const toast = useToast();
   useEffect(() => {
     axios
-      .get("/api/restaurant/categoryList")
+      .get("/api/category/list")
       .then((response) => {
         setRestaurantTypesList(response.data.restaurantTypes);
         setRestaurantPurposeList(response.data.restaurantPurpose);
@@ -102,11 +102,18 @@ export function RestaurantEdit() {
         });
         navigate(-1);
       })
-      .catch(() => {
-        toast({
-          description: "서버 문제로 업데이트 실패",
-          status: "",
-        });
+      .catch((err) => {
+        if (err.response.status === 400) {
+          toast({
+            description: "작성 내용을 확인해주세요",
+            status: "warning",
+          });
+        } else {
+          toast({
+            description: "서버 문제로 저장 실패",
+            status: "error",
+          });
+        }
       });
   }
 

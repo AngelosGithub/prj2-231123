@@ -42,6 +42,18 @@ function RestaurantForm(props) {
   const [checkBoxIds, setCheckBoxIds] = useState([]);
   const [restaurantTypeName, setRestaurantTypeName] = useState("");
 
+  // Available
+  const [addressAvailable, setAdddressAvailable] = useState(false);
+  const [cityAvailable, setCityAvailable] = useState(false);
+  const [placeAvailable, setPlaceAvailable] = useState(false);
+  const [infoAvailable, setInfoAvailable] = useState(false);
+  const [phoneAvailable, setPhoneAvailable] = useState(false);
+  const [uploadFileAvaliable, setUploadFileAvaliable] = useState(false);
+  const [restaurantTypeAvaliable, setRestaurantTypeAvaliable] = useState(false);
+  const [checkBoxAvaliable, setCheckBoxAvaliable] = useState(false);
+
+  const [townAddressAvaliable, setTownAddressAvaliable] = useState(false);
+
   //restauranttypes restaurantpurpose
   const [restaurantTypesList, setRestaurantTypesList] = useState(null);
   const [restaurantPurpose, setRestaurantPurpose] = useState(null);
@@ -52,13 +64,57 @@ function RestaurantForm(props) {
 
   useEffect(() => {
     axios
-      .get("/api/restaurant/categoryList")
+      .get("/api/category/list")
       .then((response) => {
         setRestaurantTypesList(response.data.restaurantTypes);
         setRestaurantPurpose(response.data.restaurantPurpose);
       })
       .catch((err) => console.log("실패"));
   }, []);
+
+  useEffect(() => {
+    if (place == null || place.length === 0) {
+      setPlaceAvailable(false);
+    } else {
+      setPlaceAvailable(true);
+    }
+
+    if (info == null || info.length === 0) {
+      setInfoAvailable(false);
+    } else {
+      setInfoAvailable(true);
+    }
+
+    if (phone == null || phone.length === 0) {
+      setPhoneAvailable(false);
+    } else {
+      setPhoneAvailable(true);
+    }
+
+    if (uploadFiles == null || uploadFiles.length === 0) {
+      setUploadFileAvaliable(false);
+    } else {
+      setUploadFileAvaliable(true);
+    }
+
+    if (restaurantTypeName == null || restaurantTypeName.length === 0) {
+      setRestaurantTypeAvaliable(false);
+    } else {
+      setRestaurantTypeAvaliable(true);
+    }
+
+    if (checkBoxIds == null || checkBoxIds.length === 0) {
+      setCheckBoxAvaliable(false);
+    } else {
+      setCheckBoxAvaliable(true);
+    }
+
+    if (townAddress == null || townAddress.length === 0) {
+      setTownAddressAvaliable(false);
+    } else {
+      setTownAddressAvaliable(true);
+    }
+  }, [place, info, phone, uploadFiles, restaurantTypeName, checkBoxIds]);
 
   function handleSubmit() {
     axios
@@ -83,13 +139,20 @@ function RestaurantForm(props) {
         navigate("/");
       })
       .catch((err) => {
-        toast({
-          description: "서버 문제로 저장 실패",
-          status: "error",
-        });
+        if (err.response.status === 400) {
+          toast({
+            description: "작성 내용을 확인해주세요",
+            status: "warning",
+          });
+        } else {
+          toast({
+            description: "서버 문제로 저장 실패",
+            status: "error",
+          });
+        }
       });
   }
-
+  console.log(uploadFiles);
   const handleComplete = (data) => {
     let fullAddress = data.address;
 
@@ -149,6 +212,8 @@ function RestaurantForm(props) {
     return <Spinner />;
   }
 
+  //저장 버튼 비활성화 (필수 항목 입력시 활성화) 및 필요 항목 정규식 작업화(미완료)
+
   function handleCheckBox(e) {
     if (e.target.checked) {
       // checkBoxIds 추가
@@ -161,7 +226,7 @@ function RestaurantForm(props) {
 
   return (
     <Center>
-      <Card w={"xl"}>
+      <Card w={"3xl"}>
         <CardHeader>
           <Heading>맛집 주소 등록</Heading>
         </CardHeader>
@@ -235,10 +300,7 @@ function RestaurantForm(props) {
 
           <FormControl>
             <FormLabel>음식 요소</FormLabel>
-            <Select
-              defaultValue={"한식"}
-              onChange={(e) => setRestaurantTypeName(e.target.value)}
-            >
+            <Select onChange={(e) => setRestaurantTypeName(e.target.value)}>
               {restaurantTypesList.map((type) => (
                 <option value={type.name} key={type.no}>
                   {type.name}
@@ -257,7 +319,6 @@ function RestaurantForm(props) {
                 {restaurantPurpose.map((purpose) => (
                   <Checkbox
                     size={"xm"}
-                    border={"1px solid black"}
                     key={purpose.no}
                     value={purpose.name}
                     onChange={handleCheckBox}
@@ -270,7 +331,22 @@ function RestaurantForm(props) {
           </FormControl>
         </CardBody>
         <CardFooter>
-          <Button mb={5} colorScheme="blue" onClick={handleSubmit}>
+          <Button
+            mb={5}
+            colorScheme="blue"
+            onClick={handleSubmit}
+            isDisabled={
+              !(
+                placeAvailable &&
+                infoAvailable &&
+                phoneAvailable &&
+                uploadFileAvaliable &&
+                restaurantTypeAvaliable &&
+                checkBoxAvaliable &&
+                townAddressAvaliable
+              )
+            }
+          >
             저장
           </Button>
         </CardFooter>

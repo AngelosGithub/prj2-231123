@@ -5,14 +5,14 @@ const { kakao } = window;
 function KakaoMap({ restaurant }) {
   return (
     <Map
-      center={{ lat: restaurant.y, lng: restaurant.x }}
+      center={{ lat: restaurant.x, lng: restaurant.y }}
       style={{ width: "100%", height: "360px" }}
     >
       <MapMarker
-        position={{ lat: restaurant.y, lng: restaurant.x }}
+        position={{ lat: restaurant.x, lng: restaurant.y }}
       ></MapMarker>
 
-      <CustomOverlayMap position={{ lat: restaurant.y, lng: restaurant.x }}>
+      <CustomOverlayMap position={{ lat: restaurant.x, lng: restaurant.y }}>
         <div style={{}}>{restaurant.place}</div>
       </CustomOverlayMap>
     </Map>

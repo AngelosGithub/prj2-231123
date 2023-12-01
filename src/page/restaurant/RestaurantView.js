@@ -17,8 +17,10 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  SimpleGrid,
   Spinner,
   Text,
+  Textarea,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -74,7 +76,7 @@ export function RestaurantView() {
   return (
     <>
       <Center>
-        <Card border={"1px solid black"}>
+        <Card w={"3xl"} border={"1px solid black"}>
           <CardHeader>
             <KakaoMap restaurant={restaurant} />
           </CardHeader>
@@ -89,7 +91,7 @@ export function RestaurantView() {
               <RestaurantImage restaurant={restaurant} />
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={7}>
               <FormLabel>매장 이름</FormLabel>
               <Input value={restaurant.place} readOnly />
             </FormControl>
@@ -106,19 +108,24 @@ export function RestaurantView() {
 
             <FormControl>
               <FormLabel>간단 설명</FormLabel>
-              <Input value={restaurant.info} readOnly />
+              <Textarea value={restaurant.info} readOnly />
             </FormControl>
 
             <FormControl>
               <FormLabel>테마</FormLabel>
               <Flex>
-                {restaurant.purpose.map((purpose) => (
-                  <Card key={purpose.no} mb={5}>
-                    <CardBody>
-                      <Text>{purpose.name}</Text>
-                    </CardBody>
-                  </Card>
-                ))}
+                <SimpleGrid
+                  spacing={"10px"}
+                  columns={{ base: 4, md: 3, lg: 4, "2xl": 6 }}
+                >
+                  {restaurant.purpose.map((purpose) => (
+                    <Card key={purpose.no} mb={5}>
+                      <CardBody>
+                        <Text>{purpose.name}</Text>
+                      </CardBody>
+                    </Card>
+                  ))}
+                </SimpleGrid>
               </Flex>
             </FormControl>
           </CardBody>

@@ -5,20 +5,29 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import HomeLayout from "./layout/HomeLayout";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import RestaurantForm from "./page/restaurant/RestaurantForm";
 import RestaurantList from "./page/restaurant/RestaurantList";
 
 import { RestaurantView } from "./page/restaurant/RestaurantView";
 import { RestaurantEdit } from "./page/restaurant/RestaurantEdit";
-
-import axios from "axios";
+import CategoryList from "./page/category/CategoryList";
+import { CategoryForm } from "./page/category/CategoryForm";
+import RestaurantTypeEdit from "./page/category/RestaurantTypeEdit";
+import RestaurantPurposeEdit from "./page/category/RestaurantPurposeEdit";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<HomeLayout />}>
-      <Route path="restaurantList" element={<RestaurantList />} />
+      <Route path="/categoryList" element={<CategoryList />} />
+      <Route path="/category/insert" element={<CategoryForm />} />
+      <Route path="/category/typeEdit/:no" element={<RestaurantTypeEdit />} />
+      <Route
+        path="/category/purposeEdit/:no"
+        element={<RestaurantPurposeEdit />}
+      />
 
+      <Route path="restaurantList" element={<RestaurantList />} />
       <Route path="restaurant/view/:no" element={<RestaurantView />} />
       <Route path="restaurantForm" element={<RestaurantForm />} />
       <Route path="restaurant/edit/:no" element={<RestaurantEdit />} />
@@ -27,27 +36,6 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  // const [mapKey, setMapKey] = useState(null);
-  //
-  // useEffect(() => {
-  //   axios
-  //     .get("/api/restaurant/map/key")
-  //     .then((response) => setMapKey(response.data));
-  // }, []);
-  //
-  // if (mapKey === null) {
-  //   return null;
-  // }
-  //
-  // // insert kakao map script tag
-  // let scriptTag = document.getElementById("kakaMapApiScriptTag");
-  // if (!scriptTag) {
-  //   scriptTag = document.createElement("script");
-  //   scriptTag.id = "kakaMapApiScriptTag";
-  //   scriptTag.type = "text/javascript";
-  //   scriptTag.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${mapKey}&libraries=services,clusterer,drawing&autoload=false`;
-  //   document.querySelector("title").before(scriptTag);
-  // }
   return <RouterProvider router={router} />;
 }
 
