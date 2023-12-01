@@ -63,7 +63,7 @@ export function ReviewView() {
       <Text>제목 : {review.title}</Text>
       <Text>추천메뉴 : {review.recommend}</Text>
       <Text>내용 : {review.content}</Text>
-      <Text>작성자 : {review.writer}</Text>
+      <Text>작성자 : {review.nickName}</Text>
       <Text>작성일 : {review.inserted}</Text>
       <Button colorScheme="blue" onClick={() => navigate("/edit/" + no)}>
         수정
