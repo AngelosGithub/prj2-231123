@@ -1,11 +1,11 @@
 import { Box } from "@chakra-ui/react";
-import { NavBar } from "../component/NavBar";
 import { Outlet } from "react-router-dom";
+import Navbar from "../component/Navbar";
 
 export function MainLayout() {
   return (
     <Box>
-      <NavBar />
+      <Navbar />
       <Outlet />
     </Box>
   );
