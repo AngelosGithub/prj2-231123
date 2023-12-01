@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardBody,
@@ -8,7 +9,6 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  Image,
   Input,
   Modal,
   ModalBody,
@@ -31,10 +31,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ReviewContainer } from "./ReviewContainer";
 import KakaoMap from "../../component/KakaoMap";
 import RestaurantImage from "./RestaurantImage";
+import { StarView } from "./StarView";
+import { FaStar } from "react-icons/fa6";
+import StarRatings from "react-star-ratings/build/star-ratings";
 
 export function RestaurantView() {
   const [restaurant, setRestaurant] = useState(null);
-
+  const [star, setStar] = useState(5);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { no } = useParams();
 
@@ -82,7 +85,17 @@ export function RestaurantView() {
           </CardHeader>
           <CardBody>
             <FormControl>
+              {/*TODO :
+             해당 별점 점수 데이터 받아서 별점 컴포넌트에 전달해서 출력*/}
               <FormLabel>별점</FormLabel>
+              <StarView />
+              <StarRatings
+                rating={star}
+                starDimension="40px"
+                starSpacing="8px"
+                starRatedColor="blue"
+                numberOfStars={5}
+              />
             </FormControl>
 
             <FormControl>
@@ -129,11 +142,16 @@ export function RestaurantView() {
               </Flex>
             </FormControl>
           </CardBody>
+
+          <Box>
+            <Flex>
+              <Text>리뷰</Text>
+              <Button colorScheme="green">리뷰작성</Button>
+            </Flex>
+            <ReviewContainer restaurantNo={no} />
+          </Box>
           <CardFooter>
             <Flex gap={8}>
-              <Button colorScheme="blue">더보기</Button>
-              <Button colorScheme="green">리뷰작성</Button>
-
               <Button
                 colorScheme="purple"
                 onClick={() => navigate(`/restaurant/edit/${no}`)}
@@ -163,7 +181,6 @@ export function RestaurantView() {
           </ModalContent>
         </Modal>
       </Center>
-      <ReviewContainer restaurantNo={no} />
     </>
   );
 }

@@ -5,8 +5,10 @@ import {
   CardBody,
   CardFooter,
   Center,
+  Flex,
   SimpleGrid,
   Spinner,
+  Text,
 } from "@chakra-ui/react";
 
 import axios from "axios";
@@ -17,6 +19,7 @@ import { Pagination } from "./Pagination";
 import RestaurantImage from "./RestaurantImage";
 import { SearchComponent } from "./SearchComponent";
 import { clear } from "@testing-library/user-event/dist/clear";
+import StarRatings from "react-star-ratings/build/star-ratings";
 
 function RestaurantList(props) {
   const [restaurant, setRestaurant] = useState(null);
@@ -28,6 +31,9 @@ function RestaurantList(props) {
   const [typeNo, setTypeNo] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
+  const [nowPage, setNowPage] = useState(1);
+
+  const [isCheckbox, setIsCheckbox] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -39,25 +45,32 @@ function RestaurantList(props) {
       params.set("typeno", typeNo);
     }
 
-    axios.get("/api/restaurant/list?" + params).then((response) => {
-      setRestaurant(response.data.restaurantList);
-      setPageInfo(response.data.pageInfo);
-      setRestaurantPurpose(response.data.restaurantPurpose);
-      setRestaurntType(response.data.restaurantTypes);
-    });
-  }, [location, checkBoxIds, typeNo]);
-
+    axios
+      .get(`/api/restaurant/list?${params}&&p=${nowPage}`)
+      .then((response) => {
+        setRestaurant(response.data.restaurantList);
+        setPageInfo(response.data.pageInfo);
+        setRestaurantPurpose(response.data.restaurantPurpose);
+        setRestaurntType(response.data.restaurantTypes);
+      });
+  }, [checkBoxIds, typeNo, nowPage]);
+  useEffect(() => {
+    setCheckBoxIds([]);
+    setTypeNo(0);
+  }, [location]);
   if (restaurant == null) {
     return <Spinner />;
   }
 
   function handleCheckBox(values) {
     setTypeNo(0);
+    setNowPage(1);
     setCheckBoxIds(values);
   }
 
   function handleClickType(v) {
     setCheckBoxIds([]);
+    setNowPage(1);
     setTypeNo(v);
   }
 
@@ -89,13 +102,29 @@ function RestaurantList(props) {
               <RestaurantImage restaurant={restaurant} />
 
               <CardBody mt={8} fontSize={"2xl"} textAlign={"center"}>
-                {restaurant.place}
+                <Flex>
+                  <Text> {restaurant.place}</Text>
+                </Flex>
               </CardBody>
-              <CardFooter fontSize={"md"}>{restaurant.address}</CardFooter>
+              <CardFooter fontSize={"md"}>
+                <Box>
+                  <Box>
+                    <StarRatings
+                      rating={3}
+                      starDimension="25px"
+                      starSpacing="8px"
+                      starRatedColor="blue"
+                      numberOfStars={5}
+                    />
+                  </Box>
+
+                  {restaurant.address}
+                </Box>
+              </CardFooter>
             </Card>
           ))}
         </SimpleGrid>
-        <Pagination pageInfo={pageInfo} />
+        <Pagination setNowPage={setNowPage} pageInfo={pageInfo} />
       </Box>
     </Center>
   );
