@@ -32,7 +32,14 @@ export function MemberInfo() {
   useEffect(() => {
     axios
       .get("/api/member?" + params.toString())
-      .then((response) => setMember(response.data));
+      .then((response) => setMember(response.data))
+      .catch((error) => {
+        navigate("/login");
+        toast({
+          description: "권한이 없습니다",
+          status: "warning",
+        });
+      });
   }, []);
 
   if (member === null) {
