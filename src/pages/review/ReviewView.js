@@ -22,7 +22,7 @@ import { LoginContext } from "../../App";
 export function ReviewView() {
   const [review, setReview] = useState(null);
 
-  const { hasAccess } = useContext(LoginContext);
+  const { hasAccess, isAdmin } = useContext(LoginContext);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -69,7 +69,7 @@ export function ReviewView() {
       <Text>작성자 : {review.nickName}</Text>
       <Text>작성일 : {review.inserted}</Text>
 
-      {hasAccess(review.writer) && (
+      {(hasAccess(review.writer) || isAdmin()) && (
         <Box>
           <Button colorScheme="blue" onClick={() => navigate("/edit/" + no)}>
             수정

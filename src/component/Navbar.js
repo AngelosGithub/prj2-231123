@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box, Button, Center, Flex, Spacer, useToast } from "@chakra-ui/react";
+import { Button, Center, Flex, Spacer, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "../App";
@@ -10,6 +10,7 @@ function Navbar(props) {
 
   const navigate = useNavigate();
   const toast = useToast();
+  // const urlParams = new URLSearchParams();
 
   function handleLogout() {
     axios
@@ -23,6 +24,10 @@ function Navbar(props) {
       })
       .finally(() => fetchLogin());
   }
+
+  // if (login !== "") {
+  //   urlParams.set("id", login.id);
+  // }
 
   return (
     <Center>

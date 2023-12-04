@@ -61,7 +61,10 @@ const routes = createBrowserRouter(
 export const LoginContext = createContext(null);
 
 function App() {
-  const [login, setLogin] = useState(null);
+  const [login, setLogin] = useState("");
+  // isAdmin 함수를 적용 할때 에러가 났는데 login 이 null 이라서
+  // 비어있는 값에서 auth라는 배열을 찾으려고 하니 에러가 발생함
+  // const [login, setLogin] = useState(null);
 
   useEffect(() => {
     fetchLogin();
@@ -80,14 +83,15 @@ function App() {
     if (login.auth) {
       // some >> 배열중에 특정 값 찾기
       // 여기서는 admin 이라는 값을 찾는다
-      login.auth.some((elem) => elem.name === "admin");
+      return login.auth.some((elem) => elem.manager === "admin");
     }
-
     return false;
   }
 
+  console.log(login);
+
   // function isManager() {
-  //   login.auth.some((elem) => elem.name === "manager");
+  //   login.auth.some((elem) => elem.manager === "manager");
   // }
 
   function hasAccess(userId) {
