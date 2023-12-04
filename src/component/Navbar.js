@@ -1,13 +1,26 @@
-import React from "react";
-import { Box, Button, Center, Flex, Spacer } from "@chakra-ui/react";
+import React, { useContext } from "react";
+import { Box, Button, Center, Flex, Spacer, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { LoginContext } from "../App";
 
 function Navbar(props) {
+  const { fetchLogin, login, isAuthenticated } = useContext(LoginContext);
+
   const navigate = useNavigate();
+  const toast = useToast();
 
   function handleLogout() {
-    axios.post("/api/member/logout").then(() => console.log("success"));
+    axios
+      .post("/api/member/logout")
+      .then(() => {
+        toast({
+          description: "로그아웃 완료",
+          status: "info",
+        });
+        navigate("/");
+      })
+      .finally(() => fetchLogin());
   }
 
   return (
