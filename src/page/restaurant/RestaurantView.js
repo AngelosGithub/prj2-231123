@@ -88,14 +88,18 @@ export function RestaurantView() {
               {/*TODO :
              해당 별점 점수 데이터 받아서 별점 컴포넌트에 전달해서 출력*/}
               <FormLabel>별점</FormLabel>
-              <StarView />
-              <StarRatings
-                rating={star}
-                starDimension="40px"
-                starSpacing="8px"
-                starRatedColor="blue"
-                numberOfStars={5}
-              />
+              {/*<StarView />*/}
+              {restaurant.starPoint > 0 ? (
+                <StarRatings
+                  rating={restaurant.starPoint}
+                  starDimension="40px"
+                  starSpacing="8px"
+                  starRatedColor="blue"
+                  numberOfStars={5}
+                />
+              ) : (
+                <Text>평가가 아직없습니다.</Text>
+              )}
             </FormControl>
 
             <FormControl>
