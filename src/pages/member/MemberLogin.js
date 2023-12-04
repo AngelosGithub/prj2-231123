@@ -5,23 +5,41 @@ import {
   FormControl,
   FormLabel,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { LoginContext } from "../../App";
 
 export function MemberLogin() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
+  const { fetchLogin } = useContext(LoginContext);
+
   const navigate = useNavigate();
+  const toast = useToast();
 
   function handleLogin() {
     axios
       .post("/api/member/login", { id, password })
-      .then(() => navigate("/"))
-      .catch(() => console.log("bad"))
-      .finally(() => console.log("done"));
+      .then(() => {
+        toast({
+          description: "로그인 되었습니다",
+          status: "info",
+        });
+        navigate("/");
+      })
+      .catch(() => {
+        toast({
+          description: "아이디와 암호를 확인하세요",
+          status: "warning",
+        });
+      })
+      .finally(() => {
+        fetchLogin();
+      });
   }
 
   return (
