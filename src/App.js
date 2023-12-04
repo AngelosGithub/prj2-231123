@@ -76,6 +76,20 @@ function App() {
     return login !== "";
   }
 
+  function isAdmin() {
+    if (login.auth) {
+      // some >> 배열중에 특정 값 찾기
+      // 여기서는 admin 이라는 값을 찾는다
+      login.auth.some((elem) => elem.name === "admin");
+    }
+
+    return false;
+  }
+
+  // function isManager() {
+  //   login.auth.some((elem) => elem.name === "manager");
+  // }
+
   function hasAccess(userId) {
     // 로그인 되어있는 아이디를 확인하는 함수
     return login.id === userId;
@@ -83,9 +97,9 @@ function App() {
 
   return (
     <LoginContext.Provider
-      value={{ login, fetchLogin, isAuthenticated, hasAccess }}
+      value={{ login, fetchLogin, isAuthenticated, hasAccess, isAdmin }}
     >
-      <RouterProvider router={routes} />;
+      <RouterProvider router={routes} />
     </LoginContext.Provider>
   );
 }

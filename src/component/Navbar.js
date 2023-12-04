@@ -5,7 +5,8 @@ import axios from "axios";
 import { LoginContext } from "../App";
 
 function Navbar(props) {
-  const { fetchLogin, login, isAuthenticated } = useContext(LoginContext);
+  const { fetchLogin, login, isAuthenticated, isAdmin } =
+    useContext(LoginContext);
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -37,7 +38,7 @@ function Navbar(props) {
         {/* 팀장 */}
         <Button onClick={() => navigate("/review")}>리뷰</Button>
         {/* 로그인 했을때만 보이도록 */}
-        {isAuthenticated() && (
+        {isAdmin() && (
           <Button onClick={() => navigate("/member/list")}>회원 정보</Button>
         )}
         {/* 로그인 안되어 있을때 보이도록 */}
