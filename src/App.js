@@ -72,6 +72,7 @@ function App() {
   }
 
   function isAuthenticated() {
+    // 로그인 되어있는지 여부 확인 메소드
     return login !== "";
   }
 

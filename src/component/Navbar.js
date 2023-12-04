@@ -36,10 +36,16 @@ function Navbar(props) {
 
         {/* 팀장 */}
         <Button onClick={() => navigate("/review")}>리뷰</Button>
-        <Button onClick={() => navigate("/member/list")}>회원 정보</Button>
-        <Button onClick={() => navigate("/signup")}>회원 가입</Button>
-        <Button onClick={() => navigate("/login")}>로그인</Button>
-        <Button onClick={handleLogout}>로그아웃</Button>
+        {isAuthenticated() && (
+          <Button onClick={() => navigate("/member/list")}>회원 정보</Button>
+        )}
+        {isAuthenticated() || (
+          <Button onClick={() => navigate("/signup")}>회원 가입</Button>
+        )}
+        {isAuthenticated() || (
+          <Button onClick={() => navigate("/login")}>로그인</Button>
+        )}
+        {isAuthenticated() && <Button onClick={handleLogout}>로그아웃</Button>}
       </Flex>
     </Center>
   );
