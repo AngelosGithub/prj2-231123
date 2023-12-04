@@ -76,8 +76,15 @@ function App() {
     return login !== "";
   }
 
+  function hasAccess(userId) {
+    // 로그인 되어있는 아이디를 확인하는 함수
+    return login.id === userId;
+  }
+
   return (
-    <LoginContext.Provider value={{ login, fetchLogin, isAuthenticated }}>
+    <LoginContext.Provider
+      value={{ login, fetchLogin, isAuthenticated, hasAccess }}
+    >
       <RouterProvider router={routes} />;
     </LoginContext.Provider>
   );

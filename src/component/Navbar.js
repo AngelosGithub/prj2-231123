@@ -36,9 +36,11 @@ function Navbar(props) {
 
         {/* 팀장 */}
         <Button onClick={() => navigate("/review")}>리뷰</Button>
+        {/* 로그인 했을때만 보이도록 */}
         {isAuthenticated() && (
           <Button onClick={() => navigate("/member/list")}>회원 정보</Button>
         )}
+        {/* 로그인 안되어 있을때 보이도록 */}
         {isAuthenticated() || (
           <Button onClick={() => navigate("/signup")}>회원 가입</Button>
         )}
