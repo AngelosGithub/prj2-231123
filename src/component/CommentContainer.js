@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import { LoginContext } from "./LoginProvider";
 
 function CommentForm({ reviewId, isSubmitting, onSubmit }) {
@@ -47,7 +47,14 @@ function CommentForm({ reviewId, isSubmitting, onSubmit }) {
 }
 
 function CommentItem({ comment, onDeleteModal }) {
+  // 필요한 프로퍼티들 받아옴
+  const [isEditing, setIsEditing] = useState(false);
+  // 수정중인지 아닌지 구분하는 코드
+  const [commentEdited, setCommentEdited] = useState(comment.comment);
+  // 수정하는 textarea에 기존 댓글이 입력되어 있도록 함
+
   const { hasAccess } = useContext(LoginContext);
+  // 권한 설정을 위한 코드
 
   return (
     <Box>
@@ -56,15 +63,40 @@ function CommentItem({ comment, onDeleteModal }) {
         <Text fontSize={"xs"}>{comment.inserted}</Text>
       </Flex>
       <Flex justifyContent={"space-between"} alignItems={"center"}>
-        {/* 댓글 줄 바꿈 */}
-        <Text sx={{ whiteSpace: "pre-wrap" }} pt={"2"} fontSize={"sm"}>
-          {comment.comment}
-        </Text>
+        <Box flex={1}>
+          {/* 댓글 줄 바꿈 */}
+          <Text sx={{ whiteSpace: "pre-wrap" }} pt={"2"} fontSize={"sm"}>
+            {comment.comment}
+          </Text>
+          {isEditing && (
+            // 수정버튼 클릭시 작성칸이 생김
+            <Textarea
+              value={commentEdited}
+              onChange={(e) => setCommentEdited(e.target.value)}
+            />
+          )}
+        </Box>
+
         {hasAccess(comment.memberId) && (
           <Flex>
-            <Button size={"xs"} colorScheme="blue">
-              <EditIcon />
-            </Button>
+            {isEditing || (
+              <Button
+                onClick={() => setIsEditing(true)}
+                size={"xs"}
+                colorScheme="blue"
+              >
+                <EditIcon />
+              </Button>
+            )}
+            {isEditing && (
+              <Button
+                size={"xs"}
+                colorScheme="gray"
+                onClick={() => setIsEditing(false)}
+              >
+                <NotAllowedIcon />
+              </Button>
+            )}
             <Button
               onClick={() => onDeleteModal(comment.no)}
               size={"xs"}
@@ -96,6 +128,7 @@ function CommentList({ commentList, onDeleteModal, isSubmitting }) {
               comment={comment}
               onDeleteModal={onDeleteModal}
             />
+            // 코멘트아이템에서 필요한 함수 꺼내옴
           ))}
         </Stack>
       </CardBody>
