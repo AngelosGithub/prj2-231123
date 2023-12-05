@@ -66,11 +66,28 @@ export function RestaurantView() {
         });
         navigate("/restaurantList");
       })
-      .catch((error) => {
-        toast({
-          description: "삭제 중 문제가 발생하였습니다.",
-          status: "error",
-        });
+      .catch((err) => {
+        if (err.response.status === 400) {
+          toast({
+            description: "작성 내용을 확인해주세요",
+            status: "warning",
+          });
+        } else if (err.response.status === 401) {
+          toast({
+            description: "로그인후 이용 가능합니다.",
+            status: "warning",
+          });
+        } else if (err.response.status === 403) {
+          toast({
+            description: "작성 권한이 없습니다.",
+            status: "warning",
+          });
+        } else {
+          toast({
+            description: "서버 문제로 저장 실패",
+            status: "error",
+          });
+        }
       })
       .finally(() => onClose());
   }
@@ -138,7 +155,7 @@ export function RestaurantView() {
                   columns={{ base: 4, md: 3, lg: 4, "2xl": 6 }}
                 >
                   {restaurant.purpose.map((purpose) => (
-                    <Text>{purpose.name}</Text>
+                    <Text key={purpose.no}>{purpose.name}</Text>
                   ))}
                 </SimpleGrid>
               </Flex>
@@ -150,6 +167,21 @@ export function RestaurantView() {
               <Text>리뷰</Text>
             </Flex>
             <ReviewContainer reviews={reviews} restaurantNo={no} />
+            {reviews.length === 0 ? (
+              <Button colorScheme="blue" onClick={() => navigate("/write")}>
+                리뷰작성
+              </Button>
+            ) : (
+              <Flex gap={5} justifyContent={"space-between"} margin={5}>
+                <Button onClick={() => navigate("/review")} colorScheme="blue">
+                  더보기
+                </Button>
+
+                <Button colorScheme="blue" onClick={() => navigate("/write")}>
+                  리뷰작성
+                </Button>
+              </Flex>
+            )}
           </Box>
           <CardFooter>
             {isAdmin() && (

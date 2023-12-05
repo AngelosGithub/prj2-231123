@@ -7,6 +7,7 @@ import {
   Center,
   Flex,
   SimpleGrid,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 
@@ -82,7 +83,9 @@ function RestaurantList(props) {
     setTypeNo(v);
   }
 
-  console.log("123", checkBoxIds);
+  if (restaurant === null) {
+    return <Spinner />;
+  }
   return (
     <Center>
       <Box w={"3xl"}>
@@ -101,7 +104,7 @@ function RestaurantList(props) {
           spacing={"10px"}
           columns={{ base: 2, md: 3, lg: 3, "2xl": 3 }}
         >
-          {restaurant === null ? (
+          {restaurant.length === 0 ? (
             <Text>글이 없습니다. </Text>
           ) : (
             restaurant.map((restaurant) => (

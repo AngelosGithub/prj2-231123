@@ -33,7 +33,7 @@ export default function RestaurantImage({ restaurant }) {
     <Slider {...settings}>
       {restaurant.files.length > 0 &&
         restaurant.files.map((file) => (
-          <Card>
+          <Card key={file.no}>
             <CardBody w={"100%"} h={"300px"}>
               <Image
                 w={"100%"}
