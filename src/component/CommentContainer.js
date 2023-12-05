@@ -36,15 +36,7 @@ function CommentForm({ reviewId, isSubmitting, onSubmit }) {
   );
 }
 
-function CommentList({ commentList }) {
-  function handleDelete(no) {
-    // 삭제버튼 클릭시 key값을 가져오는 지 확인
-    // console.log(no + "Comment Deleted");
-
-    // 삭제 요청 보내기
-    axios.delete("/api/comment/" + no);
-  }
-
+function CommentList({ commentList, onDelete, isSubmitting }) {
   return (
     <Card>
       <CardHeader>
@@ -68,7 +60,8 @@ function CommentList({ commentList }) {
                     <EditIcon />
                   </Button>
                   <Button
-                    onClick={() => handleDelete(comment.no)}
+                    isDisabled={isSubmitting}
+                    onClick={() => onDelete(comment.no)}
                     size={"xs"}
                     colorScheme="red"
                   >
@@ -102,6 +95,14 @@ export function CommentContainer({ reviewId }) {
       //요청이 끝나면 다시 false
       .finally(() => setIsSubmitting(false));
   }
+  function handleDelete(no) {
+    // 삭제버튼 클릭시 key값을 가져오는 지 확인
+    // console.log(no + "Comment Deleted");
+
+    setIsSubmitting(true);
+    // 삭제 요청 보내기
+    axios.delete("/api/comment/" + no).finally(() => setIsSubmitting(false));
+  }
 
   const [commentList, setCommentList] = useState([]);
 
@@ -129,7 +130,12 @@ export function CommentContainer({ reviewId }) {
         isSubmitting={isSubmitting}
         onSubmit={handleSubmit}
       />
-      <CommentList reviewId={reviewId} commentList={commentList} />
+      <CommentList
+        reviewId={reviewId}
+        isSubmitting={isSubmitting}
+        commentList={commentList}
+        onDelete={handleDelete}
+      />
     </Box>
   );
 }
