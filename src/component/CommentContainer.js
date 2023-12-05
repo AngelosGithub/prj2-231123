@@ -25,10 +25,12 @@ function CommentList({ reviewId }) {
   const [commentList, setCommentList] = useState(null);
 
   useEffect(() => {
+    // 댓글 목록을 보여줄 글의 번호값 받기
     const params = new URLSearchParams();
     params.set("id", reviewId);
 
     axios
+      // 글 번호에 해당하는 댓글 데이터 요청하기
       .get("/api/comment/list?" + params)
       .then((response) => setCommentList(response.data));
   }, []);
