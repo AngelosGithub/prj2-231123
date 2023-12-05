@@ -75,7 +75,7 @@ export function RestaurantEdit() {
   useEffect(() => {
     axios
       .get(`/api/restaurant/no/${no}`)
-      .then((response) => updateRestaurant(response.data))
+      .then((response) => updateRestaurant(response.data.restaurant))
       .catch((err) => console.log("실패"));
   }, []);
   function handleUpdate() {
@@ -193,7 +193,6 @@ export function RestaurantEdit() {
       // removeFileIds에서 삭제
     }
   }
-  console.log(removeFileIds);
 
   function handleCheckBox(e) {
     if (e.target.checked) {
@@ -279,7 +278,6 @@ export function RestaurantEdit() {
                     draft.phone = e.target.value;
                   })
                 }
-                required
               />
             </FormControl>
 
@@ -344,13 +342,14 @@ export function RestaurantEdit() {
               <CheckboxGroup>
                 <SimpleGrid
                   spacing={"10px"}
-                  columns={{ base: 2, md: 3, lg: 4, "2xl": 6 }}
+                  columns={{ base: 2, md: 3, lg: 4, "2xl": 4 }}
                 >
                   {restaurantPurposeList !== null &&
                     restaurantPurposeList.map((purpose) => (
                       <Checkbox
                         size={"xm"}
-                        border={"1px solid black"}
+                        spacing={5}
+                        fontSize={"17px"}
                         key={purpose.no}
                         value={purpose.name}
                         onChange={handleCheckBox}

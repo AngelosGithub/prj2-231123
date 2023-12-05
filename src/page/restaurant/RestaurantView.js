@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardBody,
@@ -8,7 +9,6 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  Image,
   Input,
   Modal,
   ModalBody,
@@ -32,9 +32,11 @@ import { ReviewContainer } from "./ReviewContainer";
 import KakaoMap from "../../component/KakaoMap";
 import RestaurantImage from "./RestaurantImage";
 
+import StarRatings from "react-star-ratings/build/star-ratings";
+
 export function RestaurantView() {
   const [restaurant, setRestaurant] = useState(null);
-
+  const [reviews, setReviews] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { no } = useParams();
 
@@ -45,7 +47,8 @@ export function RestaurantView() {
     axios
       .get(`/api/restaurant/no/${no}`)
       .then((response) => {
-        setRestaurant(response.data);
+        setRestaurant(response.data.restaurant);
+        setReviews(response.data.reviews);
       })
       .catch(() => console.log("에러"));
   }, []);
@@ -81,37 +84,51 @@ export function RestaurantView() {
             <KakaoMap restaurant={restaurant} />
           </CardHeader>
           <CardBody>
-            <FormControl>
+            <FormControl mt={5}>
+              {/*TODO :
+             해당 별점 점수 데이터 받아서 별점 컴포넌트에 전달해서 출력*/}
               <FormLabel>별점</FormLabel>
+              {/*<StarView />*/}
+              {restaurant.starPoint > 0 ? (
+                <StarRatings
+                  rating={restaurant.starPoint}
+                  starDimension="30px"
+                  starSpacing="3px"
+                  starRatedColor="blue"
+                  numberOfStars={5}
+                />
+              ) : (
+                <Text>평가가 아직없습니다.</Text>
+              )}
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={5}>
               <FormLabel>이미지</FormLabel>
 
               <RestaurantImage restaurant={restaurant} />
             </FormControl>
 
-            <FormControl mt={7}>
+            <FormControl mt={5}>
               <FormLabel>매장 이름</FormLabel>
               <Input value={restaurant.place} readOnly />
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={5}>
               <FormLabel>주소</FormLabel>
               <Input value={restaurant.address} readOnly />
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={5}>
               <FormLabel>전화번호</FormLabel>
               <Input value={restaurant.phone} readOnly />
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={5}>
               <FormLabel>간단 설명</FormLabel>
               <Textarea value={restaurant.info} readOnly />
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={5}>
               <FormLabel>테마</FormLabel>
               <Flex>
                 <SimpleGrid
@@ -119,21 +136,21 @@ export function RestaurantView() {
                   columns={{ base: 4, md: 3, lg: 4, "2xl": 6 }}
                 >
                   {restaurant.purpose.map((purpose) => (
-                    <Card key={purpose.no} mb={5}>
-                      <CardBody>
-                        <Text>{purpose.name}</Text>
-                      </CardBody>
-                    </Card>
+                    <Text>{purpose.name}</Text>
                   ))}
                 </SimpleGrid>
               </Flex>
             </FormControl>
           </CardBody>
+
+          <Box>
+            <Flex>
+              <Text>리뷰</Text>
+            </Flex>
+            <ReviewContainer reviews={reviews} restaurantNo={no} />
+          </Box>
           <CardFooter>
             <Flex gap={8}>
-              <Button colorScheme="blue">더보기</Button>
-              <Button colorScheme="green">리뷰작성</Button>
-
               <Button
                 colorScheme="purple"
                 onClick={() => navigate(`/restaurant/edit/${no}`)}
@@ -163,7 +180,6 @@ export function RestaurantView() {
           </ModalContent>
         </Modal>
       </Center>
-      <ReviewContainer restaurantNo={no} />
     </>
   );
 }

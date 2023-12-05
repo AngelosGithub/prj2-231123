@@ -1,20 +1,18 @@
 import { Box, Button, Center, Flex, Input, Select } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
-export function SearchComponent() {
-  const [keyword, setKeyword] = useState("");
-  const navigate = useNavigate();
+export function SearchComponent({ keyword, setKeyword }) {
   const [category, setCategory] = useState("all");
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
   function handleSearch() {
-    // /?k=keyword & c=all
-
-    const params = new URLSearchParams();
-    params.set("k", keyword);
     params.set("c", category);
-    navigate("/?" + params);
+    params.set("k", keyword);
+
+    navigate("/restaurantList?" + params);
   }
   return (
     <Center>
