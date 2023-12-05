@@ -21,7 +21,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { LoginContext } from "./LoginProvider";
 
@@ -98,7 +98,12 @@ export function CommentContainer({ reviewId }) {
   // 댓글 데이터를 배열 형태로 응답받음
   const [commentList, setCommentList] = useState([]);
   // 댓글 키 값을 state에 저장
-  const [no, setNo] = useState(0);
+  // const [no, setNo] = useState(0);
+
+  // useRef : 컴포넌트에서 임시로 값을 저장하는 용도(랜더링하는 도중에 쓰면 안됨)
+  // Effect 함수나 이벤트 핸들러 함수 안에서만 사용
+  // 댓글 키 값을 useRef에 저장
+  const commentIdRef = useRef(0);
 
   // LoginContext로 부터 권한 확인용 함수 가져옴
   const { isAuthenticated } = useContext(LoginContext);
@@ -124,7 +129,7 @@ export function CommentContainer({ reviewId }) {
 
     setIsSubmitting(true);
     // 삭제 요청 보내기
-    axios.delete("/api/comment/" + no).finally(() => {
+    axios.delete("/api/comment/" + commentIdRef.current).finally(() => {
       setIsSubmitting(false);
       onClose();
     });
@@ -146,8 +151,10 @@ export function CommentContainer({ reviewId }) {
   }, [isSubmitting]);
 
   function handleDeleteModal(no) {
-    // id를 어딘가 저장
-    setNo(no);
+    // id를 어딘가 저장(state)
+    // setNo(no);
+    // useRef를 사용하여 id를 저장
+    commentIdRef.current = no;
     // >> 모달 열기
     onOpen();
   }
