@@ -98,7 +98,7 @@ export function ReviewView() {
         </ModalContent>
       </Modal>
       {/* 코멘트 컨테이너로 작성된 글의 번호를 넘김 */}
-      <CommentContainer reviewNo={no} />
+      <CommentContainer reviewId={no} />
     </Box>
   );
 }
