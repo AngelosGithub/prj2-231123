@@ -21,8 +21,9 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { LoginContext } from "./LoginProvider";
 
 function CommentForm({ reviewId, isSubmitting, onSubmit }) {
   const [comment, setComment] = useState("");
@@ -45,6 +46,9 @@ function CommentForm({ reviewId, isSubmitting, onSubmit }) {
 }
 
 function CommentList({ commentList, onDeleteModal, isSubmitting }) {
+  // 삭제, 수정에 권한 설정용 함수를 LoginContext로 부터 가져옴
+  const { hasAccess } = useContext(LoginContext);
+
   return (
     <Card>
       <CardHeader>
@@ -63,19 +67,21 @@ function CommentList({ commentList, onDeleteModal, isSubmitting }) {
                 <Text sx={{ whiteSpace: "pre-wrap" }} pt={"2"} fontSize={"sm"}>
                   {comment.comment}
                 </Text>
-                <Flex>
-                  <Button size={"xs"} colorScheme="blue">
-                    <EditIcon />
-                  </Button>
-                  <Button
-                    isDisabled={isSubmitting}
-                    onClick={() => onDeleteModal(comment.no)}
-                    size={"xs"}
-                    colorScheme="red"
-                  >
-                    <DeleteIcon />
-                  </Button>
-                </Flex>
+                {hasAccess(comment.memberId) && (
+                  <Flex>
+                    <Button size={"xs"} colorScheme="blue">
+                      <EditIcon />
+                    </Button>
+                    <Button
+                      isDisabled={isSubmitting}
+                      onClick={() => onDeleteModal(comment.no)}
+                      size={"xs"}
+                      colorScheme="red"
+                    >
+                      <DeleteIcon />
+                    </Button>
+                  </Flex>
+                )}
               </Flex>
             </Box>
           ))}
@@ -87,13 +93,15 @@ function CommentList({ commentList, onDeleteModal, isSubmitting }) {
 
 export function CommentContainer({ reviewId }) {
   // 넘어온 글 번호를 받음
-
   // 댓글 요청상태를 알아내는 공통 state
   const [isSubmitting, setIsSubmitting] = useState(false);
   // 댓글 데이터를 배열 형태로 응답받음
   const [commentList, setCommentList] = useState([]);
   // 댓글 키 값을 state에 저장
   const [no, setNo] = useState(0);
+
+  // LoginContext로 부터 권한 확인용 함수 가져옴
+  const { isAuthenticated } = useContext(LoginContext);
 
   // 모달 컨트롤
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -147,11 +155,13 @@ export function CommentContainer({ reviewId }) {
     <Box>
       {/* Form에서 submit 되었을때 List가 다시 랜더링 되어야하기 때문에
       상위 컴포넌트에 공통 state를 만들 것 */}
-      <CommentForm
-        reviewId={reviewId}
-        isSubmitting={isSubmitting}
-        onSubmit={handleSubmit}
-      />
+      {isAuthenticated() && (
+        <CommentForm
+          reviewId={reviewId}
+          isSubmitting={isSubmitting}
+          onSubmit={handleSubmit}
+        />
+      )}
       <CommentList
         reviewId={reviewId}
         isSubmitting={isSubmitting}
