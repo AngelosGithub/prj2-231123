@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 function CommentForm({ reviewId, isSubmitting, onSubmit }) {
   const [comment, setComment] = useState("");
@@ -36,6 +37,14 @@ function CommentForm({ reviewId, isSubmitting, onSubmit }) {
 }
 
 function CommentList({ commentList }) {
+  function handleDelete(no) {
+    // 삭제버튼 클릭시 key값을 가져오는 지 확인
+    // console.log(no + "Comment Deleted");
+
+    // 삭제 요청 보내기
+    axios.delete("/api/comment/" + no);
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -49,10 +58,24 @@ function CommentList({ commentList }) {
                 <Heading size={"xs"}>{comment.memberId}</Heading>
                 <Text fontSize={"xs"}>{comment.inserted}</Text>
               </Flex>
-              {/* 댓글 줄 바꿈 */}
-              <Text sx={{ whiteSpace: "pre-wrap" }} pt={"2"} fontSize={"sm"}>
-                {comment.comment}
-              </Text>
+              <Flex justifyContent={"space-between"} alignItems={"center"}>
+                {/* 댓글 줄 바꿈 */}
+                <Text sx={{ whiteSpace: "pre-wrap" }} pt={"2"} fontSize={"sm"}>
+                  {comment.comment}
+                </Text>
+                <Flex>
+                  <Button size={"xs"} colorScheme="blue">
+                    <EditIcon />
+                  </Button>
+                  <Button
+                    onClick={() => handleDelete(comment.no)}
+                    size={"xs"}
+                    colorScheme="red"
+                  >
+                    <DeleteIcon />
+                  </Button>
+                </Flex>
+              </Flex>
             </Box>
           ))}
         </Stack>
