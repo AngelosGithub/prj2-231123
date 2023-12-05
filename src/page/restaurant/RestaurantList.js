@@ -7,7 +7,6 @@ import {
   Center,
   Flex,
   SimpleGrid,
-  Spinner,
   Text,
 } from "@chakra-ui/react";
 
@@ -27,17 +26,17 @@ function RestaurantList(props) {
   const [checkBoxIds, setCheckBoxIds] = useState([]);
   const [restaurantType, setRestaurntType] = useState(null);
   const [restaurantPurpose, setRestaurantPurpose] = useState(null);
+  const [keyword, setKeyword] = useState("");
 
   const [typeNo, setTypeNo] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
   const [nowPage, setNowPage] = useState(1);
 
-  const [keyword, setKeyword] = useState("");
-  const [category, setCategory] = useState("all");
   const [params] = useSearchParams();
   useEffect(() => {
-    if (checkBoxIds.length > 0) {
+    // const nextParams = new URLSearchParams(params.toString());
+    if (checkBoxIds.length >= 0) {
       params.set("purpose", checkBoxIds);
       params.delete("typeno");
     }
@@ -48,6 +47,7 @@ function RestaurantList(props) {
     }
 
     params.set("p", nowPage);
+    // setParams(nextParams);
     axios.get(`/api/restaurant/list?${params}`).then((response) => {
       setRestaurant(response.data.restaurantList);
       setPageInfo(response.data.pageInfo);
@@ -55,44 +55,38 @@ function RestaurantList(props) {
       setRestaurntType(response.data.restaurantTypes);
     });
   }, [checkBoxIds, typeNo, nowPage]);
+
   useEffect(() => {
+    // const nextParams = new URLSearchParams(params.toString());
+
     setCheckBoxIds([]);
     setTypeNo(0);
-
+    setKeyword("");
     params.delete("typeno");
     params.delete("purpose");
+
+    // setParams(nextParams);
   }, [location]);
-  if (restaurant == null) {
-    return <Spinner />;
-  }
 
   function handleCheckBox(values) {
     setTypeNo(0);
     setNowPage(1);
-    setCategory("all");
     setKeyword("");
     setCheckBoxIds(values);
   }
 
   function handleClickType(v) {
     setCheckBoxIds([]);
-    setCategory("all");
     setKeyword("");
     setNowPage(1);
     setTypeNo(v);
   }
 
-  function handleSearch() {}
-
+  console.log("123", checkBoxIds);
   return (
     <Center>
       <Box w={"3xl"}>
-        <SearchComponent
-          keyword={keyword}
-          setKeyword={setKeyword}
-          category={category}
-          setCategory={setCategory}
-        />
+        <SearchComponent keyword={keyword} setKeyword={setKeyword} />
         {/*상세 조건 컴포넌트  */}
         <DetailedSelect
           checkBoxIds={checkBoxIds}
@@ -108,9 +102,7 @@ function RestaurantList(props) {
           columns={{ base: 2, md: 3, lg: 3, "2xl": 3 }}
         >
           {restaurant === null ? (
-            <Box>
-              <Text>글이 없습니다.</Text>
-            </Box>
+            <Text>글이 없습니다. </Text>
           ) : (
             restaurant.map((restaurant) => (
               <Card
@@ -149,7 +141,9 @@ function RestaurantList(props) {
             ))
           )}
         </SimpleGrid>
-        <Pagination setNowPage={setNowPage} pageInfo={pageInfo} />
+        {pageInfo !== null && (
+          <Pagination setNowPage={setNowPage} pageInfo={pageInfo} />
+        )}
       </Box>
     </Center>
   );

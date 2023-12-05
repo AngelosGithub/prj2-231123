@@ -31,13 +31,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ReviewContainer } from "./ReviewContainer";
 import KakaoMap from "../../component/KakaoMap";
 import RestaurantImage from "./RestaurantImage";
-import { StarView } from "./StarView";
-import { FaStar } from "react-icons/fa6";
+
 import StarRatings from "react-star-ratings/build/star-ratings";
 
 export function RestaurantView() {
   const [restaurant, setRestaurant] = useState(null);
-  const [star, setStar] = useState(5);
+  const [reviews, setReviews] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { no } = useParams();
 
@@ -48,7 +47,8 @@ export function RestaurantView() {
     axios
       .get(`/api/restaurant/no/${no}`)
       .then((response) => {
-        setRestaurant(response.data);
+        setRestaurant(response.data.restaurant);
+        setReviews(response.data.reviews);
       })
       .catch(() => console.log("에러"));
   }, []);
@@ -84,7 +84,7 @@ export function RestaurantView() {
             <KakaoMap restaurant={restaurant} />
           </CardHeader>
           <CardBody>
-            <FormControl>
+            <FormControl mt={5}>
               {/*TODO :
              해당 별점 점수 데이터 받아서 별점 컴포넌트에 전달해서 출력*/}
               <FormLabel>별점</FormLabel>
@@ -92,8 +92,8 @@ export function RestaurantView() {
               {restaurant.starPoint > 0 ? (
                 <StarRatings
                   rating={restaurant.starPoint}
-                  starDimension="40px"
-                  starSpacing="8px"
+                  starDimension="30px"
+                  starSpacing="3px"
                   starRatedColor="blue"
                   numberOfStars={5}
                 />
@@ -102,33 +102,33 @@ export function RestaurantView() {
               )}
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={5}>
               <FormLabel>이미지</FormLabel>
 
               <RestaurantImage restaurant={restaurant} />
             </FormControl>
 
-            <FormControl mt={7}>
+            <FormControl mt={5}>
               <FormLabel>매장 이름</FormLabel>
               <Input value={restaurant.place} readOnly />
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={5}>
               <FormLabel>주소</FormLabel>
               <Input value={restaurant.address} readOnly />
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={5}>
               <FormLabel>전화번호</FormLabel>
               <Input value={restaurant.phone} readOnly />
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={5}>
               <FormLabel>간단 설명</FormLabel>
               <Textarea value={restaurant.info} readOnly />
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={5}>
               <FormLabel>테마</FormLabel>
               <Flex>
                 <SimpleGrid
@@ -150,9 +150,8 @@ export function RestaurantView() {
           <Box>
             <Flex>
               <Text>리뷰</Text>
-              <Button colorScheme="green">리뷰작성</Button>
             </Flex>
-            <ReviewContainer restaurantNo={no} />
+            <ReviewContainer reviews={reviews} restaurantNo={no} />
           </Box>
           <CardFooter>
             <Flex gap={8}>

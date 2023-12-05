@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Center,
+  Flex,
   Table,
   Tbody,
   Td,
@@ -11,16 +12,11 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React from "react";
+import StarRatings from "react-star-ratings/build/star-ratings";
+import { useNavigate } from "react-router-dom";
 
-export const reivew = [
-  { no: 1, title: "돈까스 맛집", name: "홍길동1", inserted: "2023-12-01" },
-  { no: 2, title: "곱창 맛집", name: "홍길동2", inserted: "2023-12-01" },
-  { no: 3, title: "삼겹살 맛집", name: "홍길동3", inserted: "2023-12-01" },
-  { no: 4, title: "치킨 맛집", name: "홍길동4", inserted: "2023-12-01" },
-  { no: 5, title: "피자 맛집", name: "홍길동5", inserted: "2023-12-01" },
-];
-
-export function ReviewContainer(props) {
+export function ReviewContainer({ reviews }) {
+  const navigate = useNavigate();
   return (
     <Box>
       <Table>
@@ -30,24 +26,48 @@ export function ReviewContainer(props) {
             <Th>제목</Th>
             <Th>작성자</Th>
             <Th>작성날짜</Th>
+            <Th>평점</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {reivew.length < 0 ? (
-            <Text>리뷰가 없습니다.</Text>
+          {reviews === null ? (
+            <Box>
+              <h3>작성된 리뷰가 없습니다.</h3>
+              <Button colorScheme="green">리뷰작성</Button>
+            </Box>
           ) : (
-            reivew.map((reivews) => (
-              <Tr>
-                <Td>{reivews.no}</Td>
-                <Td>{reivews.title}</Td>
-                <Td>{reivews.name}</Td>
-                <Td>{reivews.inserted}</Td>
+            reviews.map((reivew) => (
+              <Tr
+                key={reivew.no}
+                onClick={() => navigate(`/review/${reivew.no}`)}
+              >
+                <Td>{reivew.no}</Td>
+                <Td>{reivew.title}</Td>
+                <Td>{reivew.writer}</Td>
+                <Td>{reivew.inserted}</Td>
+                <Td>
+                  <StarRatings
+                    rating={reivew.starPoint}
+                    starDimension="13px"
+                    starSpacing="4px"
+                    starRatedColor="blue"
+                    numberOfStars={5}
+                  />
+                </Td>
               </Tr>
             ))
           )}
         </Tbody>
       </Table>
-      <Button colorScheme="blue">더보기</Button>
+      <Flex gap={5} justifyContent={"space-between"} margin={5}>
+        <Button onClick={() => navigate("/review")} colorScheme="blue">
+          더보기
+        </Button>
+
+        <Button colorScheme="blue" onClick={() => navigate("/write")}>
+          리뷰작성
+        </Button>
+      </Flex>
     </Box>
   );
 }
