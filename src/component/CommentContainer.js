@@ -35,20 +35,7 @@ function CommentForm({ reviewId, isSubmitting, onSubmit }) {
   );
 }
 
-function CommentList({ reviewId }) {
-  const [commentList, setCommentList] = useState([]);
-
-  useEffect(() => {
-    // 댓글 목록을 보여줄 글의 번호값 받기
-    const params = new URLSearchParams();
-    params.set("id", reviewId);
-
-    axios
-      // 글 번호에 해당하는 댓글 데이터 요청하기
-      .get("/api/comment/list?" + params)
-      .then((response) => setCommentList(response.data));
-  }, []);
-
+function CommentList({ commentList }) {
   return (
     <Card>
       <CardHeader>
@@ -80,6 +67,7 @@ export function CommentContainer({ reviewId }) {
   // 댓글 요청상태를 알아내는 공통 state
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // 댓글 쓰기 함수
   function handleSubmit(comment) {
     // 이 곳에서 댓글 전송 요청
     // 요청시 true
@@ -92,6 +80,23 @@ export function CommentContainer({ reviewId }) {
       .finally(() => setIsSubmitting(false));
   }
 
+  const [commentList, setCommentList] = useState([]);
+
+  // 댓글 리스트 불러오는 함수
+  useEffect(() => {
+    // isSubmitting이 false 일때만 랜더링을 하도록 함
+    if (!isSubmitting) {
+      // 댓글 목록을 보여줄 글의 번호값 받기
+      const params = new URLSearchParams();
+      params.set("id", reviewId);
+
+      axios
+        // 글 번호에 해당하는 댓글 데이터 요청하기
+        .get("/api/comment/list?" + params)
+        .then((response) => setCommentList(response.data));
+    }
+  }, [isSubmitting]);
+
   return (
     <Box>
       {/* Form에서 submit 되었을때 List가 다시 랜더링 되어야하기 때문에
@@ -101,7 +106,7 @@ export function CommentContainer({ reviewId }) {
         isSubmitting={isSubmitting}
         onSubmit={handleSubmit}
       />
-      <CommentList reviewId={reviewId} />
+      <CommentList reviewId={reviewId} commentList={commentList} />
     </Box>
   );
 }
