@@ -136,11 +136,7 @@ export function RestaurantView() {
                   columns={{ base: 4, md: 3, lg: 4, "2xl": 6 }}
                 >
                   {restaurant.purpose.map((purpose) => (
-                    <Card key={purpose.no} mb={5}>
-                      <CardBody>
-                        <Text>{purpose.name}</Text>
-                      </CardBody>
-                    </Card>
+                    <Text>{purpose.name}</Text>
                   ))}
                 </SimpleGrid>
               </Flex>
