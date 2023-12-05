@@ -46,6 +46,39 @@ function CommentForm({ reviewId, isSubmitting, onSubmit }) {
   );
 }
 
+function CommentItem({ comment, onDeleteModal }) {
+  const { hasAccess } = useContext(LoginContext);
+
+  return (
+    <Box>
+      <Flex justifyContent={"space-between"}>
+        <Heading size={"xs"}>{comment.memberId}</Heading>
+        <Text fontSize={"xs"}>{comment.inserted}</Text>
+      </Flex>
+      <Flex justifyContent={"space-between"} alignItems={"center"}>
+        {/* 댓글 줄 바꿈 */}
+        <Text sx={{ whiteSpace: "pre-wrap" }} pt={"2"} fontSize={"sm"}>
+          {comment.comment}
+        </Text>
+        {hasAccess(comment.memberId) && (
+          <Flex>
+            <Button size={"xs"} colorScheme="blue">
+              <EditIcon />
+            </Button>
+            <Button
+              onClick={() => onDeleteModal(comment.no)}
+              size={"xs"}
+              colorScheme="red"
+            >
+              <DeleteIcon />
+            </Button>
+          </Flex>
+        )}
+      </Flex>
+    </Box>
+  );
+}
+
 function CommentList({ commentList, onDeleteModal, isSubmitting }) {
   // 삭제, 수정에 권한 설정용 함수를 LoginContext로 부터 가져옴
   const { hasAccess } = useContext(LoginContext);
@@ -58,33 +91,11 @@ function CommentList({ commentList, onDeleteModal, isSubmitting }) {
       <CardBody>
         <Stack divider={<StackDivider />} spacing={"4"}>
           {commentList.map((comment) => (
-            <Box key={comment.no}>
-              <Flex justifyContent={"space-between"}>
-                <Heading size={"xs"}>{comment.memberId}</Heading>
-                <Text fontSize={"xs"}>{comment.inserted}</Text>
-              </Flex>
-              <Flex justifyContent={"space-between"} alignItems={"center"}>
-                {/* 댓글 줄 바꿈 */}
-                <Text sx={{ whiteSpace: "pre-wrap" }} pt={"2"} fontSize={"sm"}>
-                  {comment.comment}
-                </Text>
-                {hasAccess(comment.memberId) && (
-                  <Flex>
-                    <Button size={"xs"} colorScheme="blue">
-                      <EditIcon />
-                    </Button>
-                    <Button
-                      isDisabled={isSubmitting}
-                      onClick={() => onDeleteModal(comment.no)}
-                      size={"xs"}
-                      colorScheme="red"
-                    >
-                      <DeleteIcon />
-                    </Button>
-                  </Flex>
-                )}
-              </Flex>
-            </Box>
+            <CommentItem
+              key={comment.no}
+              comment={comment}
+              onDeleteModal={onDeleteModal}
+            />
           ))}
         </Stack>
       </CardBody>
