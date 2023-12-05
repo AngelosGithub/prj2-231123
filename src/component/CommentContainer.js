@@ -56,6 +56,15 @@ function CommentItem({ comment, onDeleteModal }) {
   const { hasAccess } = useContext(LoginContext);
   // 권한 설정을 위한 코드
 
+  function handleSubmit() {
+    axios
+      // 수정된 댓글이 잘 요청되는지 확인
+      .put("/api/comment/edit", { no: comment.no, comment: commentEdited })
+      .then(() => console.log("good"))
+      .catch(() => console.log("bad"))
+      .finally(() => console.log("done"));
+  }
+
   return (
     <Box>
       <Flex justifyContent={"space-between"}>
@@ -69,11 +78,16 @@ function CommentItem({ comment, onDeleteModal }) {
             {comment.comment}
           </Text>
           {isEditing && (
-            // 수정버튼 클릭시 작성칸이 생김
-            <Textarea
-              value={commentEdited}
-              onChange={(e) => setCommentEdited(e.target.value)}
-            />
+            <Box>
+              {/* 수정버튼 클릭시 작성칸이 생김 */}
+              <Textarea
+                value={commentEdited}
+                onChange={(e) => setCommentEdited(e.target.value)}
+              />
+              <Button colorScheme="blue" onClick={handleSubmit}>
+                저장
+              </Button>
+            </Box>
           )}
         </Box>
 
