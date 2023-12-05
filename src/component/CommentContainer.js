@@ -46,7 +46,12 @@ function CommentForm({ reviewId, isSubmitting, onSubmit }) {
   );
 }
 
-function CommentItem({ comment, onDeleteModal }) {
+function CommentItem({
+  comment,
+  onDeleteModal,
+  setIsSubmitting,
+  isSubmitting,
+}) {
   // 필요한 프로퍼티들 받아옴
   const [isEditing, setIsEditing] = useState(false);
   // 수정중인지 아닌지 구분하는 코드
@@ -56,13 +61,38 @@ function CommentItem({ comment, onDeleteModal }) {
   const { hasAccess } = useContext(LoginContext);
   // 권한 설정을 위한 코드
 
+  const toast = useToast();
+
   function handleSubmit() {
+    setIsSubmitting(true);
+    // 수정후에 바로 랜더링 되도록 하는 함수를 드릴링을 이용하여 상위 컴포넌트에서 받아옴
+
     axios
       // 수정된 댓글이 잘 요청되는지 확인
       .put("/api/comment/edit", { no: comment.no, comment: commentEdited })
-      .then(() => console.log("good"))
-      .catch(() => console.log("bad"))
-      .finally(() => console.log("done"));
+      .then(() => {
+        toast({
+          description: "수정되었습니다",
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
+          toast({
+            description: "권한이 없습니다",
+            status: "warning",
+          });
+        } else {
+          toast({
+            description: "문제가 발생했습니다",
+            status: "error",
+          });
+        }
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+        setIsEditing(false);
+      });
   }
 
   return (
@@ -84,7 +114,11 @@ function CommentItem({ comment, onDeleteModal }) {
                 value={commentEdited}
                 onChange={(e) => setCommentEdited(e.target.value)}
               />
-              <Button colorScheme="blue" onClick={handleSubmit}>
+              <Button
+                isDisabled={isSubmitting}
+                colorScheme="blue"
+                onClick={handleSubmit}
+              >
                 저장
               </Button>
             </Box>
@@ -125,7 +159,12 @@ function CommentItem({ comment, onDeleteModal }) {
   );
 }
 
-function CommentList({ commentList, onDeleteModal, isSubmitting }) {
+function CommentList({
+  commentList,
+  onDeleteModal,
+  isSubmitting,
+  setIsSubmitting,
+}) {
   // 삭제, 수정에 권한 설정용 함수를 LoginContext로 부터 가져옴
   const { hasAccess } = useContext(LoginContext);
 
@@ -141,6 +180,8 @@ function CommentList({ commentList, onDeleteModal, isSubmitting }) {
               key={comment.no}
               comment={comment}
               onDeleteModal={onDeleteModal}
+              setIsSubmitting={setIsSubmitting}
+              isSubmitting={isSubmitting}
             />
             // 코멘트아이템에서 필요한 함수 꺼내옴
           ))}
@@ -267,6 +308,7 @@ export function CommentContainer({ reviewId }) {
       <CommentList
         reviewId={reviewId}
         isSubmitting={isSubmitting}
+        setIsSubmitting={setIsSubmitting}
         commentList={commentList}
         onDeleteModal={handleDeleteModal}
       />
