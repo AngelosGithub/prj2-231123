@@ -19,6 +19,7 @@ import {
   Text,
   Textarea,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
@@ -108,6 +109,9 @@ export function CommentContainer({ reviewId }) {
   // LoginContext로 부터 권한 확인용 함수 가져옴
   const { isAuthenticated } = useContext(LoginContext);
 
+  // toast 선언
+  const toast = useToast();
+
   // 모달 컨트롤
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -120,6 +124,18 @@ export function CommentContainer({ reviewId }) {
     axios
       // 댓글 입력 할 글의 번호를 받아옴
       .post("/api/comment/add", comment)
+      .then(() => {
+        toast({
+          description: "등록되었습니다",
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        toast({
+          description: "문제가 발생했습니다",
+          status: "error",
+        });
+      })
       //요청이 끝나면 다시 false
       .finally(() => setIsSubmitting(false));
   }
@@ -129,10 +145,31 @@ export function CommentContainer({ reviewId }) {
 
     setIsSubmitting(true);
     // 삭제 요청 보내기
-    axios.delete("/api/comment/" + commentIdRef.current).finally(() => {
-      setIsSubmitting(false);
-      onClose();
-    });
+    axios
+      .delete("/api/comment/" + commentIdRef.current)
+      .then(() => {
+        toast({
+          description: "삭제되었습니다",
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
+          toast({
+            description: "권한이 없습니다",
+            status: "warning",
+          });
+        } else {
+          toast({
+            description: "문제가 발생했습니다",
+            status: "error",
+          });
+        }
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+        onClose();
+      });
   }
 
   // 댓글 리스트 불러오는 함수
