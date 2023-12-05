@@ -24,7 +24,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import { useNavigate, useParams } from "react-router-dom";
@@ -33,13 +33,15 @@ import KakaoMap from "../../component/KakaoMap";
 import RestaurantImage from "./RestaurantImage";
 
 import StarRatings from "react-star-ratings/build/star-ratings";
+import { LoginContext } from "../../component/LoginProvider";
 
 export function RestaurantView() {
   const [restaurant, setRestaurant] = useState(null);
   const [reviews, setReviews] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { no } = useParams();
-
+  const { fetchLogin, login, isAuthenticated, isAdmin } =
+    useContext(LoginContext);
   const navigate = useNavigate();
   const toast = useToast();
   const { kakao } = window;
@@ -150,17 +152,19 @@ export function RestaurantView() {
             <ReviewContainer reviews={reviews} restaurantNo={no} />
           </Box>
           <CardFooter>
-            <Flex gap={8}>
-              <Button
-                colorScheme="purple"
-                onClick={() => navigate(`/restaurant/edit/${no}`)}
-              >
-                수정
-              </Button>
-              <Button colorScheme="red" onClick={onOpen}>
-                삭제
-              </Button>
-            </Flex>
+            {isAdmin() && (
+              <Flex gap={8}>
+                <Button
+                  colorScheme="purple"
+                  onClick={() => navigate(`/restaurant/edit/${no}`)}
+                >
+                  수정
+                </Button>
+                <Button colorScheme="red" onClick={onOpen}>
+                  삭제
+                </Button>
+              </Flex>
+            )}
           </CardFooter>
         </Card>
 
