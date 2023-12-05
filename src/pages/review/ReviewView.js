@@ -18,6 +18,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "../../component/LoginProvider";
+import { CommentContainer } from "../../component/CommentContainer";
 
 export function ReviewView() {
   const [review, setReview] = useState(null);
@@ -96,6 +97,8 @@ export function ReviewView() {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      {/* 코멘트 컨테이너로 작성된 글의 번호를 넘김 */}
+      <CommentContainer reviewNo={no} />
     </Box>
   );
 }
