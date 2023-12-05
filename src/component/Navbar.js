@@ -10,7 +10,8 @@ function Navbar(props) {
 
   const navigate = useNavigate();
   const toast = useToast();
-  // const urlParams = new URLSearchParams();
+  // 로그인 정보값을 받아옴
+  const urlParams = new URLSearchParams();
 
   function handleLogout() {
     axios
@@ -25,9 +26,10 @@ function Navbar(props) {
       .finally(() => fetchLogin());
   }
 
-  // if (login !== "") {
-  //   urlParams.set("id", login.id);
-  // }
+  if (login !== "") {
+    // 로그인 한 정보값중 아이디를 가져옴
+    urlParams.set("id", login.id);
+  }
 
   return (
     <Center>
@@ -43,6 +45,12 @@ function Navbar(props) {
         {/* 팀장 */}
         <Button onClick={() => navigate("/review")}>리뷰</Button>
         {/* 로그인 했을때만 보이도록 */}
+        {isAuthenticated() && (
+          <Button onClick={() => navigate("/member?" + urlParams.toString())}>
+            내 정보
+          </Button>
+        )}
+        {/* 관리자 로그인 했을때만 보이도록 */}
         {isAdmin() && (
           <Button onClick={() => navigate("/member/list")}>회원 정보</Button>
         )}
