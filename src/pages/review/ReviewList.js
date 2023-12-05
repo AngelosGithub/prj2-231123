@@ -52,7 +52,7 @@ export function ReviewList() {
               >
                 <Td>{review.no}</Td>
                 <Td>{review.title}</Td>
-                <Td>{review.writer}</Td>
+                <Td>{review.nickName}</Td>
                 <Td>{review.inserted}</Td>
               </Tr>
             ))}

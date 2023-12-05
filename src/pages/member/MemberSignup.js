@@ -26,6 +26,8 @@ export function MemberSignup() {
   const [idAvailable, setIdAvailable] = useState(false);
 
   let submitAvailable = true;
+  const dateNow = new Date();
+  const today = dateNow.toISOString().slice(0, 10);
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -117,6 +119,8 @@ export function MemberSignup() {
           type="date"
           value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}
+          min={"1900-01-01"}
+          max={today}
         />
       </FormControl>
       <Button onClick={handleSubmit} isDisabled={!submitAvailable}>

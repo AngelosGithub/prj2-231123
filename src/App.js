@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useEffect, useState } from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -28,6 +28,8 @@ import CategoryList from "./page/category/CategoryList";
 import { CategoryForm } from "./page/category/CategoryForm";
 import RestaurantTypeEdit from "./page/category/RestaurantTypeEdit";
 import RestaurantPurposeEdit from "./page/category/RestaurantPurposeEdit";
+import axios from "axios";
+import LoginProvider from "./component/LoginProvider";
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
@@ -41,7 +43,6 @@ const routes = createBrowserRouter(
       <Route path="review/:no" element={<ReviewView />} />
       <Route path="edit/:no" element={<ReviewEdit />} />
       <Route path="write" element={<ReviewWrite />} />
-
       // jsb
       <Route path="/categoryList" element={<CategoryList />} />
       <Route path="/category/insert" element={<CategoryForm />} />
@@ -50,7 +51,6 @@ const routes = createBrowserRouter(
         path="/category/purposeEdit/:no"
         element={<RestaurantPurposeEdit />}
       />
-
       <Route path="restaurantList" element={<RestaurantList />} />
       <Route path="restaurant/view/:no" element={<RestaurantView />} />
       <Route path="restaurantForm" element={<RestaurantForm />} />
@@ -59,9 +59,12 @@ const routes = createBrowserRouter(
   ),
 );
 
-
 function App() {
-  return <RouterProvider router={routes} />;
+  return (
+    <LoginProvider>
+      <RouterProvider router={routes} />
+    </LoginProvider>
+  );
 }
 
 export default App;
