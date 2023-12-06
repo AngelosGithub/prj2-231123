@@ -64,7 +64,7 @@ export function ReviewList() {
                   )}
                 </Td>
                 <Td>{review.nickName}</Td>
-                <Td>{review.inserted}</Td>
+                <Td>{review.ago}</Td>
               </Tr>
             ))}
           </Tbody>
