@@ -16,6 +16,30 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ChatIcon } from "@chakra-ui/icons";
 
+function Pagination({ pageInfo }) {
+  // page 컴포넌트
+  const navigate = useNavigate();
+
+  const pageNums = [];
+
+  for (let i = pageInfo.startPageNum; i < pageInfo.endPageNum; i++) {
+    pageNums.push(i);
+  }
+
+  return (
+    <Box>
+      {pageNums.map((pageNumber) => (
+        <Button
+          key={pageNumber}
+          onClick={() => navigate("/review?p=" + pageNumber)}
+        >
+          {pageNumber}
+        </Button>
+      ))}
+    </Box>
+  );
+}
+
 export function ReviewList() {
   const [reviewList, setReviewList] = useState(null);
   const [pageInfo, setPageInfo] = useState(null);
@@ -80,18 +104,7 @@ export function ReviewList() {
         </Table>
       </Box>
 
-      <Box>
-        <Button onClick={() => navigate("/review?p=1")}>1</Button>
-        <Button onClick={() => navigate("/review?p=2")}>2</Button>
-        <Button onClick={() => navigate("/review?p=3")}>3</Button>
-        <Button onClick={() => navigate("/review?p=4")}>4</Button>
-        <Button onClick={() => navigate("/review?p=5")}>5</Button>
-        <Button onClick={() => navigate("/review?p=6")}>6</Button>
-        <Button onClick={() => navigate("/review?p=7")}>7</Button>
-        <Button onClick={() => navigate("/review?p=8")}>8</Button>
-        <Button onClick={() => navigate("/review?p=9")}>9</Button>
-        <Button onClick={() => navigate("/review?p=10")}>10</Button>
-      </Box>
+      <Pagination pageInfo={pageInfo} />
     </Box>
   );
 }
