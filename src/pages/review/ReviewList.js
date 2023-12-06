@@ -9,10 +9,12 @@ import {
   Th,
   Thead,
   Tr,
+  Badge,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ChatIcon } from "@chakra-ui/icons";
 
 export function ReviewList() {
   const [reviewList, setReviewList] = useState(null);
@@ -51,7 +53,16 @@ export function ReviewList() {
                 onClick={() => navigate("/review/" + review.no)}
               >
                 <Td>{review.no}</Td>
-                <Td>{review.title}</Td>
+                <Td>
+                  {review.title}
+                  {review.countComment > 0 && (
+                    <Badge>
+                      {" "}
+                      <ChatIcon />
+                      {review.countComment}
+                    </Badge>
+                  )}
+                </Td>
                 <Td>{review.nickName}</Td>
                 <Td>{review.inserted}</Td>
               </Tr>
