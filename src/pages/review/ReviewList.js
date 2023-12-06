@@ -11,7 +11,7 @@ import {
   Tr,
   Badge,
 } from "@chakra-ui/react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ChatIcon } from "@chakra-ui/icons";
@@ -23,6 +23,7 @@ export function ReviewList() {
   // 페이지 나누고 페이지 번호 받아오는 코드
   const [params] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     axios
@@ -32,7 +33,8 @@ export function ReviewList() {
         setReviewList(response.data.reviewList);
         setPageInfo(response.data.pageInfo);
       });
-  }, [params]);
+  }, [location]);
+  // dependency를 params에서 location으로 바꿈(react에서 권장)
 
   if (reviewList === null) {
     return <Spinner />;
