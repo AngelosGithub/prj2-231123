@@ -11,7 +11,7 @@ import {
   Tr,
   Badge,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ChatIcon } from "@chakra-ui/icons";
@@ -19,11 +19,14 @@ import { ChatIcon } from "@chakra-ui/icons";
 export function ReviewList() {
   const [reviewList, setReviewList] = useState(null);
 
+  // 페이지 나누고 페이지 번호 받아오는 코드
+  const [params] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("/api/review/list")
+      .get("/api/review/list?" + params)
+      // 얻어낸 페이지 번호 값 사용
       .then((response) => setReviewList(response.data));
   }, []);
 
