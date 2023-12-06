@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -18,7 +18,6 @@ import { MemberEdit } from "./pages/member/MemberEdit";
 
 // TODO : HomeLayout의 내용을 MainLayout으로 옮기기
 //  둘이 합의 볼 것...
-
 import RestaurantForm from "./page/restaurant/RestaurantForm";
 import RestaurantList from "./page/restaurant/RestaurantList";
 
@@ -28,12 +27,14 @@ import CategoryList from "./page/category/CategoryList";
 import { CategoryForm } from "./page/category/CategoryForm";
 import RestaurantTypeEdit from "./page/category/RestaurantTypeEdit";
 import RestaurantPurposeEdit from "./page/category/RestaurantPurposeEdit";
-import axios from "axios";
 import LoginProvider from "./component/LoginProvider";
+import { Home } from "./page/Home";
+
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
       // 팀장
+      <Route index element={<Home />} />
       <Route path="signup" element={<MemberSignup />} />
       <Route path="login" element={<MemberLogin />} />
       <Route path="member" element={<MemberInfo />} />
