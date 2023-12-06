@@ -29,7 +29,10 @@ function Pagination({ pageInfo }) {
   return (
     <Box>
       {pageInfo.prevPage && (
-        <Button onClick={() => navigate("/review?p=" + pageInfo.prevPage)}>
+        <Button
+          variant={"ghost"}
+          onClick={() => navigate("/review?p=" + pageInfo.prevPage)}
+        >
           -
         </Button>
       )}
@@ -37,6 +40,7 @@ function Pagination({ pageInfo }) {
       {pageNums.map((pageNumber) => (
         <Button
           key={pageNumber}
+          variant={pageNumber === pageInfo.currentPage ? "solid" : "ghost"}
           onClick={() => navigate("/review?p=" + pageNumber)}
         >
           {pageNumber}
@@ -44,7 +48,10 @@ function Pagination({ pageInfo }) {
       ))}
 
       {pageInfo.nextPage && (
-        <Button onClick={() => navigate("/review?p=" + pageInfo.nextPage)}>
+        <Button
+          variant={"ghost"}
+          onClick={() => navigate("/review?p=" + pageInfo.nextPage)}
+        >
           +
         </Button>
       )}
