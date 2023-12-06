@@ -28,7 +28,7 @@ export function ReviewList() {
       .get("/api/review/list?" + params)
       // 얻어낸 페이지 번호 값 사용
       .then((response) => setReviewList(response.data));
-  }, []);
+  }, [params]);
 
   if (reviewList === null) {
     return <Spinner />;
@@ -72,6 +72,19 @@ export function ReviewList() {
             ))}
           </Tbody>
         </Table>
+      </Box>
+
+      <Box>
+        <Button onClick={() => navigate("/review?p=1")}>1</Button>
+        <Button onClick={() => navigate("/review?p=2")}>2</Button>
+        <Button onClick={() => navigate("/review?p=3")}>3</Button>
+        <Button onClick={() => navigate("/review?p=4")}>4</Button>
+        <Button onClick={() => navigate("/review?p=5")}>5</Button>
+        <Button onClick={() => navigate("/review?p=6")}>6</Button>
+        <Button onClick={() => navigate("/review?p=7")}>7</Button>
+        <Button onClick={() => navigate("/review?p=8")}>8</Button>
+        <Button onClick={() => navigate("/review?p=9")}>9</Button>
+        <Button onClick={() => navigate("/review?p=10")}>10</Button>
       </Box>
     </Box>
   );
