@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button, Center, Flex, Spacer, useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "./LoginProvider";
 
@@ -12,18 +12,21 @@ function Navbar(props) {
   const toast = useToast();
   // 로그인 정보값을 받아옴
   const urlParams = new URLSearchParams();
+  // 세션을 계속 받아와서 서버에서 세션이 사라지면 실시간으로 업데이트 됨
+  const location = useLocation();
+
+  useEffect(() => {
+    fetchLogin();
+  }, [location]);
 
   function handleLogout() {
-    axios
-      .post("/api/member/logout")
-      .then(() => {
-        toast({
-          description: "로그아웃 완료",
-          status: "info",
-        });
-        navigate("/");
-      })
-      .finally(() => fetchLogin());
+    axios.post("/api/member/logout").then(() => {
+      toast({
+        description: "로그아웃 완료",
+        status: "info",
+      });
+      navigate("/");
+    });
   }
 
   if (login !== "") {
