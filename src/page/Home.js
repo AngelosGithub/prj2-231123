@@ -16,10 +16,12 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import StarRatings from "react-star-ratings/build/star-ratings";
 
 export function Home() {
   const [restaurantTypeList, setRestaurantTypeList] = useState(null);
   const [typeNameList, setTypeNameList] = useState(null);
+  const [typeNo, setTypeNo] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
     axios.get("/api/restaurant/typeList").then((response) => {
@@ -28,8 +30,6 @@ export function Home() {
     });
   }, []);
 
-  console.log(restaurantTypeList);
-  console.log(typeNameList);
   if (restaurantTypeList == null) {
     return <Spinner />;
   }
@@ -45,24 +45,53 @@ export function Home() {
       {typeNameList.length === 0 ? (
         <Text>사이트 준비중</Text>
       ) : (
-        typeNameList.map((name) => (
+        typeNameList.map((nameList) => (
           <Box marginTop={20}>
             <Center>
-              <Card bg={"skyblue"} w={"300px"} h={"300px"}>
-                <CardHeader bg={"pink"}>
+              <Card w={"800px"} h={"300px"} borderRadius="lg">
+                <CardHeader borderBottom={"1px solid #D7DBDD"}>
                   <Flex justifyContent={"space-between"}>
-                    <Text>{name}</Text>
-                    <Button>자세히보기</Button>
+                    <Text>
+                      {nameList.name}({nameList.count})
+                    </Text>
+                    <Button colorScheme="blue">자세히보기</Button>
                   </Flex>
                 </CardHeader>
-
-                {restaurantTypeList.map((restaurant) => (
-                  <Flex>
-                    <Box border={"1px solid black"}>
-                      <Text>{restaurant.typeName}</Text>
-                    </Box>
+                <CardBody>
+                  <Flex gap={8} justifyContent={"flex-start"}>
+                    {restaurantTypeList
+                      .filter((item) => item.typeName === nameList.name)
+                      .map(
+                        (restaurant) =>
+                          restaurant.files.length > 0 &&
+                          restaurant.files.map((file) => (
+                            <Box
+                              w={"250px"}
+                              h={"180px"}
+                              onClick={() =>
+                                navigate("/restaurant/view/" + restaurant.no)
+                              }
+                            >
+                              <Image
+                                w={"100%"}
+                                h={"100px"}
+                                key={file.no}
+                                src={file.url}
+                                alt="stay slide"
+                              />
+                              <Text>{restaurant.place}</Text>
+                              <StarRatings
+                                rating={3}
+                                starDimension="20px"
+                                starSpacing="3px"
+                                starRatedColor="blue"
+                                numberOfStars={5}
+                              />
+                            </Box>
+                          )),
+                      )}
                   </Flex>
-                ))}
+                </CardBody>
               </Card>
             </Center>
           </Box>
