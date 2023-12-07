@@ -15,17 +15,20 @@ export function ReviewWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [recommend, setRecommend] = useState("");
+  const [file, setFile] = useState(null);
   const [restaurantId, setRestaurantId] = useState();
 
   const navigate = useNavigate();
 
   function handleSubmit() {
     axios
-      .post("/api/review/add", {
+      // 파일을 보내기위해 데이터를 multipart/form-data로 보내는 요청방식(postForm)
+      .postForm("/api/review/add", {
         title,
         recommend,
         content,
         restaurantId,
+        file,
       })
       .then(() => navigate("/review"))
       .catch(() => console.log("bad"))
@@ -47,6 +50,15 @@ export function ReviewWrite() {
           />
         </FormControl>
       </Flex>
+      {/* 리뷰 파일첨부 */}
+      <FormControl>
+        <FormLabel>사진 첨부</FormLabel>
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+      </FormControl>
       <FormControl>
         <FormLabel>내용</FormLabel>
         <Textarea
