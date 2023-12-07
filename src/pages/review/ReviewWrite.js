@@ -16,7 +16,7 @@ export function ReviewWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [recommend, setRecommend] = useState("");
-  const [files, setFiles] = useState(null);
+  const [uploadFiles, setUploadFiles] = useState(null);
   const [restaurantId, setRestaurantId] = useState();
 
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export function ReviewWrite() {
         recommend,
         content,
         restaurantId,
-        files,
+        uploadFiles,
       })
       .then(() => navigate("/review"))
       .catch(() => console.log("bad"))
@@ -58,7 +58,7 @@ export function ReviewWrite() {
           type="file"
           accept="image/*"
           multiple
-          onChange={(e) => setFiles(e.target.files)}
+          onChange={(e) => setUploadFiles(e.target.files)}
         />
         {/* 여러 파일 전송 */}
         <FormHelperText>
