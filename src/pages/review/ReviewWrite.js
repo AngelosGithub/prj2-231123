@@ -57,9 +57,9 @@ export function ReviewWrite() {
           type="file"
           accept="image/*"
           multiple
-          {/* 여러 파일 전송 */}
           onChange={(e) => setFiles(e.target.files)}
         />
+        {/* 여러 파일 전송 */}
       </FormControl>
       <FormControl>
         <FormLabel>내용</FormLabel>
