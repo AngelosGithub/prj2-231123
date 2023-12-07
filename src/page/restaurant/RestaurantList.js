@@ -4,8 +4,10 @@ import {
   Card,
   CardBody,
   CardFooter,
+  CardHeader,
   Center,
   Flex,
+  Image,
   SimpleGrid,
   Spinner,
   Text,
@@ -13,90 +15,46 @@ import {
 
 import axios from "axios";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { DetailedSelect } from "./DetailedSelect";
 
-import { Pagination } from "./Pagination";
-import RestaurantImage from "./RestaurantImage";
-import { SearchComponent } from "./SearchComponent";
-import { clear } from "@testing-library/user-event/dist/clear";
 import StarRatings from "react-star-ratings/build/star-ratings";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { DetailedSelect } from "../../component/DetailedSelect";
+import { SearchComponent } from "../../component/SearchComponent";
+import { Pagination } from "./Pagination";
+import RestaurantImage from "../../component/RestaurantImage";
 
 function RestaurantList(props) {
   const [restaurant, setRestaurant] = useState(null);
   const [pageInfo, setPageInfo] = useState(null);
-  const [checkBoxIds, setCheckBoxIds] = useState([]);
   const [restaurantType, setRestaurntType] = useState(null);
   const [restaurantPurpose, setRestaurantPurpose] = useState(null);
-  const [keyword, setKeyword] = useState("");
 
-  const [typeNo, setTypeNo] = useState(0);
   const navigate = useNavigate();
-  const location = useLocation();
-  const [nowPage, setNowPage] = useState(1);
-
   const [params] = useSearchParams();
+  const location = useLocation();
+
   useEffect(() => {
-    // const nextParams = new URLSearchParams(params.toString());
-    if (checkBoxIds.length >= 0) {
-      params.set("purpose", checkBoxIds);
-      params.delete("typeno");
-    }
-
-    if (typeNo > 0) {
-      params.set("typeno", typeNo);
-      params.delete("purpose");
-    }
-
-    params.set("p", nowPage);
-    // setParams(nextParams);
     axios.get(`/api/restaurant/list?${params}`).then((response) => {
       setRestaurant(response.data.restaurantList);
       setPageInfo(response.data.pageInfo);
       setRestaurantPurpose(response.data.restaurantPurpose);
       setRestaurntType(response.data.restaurantTypes);
     });
-  }, [checkBoxIds, typeNo, nowPage]);
-
-  useEffect(() => {
-    // const nextParams = new URLSearchParams(params.toString());
-
-    setCheckBoxIds([]);
-    setTypeNo(0);
-    setKeyword("");
-    params.delete("typeno");
-    params.delete("purpose");
-
-    // setParams(nextParams);
   }, [location]);
-
-  function handleCheckBox(values) {
-    setTypeNo(0);
-    setNowPage(1);
-    setKeyword("");
-    setCheckBoxIds(values);
-  }
-
-  function handleClickType(v) {
-    setCheckBoxIds([]);
-    setKeyword("");
-    setNowPage(1);
-    setTypeNo(v);
-  }
-
   if (restaurant === null) {
     return <Spinner />;
   }
+
   return (
     <Center>
       <Box w={"3xl"}>
-        <SearchComponent keyword={keyword} setKeyword={setKeyword} />
-        {/*상세 조건 컴포넌트  */}
+        <SearchComponent />
+        {/*/!*상세 조건 컴포넌트  *!/*/}
         <DetailedSelect
-          checkBoxIds={checkBoxIds}
-          handleClickType={handleClickType}
           restaurantType={restaurantType}
           restaurantPurpose={restaurantPurpose}
-          handleCheckBox={handleCheckBox}
         />
         {/*리뷰 썸네일  */}
         <SimpleGrid
@@ -117,9 +75,7 @@ function RestaurantList(props) {
                 <RestaurantImage restaurant={restaurant} />
 
                 <CardBody mt={8} fontSize={"2xl"} textAlign={"center"}>
-                  <Flex>
-                    <Text> {restaurant.place}</Text>
-                  </Flex>
+                  <Text> {restaurant.place}</Text>
                 </CardBody>
                 <CardFooter fontSize={"md"}>
                   <Box>
@@ -144,9 +100,7 @@ function RestaurantList(props) {
             ))
           )}
         </SimpleGrid>
-        {pageInfo !== null && (
-          <Pagination setNowPage={setNowPage} pageInfo={pageInfo} />
-        )}
+        {pageInfo !== null && <Pagination pageInfo={pageInfo} />}
       </Box>
     </Center>
   );

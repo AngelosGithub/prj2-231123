@@ -9,12 +9,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function PageButton({ pageNumber, variant, children, setNowPage }) {
+function PageButton({ pageNumber, variant, children }) {
   const [params] = useSearchParams();
   const navigate = useNavigate();
 
   function handleClick() {
-    setNowPage(pageNumber);
+    params.set("p", pageNumber);
+    navigate("/restaurantList?" + params);
   }
   return (
     <Button variant={variant} onClick={handleClick}>
@@ -23,7 +24,7 @@ function PageButton({ pageNumber, variant, children, setNowPage }) {
   );
 }
 
-export function Pagination({ pageInfo, setNowPage }) {
+export function Pagination({ pageInfo }) {
   const pageNumbers = [];
 
   if (pageInfo != null) {
@@ -36,22 +37,18 @@ export function Pagination({ pageInfo, setNowPage }) {
     <Center marginTop={5}>
       <Box>
         {pageInfo.prevPageNumber > 0 && (
-          <PageButton setNowPage={setNowPage} pageNumber={1}>
+          <PageButton pageNumber={1}>
             <FontAwesomeIcon icon={faAnglesLeft} />
           </PageButton>
         )}
 
         {pageInfo.prevPageNumber > 0 && (
-          <PageButton
-            setNowPage={setNowPage}
-            pageNumber={pageInfo.prevPageNumber}
-          >
+          <PageButton pageNumber={pageInfo.prevPageNumber}>
             <FontAwesomeIcon icon={faChevronLeft} />
           </PageButton>
         )}
         {pageNumbers.map((pageNumber) => (
           <PageButton
-            setNowPage={setNowPage}
             key={pageNumber}
             variant={
               pageNumber === pageInfo.currentPageNumber ? "solid" : "ghost"
@@ -63,18 +60,12 @@ export function Pagination({ pageInfo, setNowPage }) {
         ))}
 
         {pageInfo.nextPageNumber && (
-          <PageButton
-            setNowPage={setNowPage}
-            pageNumber={pageInfo.nextPageNumber}
-          >
+          <PageButton pageNumber={pageInfo.nextPageNumber}>
             <FontAwesomeIcon icon={faChevronRight} />
           </PageButton>
         )}
         {pageInfo.nextPageNumber && (
-          <PageButton
-            setNowPage={setNowPage}
-            pageNumber={pageInfo.lastPageNumber}
-          >
+          <PageButton pageNumber={pageInfo.lastPageNumber}>
             <FontAwesomeIcon icon={faAnglesRight} />
           </PageButton>
         )}

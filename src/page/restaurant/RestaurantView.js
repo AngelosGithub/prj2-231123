@@ -30,7 +30,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { ReviewContainer } from "./ReviewContainer";
 import KakaoMap from "../../component/KakaoMap";
-import RestaurantImage from "./RestaurantImage";
+import RestaurantImage from "../../component/RestaurantImage";
 
 import StarRatings from "react-star-ratings/build/star-ratings";
 import { LoginContext } from "../../component/LoginProvider";

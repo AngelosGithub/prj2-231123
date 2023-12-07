@@ -15,14 +15,15 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import StarRatings from "react-star-ratings/build/star-ratings";
 
 export function Home() {
   const [restaurantTypeList, setRestaurantTypeList] = useState(null);
   const [typeNameList, setTypeNameList] = useState(null);
-  const [typeNo, setTypeNo] = useState(0);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     axios.get("/api/restaurant/typeList").then((response) => {
       setRestaurantTypeList(response.data.restaurantList);
@@ -46,7 +47,7 @@ export function Home() {
         <Text>사이트 준비중</Text>
       ) : (
         typeNameList.map((nameList) => (
-          <Box marginTop={20}>
+          <Box marginTop={20} key={nameList.no}>
             <Center>
               <Card w={"800px"} h={"300px"} borderRadius="lg">
                 <CardHeader borderBottom={"1px solid #D7DBDD"}>
@@ -54,7 +55,14 @@ export function Home() {
                     <Text>
                       {nameList.name}({nameList.count})
                     </Text>
-                    <Button colorScheme="blue">자세히보기</Button>
+                    <Button
+                      onClick={() =>
+                        navigate("/restaurantList?typeNo=" + nameList.no)
+                      }
+                      colorScheme="blue"
+                    >
+                      자세히보기
+                    </Button>
                   </Flex>
                 </CardHeader>
                 <CardBody>
@@ -66,6 +74,7 @@ export function Home() {
                           restaurant.files.length > 0 &&
                           restaurant.files.map((file) => (
                             <Box
+                              key={restaurant.no}
                               w={"250px"}
                               h={"180px"}
                               onClick={() =>
