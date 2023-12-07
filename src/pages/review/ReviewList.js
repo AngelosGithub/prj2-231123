@@ -72,7 +72,7 @@ function SearchComp() {
     params.set("k", keyword);
     // 검색어를 저장할 코드
 
-    navigate("/?" + params);
+    navigate("/review/?" + params);
   }
 
   return (
