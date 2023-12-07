@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   Textarea,
@@ -60,6 +61,9 @@ export function ReviewWrite() {
           onChange={(e) => setFiles(e.target.files)}
         />
         {/* 여러 파일 전송 */}
+        <FormHelperText>
+          한 개 파일은 1MB, 총 용량은 10MB를 넘길수 없습니다
+        </FormHelperText>
       </FormControl>
       <FormControl>
         <FormLabel>내용</FormLabel>
