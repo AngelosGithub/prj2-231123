@@ -10,6 +10,8 @@ import {
   Thead,
   Tr,
   Badge,
+  Input,
+  Flex,
 } from "@chakra-ui/react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -59,6 +61,28 @@ function Pagination({ pageInfo }) {
   );
 }
 
+function SearchComp() {
+  // 검색기능
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
+
+  function handleSearch() {
+    // /?k=keyword
+    const params = new URLSearchParams();
+    params.set("k", keyword);
+    // 검색어를 저장할 코드
+
+    navigate("/?" + params);
+  }
+
+  return (
+    <Flex>
+      <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+      <Button onClick={handleSearch}>검색</Button>
+    </Flex>
+  );
+}
+
 export function ReviewList() {
   const [reviewList, setReviewList] = useState(null);
   const [pageInfo, setPageInfo] = useState(null);
@@ -86,6 +110,7 @@ export function ReviewList() {
   return (
     <Box>
       <Heading>리뷰 보기</Heading>
+      <SearchComp />
       <Button onClick={() => navigate("/write")}>리뷰 쓰기</Button>
       <Box>
         <Table>
