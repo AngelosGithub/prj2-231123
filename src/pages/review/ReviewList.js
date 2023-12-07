@@ -17,6 +17,7 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ChatIcon } from "@chakra-ui/icons";
+import { FaAngleLeft, FaAngleRight, FaFileImage } from "react-icons/fa";
 
 function Pagination({ pageInfo }) {
   // page 컴포넌트
@@ -35,7 +36,7 @@ function Pagination({ pageInfo }) {
           variant={"ghost"}
           onClick={() => navigate("/review?p=" + pageInfo.prevPage)}
         >
-          -
+          <FaAngleLeft />
         </Button>
       )}
 
@@ -54,7 +55,7 @@ function Pagination({ pageInfo }) {
           variant={"ghost"}
           onClick={() => navigate("/review?p=" + pageInfo.nextPage)}
         >
-          +
+          <FaAngleRight />
         </Button>
       )}
     </Box>
