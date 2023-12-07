@@ -1,9 +1,12 @@
 import { Checkbox, CheckboxGroup, Flex, SimpleGrid } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export function PurposeSelect({ restaurantPurpose }) {
-  const [checkBoxIds, setCheckBoxIds] = useState([]);
+export function PurposeSelect({
+  restaurantPurpose,
+  checkBoxIds,
+  setCheckBoxIds,
+}) {
   const navigate = useNavigate();
 
   function handleCheckBox(values) {

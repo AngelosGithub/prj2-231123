@@ -10,7 +10,12 @@ import {
 import { TypeSelect } from "./TypeSelect";
 import { PurposeSelect } from "./PurposeSelect";
 
-export function DetailedSelect({ restaurantType, restaurantPurpose }) {
+export function DetailedSelect({
+  restaurantType,
+  restaurantPurpose,
+  checkBoxIds,
+  setCheckBoxIds,
+}) {
   return (
     <Center>
       <Box>
@@ -22,10 +27,17 @@ export function DetailedSelect({ restaurantType, restaurantPurpose }) {
 
           <TabPanels>
             <TabPanel>
-              <TypeSelect restaurantType={restaurantType} />
+              <TypeSelect
+                restaurantType={restaurantType}
+                setCheckBoxIds={setCheckBoxIds}
+              />
             </TabPanel>
             <TabPanel>
-              <PurposeSelect restaurantPurpose={restaurantPurpose} />
+              <PurposeSelect
+                setCheckBoxIds={setCheckBoxIds}
+                checkBoxIds={checkBoxIds}
+                restaurantPurpose={restaurantPurpose}
+              />
             </TabPanel>
           </TabPanels>
         </Tabs>

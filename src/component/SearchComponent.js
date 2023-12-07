@@ -4,12 +4,14 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
-export function SearchComponent() {
+export function SearchComponent({ keyword, setKeyword, setCheckBoxIds }) {
   const [category, setCategory] = useState("all");
-  const [keyword, setKeyword] = useState("");
+
   const navigate = useNavigate();
+
   function handleSearch() {
     const params = new URLSearchParams();
+    setCheckBoxIds([]);
     params.set("k", keyword);
     params.set("c", category);
     navigate("/restaurantList?" + params);

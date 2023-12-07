@@ -2,13 +2,12 @@ import { Flex, Radio, RadioGroup, SimpleGrid } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export function TypeSelect({ restaurantType }) {
-  const [typeNo, setTypeNo] = useState(0);
-
+export function TypeSelect({ restaurantType, setCheckBoxIds }) {
   const navigate = useNavigate();
 
   function handleClickType(v) {
     const params = new URLSearchParams();
+    setCheckBoxIds([]);
     params.set("typeNo", v);
     navigate("/restaurantList?" + params);
   }

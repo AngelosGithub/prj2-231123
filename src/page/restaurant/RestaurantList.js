@@ -31,9 +31,12 @@ function RestaurantList(props) {
   const [restaurantType, setRestaurntType] = useState(null);
   const [restaurantPurpose, setRestaurantPurpose] = useState(null);
 
+  const [checkBoxIds, setCheckBoxIds] = useState([]);
+
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const location = useLocation();
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     axios.get(`/api/restaurant/list?${params}`).then((response) => {
@@ -41,8 +44,10 @@ function RestaurantList(props) {
       setPageInfo(response.data.pageInfo);
       setRestaurantPurpose(response.data.restaurantPurpose);
       setRestaurntType(response.data.restaurantTypes);
+      setKeyword("");
     });
   }, [location]);
+
   if (restaurant === null) {
     return <Spinner />;
   }
@@ -50,11 +55,17 @@ function RestaurantList(props) {
   return (
     <Center>
       <Box w={"3xl"}>
-        <SearchComponent />
+        <SearchComponent
+          keyword={keyword}
+          setKeyword={setKeyword}
+          setCheckBoxIds={setCheckBoxIds}
+        />
         {/*/!*상세 조건 컴포넌트  *!/*/}
         <DetailedSelect
           restaurantType={restaurantType}
           restaurantPurpose={restaurantPurpose}
+          setCheckBoxIds={setCheckBoxIds}
+          checkBoxIds={checkBoxIds}
         />
         {/*리뷰 썸네일  */}
         <SimpleGrid

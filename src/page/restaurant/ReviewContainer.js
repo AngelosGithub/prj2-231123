@@ -33,7 +33,6 @@ export function ReviewContainer({ reviews }) {
           {reviews.length === 0 ? (
             <Box>
               <h3>작성된 리뷰가 없습니다.</h3>
-              <Button colorScheme="green">리뷰작성</Button>
             </Box>
           ) : (
             reviews.map((reivew) => (
