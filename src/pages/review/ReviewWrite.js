@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   Textarea,
@@ -15,17 +16,20 @@ export function ReviewWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [recommend, setRecommend] = useState("");
+  const [uploadFiles, setUploadFiles] = useState(null);
   const [restaurantId, setRestaurantId] = useState();
 
   const navigate = useNavigate();
 
   function handleSubmit() {
     axios
-      .post("/api/review/add", {
+      // 파일을 보내기위해 데이터를 multipart/form-data로 보내는 요청방식(postForm)
+      .postForm("/api/review/add", {
         title,
         recommend,
         content,
         restaurantId,
+        uploadFiles,
       })
       .then(() => navigate("/review"))
       .catch(() => console.log("bad"))
@@ -47,6 +51,20 @@ export function ReviewWrite() {
           />
         </FormControl>
       </Flex>
+      {/* 리뷰 파일첨부 */}
+      <FormControl>
+        <FormLabel>사진 첨부</FormLabel>
+        <Input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={(e) => setUploadFiles(e.target.files)}
+        />
+        {/* 여러 파일 전송 */}
+        <FormHelperText>
+          한 개 파일은 1MB, 총 용량은 10MB를 넘길수 없습니다
+        </FormHelperText>
+      </FormControl>
       <FormControl>
         <FormLabel>내용</FormLabel>
         <Textarea

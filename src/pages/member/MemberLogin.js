@@ -36,9 +36,6 @@ export function MemberLogin() {
           description: "아이디와 암호를 확인하세요",
           status: "warning",
         });
-      })
-      .finally(() => {
-        fetchLogin();
       });
   }
 

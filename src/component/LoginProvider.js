@@ -30,8 +30,6 @@ function LoginProvider({ children }) {
     return false;
   }
 
-  console.log(login);
-
   // function isManager() {
   //   login.auth.some((elem) => elem.manager === "manager");
   // }
