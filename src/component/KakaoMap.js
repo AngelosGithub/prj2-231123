@@ -19,7 +19,7 @@ function KakaoMap({ restaurant }) {
   return (
     <Map
       center={{ lat: restaurant.x, lng: restaurant.y }}
-      style={{ width: "100%", height: "360px" }}
+      style={{ width: "100%", height: "350px" }}
     >
       <MapMarker
         position={{ lat: restaurant.x, lng: restaurant.y }}
@@ -32,7 +32,7 @@ function KakaoMap({ restaurant }) {
           <Card w="300px">
             <CardHeader>
               <Flex justifyContent={"space-between"}>
-                <Heading>{restaurant.place}</Heading>
+                <Heading fontSize={"28px"}>{restaurant.place}</Heading>
                 <Button onClick={() => setIsOpen(false)}>
                   <FontAwesomeIcon icon={faXmark} />
                 </Button>

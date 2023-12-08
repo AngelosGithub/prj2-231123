@@ -144,6 +144,16 @@ function RestaurantForm(props) {
             description: "작성 내용을 확인해주세요",
             status: "warning",
           });
+        } else if (err.response.status === 401) {
+          toast({
+            description: "로그인후 이용 가능합니다.",
+            status: "warning",
+          });
+        } else if (err.response.status === 403) {
+          toast({
+            description: "작성 권한이 없습니다.",
+            status: "warning",
+          });
         } else {
           toast({
             description: "서버 문제로 저장 실패",
@@ -152,7 +162,7 @@ function RestaurantForm(props) {
         }
       });
   }
-  console.log(uploadFiles);
+
   const handleComplete = (data) => {
     let fullAddress = data.address;
 

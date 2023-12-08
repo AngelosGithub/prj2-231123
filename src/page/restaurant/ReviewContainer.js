@@ -30,10 +30,9 @@ export function ReviewContainer({ reviews }) {
           </Tr>
         </Thead>
         <Tbody>
-          {reviews === null ? (
+          {reviews.length === 0 ? (
             <Box>
               <h3>작성된 리뷰가 없습니다.</h3>
-              <Button colorScheme="green">리뷰작성</Button>
             </Box>
           ) : (
             reviews.map((reivew) => (
@@ -59,15 +58,6 @@ export function ReviewContainer({ reviews }) {
           )}
         </Tbody>
       </Table>
-      <Flex gap={5} justifyContent={"space-between"} margin={5}>
-        <Button onClick={() => navigate("/review")} colorScheme="blue">
-          더보기
-        </Button>
-
-        <Button colorScheme="blue" onClick={() => navigate("/write")}>
-          리뷰작성
-        </Button>
-      </Flex>
     </Box>
   );
 }

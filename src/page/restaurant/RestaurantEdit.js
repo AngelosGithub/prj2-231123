@@ -31,7 +31,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { postcodeScriptUrl } from "react-daum-postcode/lib/loadPostcode";
 import { useImmer } from "use-immer";
@@ -39,6 +39,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { LoginContext } from "../../component/LoginProvider";
 const { kakao } = window;
 export function RestaurantEdit() {
   const [restaurantTypesList, setRestaurantTypesList] = useState(null);
@@ -106,6 +107,16 @@ export function RestaurantEdit() {
         if (err.response.status === 400) {
           toast({
             description: "작성 내용을 확인해주세요",
+            status: "warning",
+          });
+        } else if (err.response.status === 401) {
+          toast({
+            description: "로그인후 이용 가능합니다.",
+            status: "warning",
+          });
+        } else if (err.response.status === 403) {
+          toast({
+            description: "작성 권한이 없습니다.",
             status: "warning",
           });
         } else {

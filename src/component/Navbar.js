@@ -33,17 +33,13 @@ function Navbar(props) {
 
   return (
     <Center>
-      <Flex w={"3xl"} mb={10} gap={4} borderBottom={"1px solid #778899"}>
+      <Flex w={"5xl"} mb={10} gap={4} borderBottom={"1px solid #778899"}>
         {/* jsb */}
         <Button onClick={() => navigate("/")}>Home</Button>
         <Spacer />
 
-        <Button onClick={() => navigate("/categoryList")}>카테고리 관리</Button>
-        <Button onClick={() => navigate("/restaurantList")}>맛집찾기</Button>
-        <Button onClick={() => navigate("/RestaurantForm")}>맛집등록</Button>
-
-        {/* 팀장 */}
         <Button onClick={() => navigate("/review")}>리뷰</Button>
+        <Button onClick={() => navigate("/restaurantList")}>맛집찾기</Button>
         {/* 로그인 했을때만 보이도록 */}
         {isAuthenticated() && (
           <Button onClick={() => navigate("/member?" + urlParams.toString())}>
@@ -52,7 +48,15 @@ function Navbar(props) {
         )}
         {/* 관리자 로그인 했을때만 보이도록 */}
         {isAdmin() && (
-          <Button onClick={() => navigate("/member/list")}>회원 정보</Button>
+          <>
+            <Button onClick={() => navigate("/member/list")}>회원 정보</Button>
+            <Button onClick={() => navigate("/RestaurantForm")}>
+              맛집등록
+            </Button>
+            <Button onClick={() => navigate("/categoryList")}>
+              카테고리 관리
+            </Button>
+          </>
         )}
         {/* 로그인 안되어 있을때 보이도록 */}
         {isAuthenticated() || (
