@@ -5,6 +5,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  Image,
   Input,
   Spinner,
   Textarea,
@@ -87,6 +88,13 @@ export function ReviewEdit() {
           />
         </FormControl>
       </Flex>
+      {/* 이미지 출력 */}
+      {review.files.length > 0 &&
+        review.files.map((file) => (
+          <Box>
+            <Image src={file.url} alt={file.name} />
+          </Box>
+        ))}
       <FormControl>
         <FormLabel>내용</FormLabel>
         <Textarea
