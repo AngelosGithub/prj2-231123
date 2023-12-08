@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 export function ReviewWrite() {
   const [title, setTitle] = useState("");
@@ -18,6 +18,8 @@ export function ReviewWrite() {
   const [recommend, setRecommend] = useState("");
   const [uploadFiles, setUploadFiles] = useState(null);
   const [restaurantId, setRestaurantId] = useState();
+
+  const { no } = useParams();
 
   const navigate = useNavigate();
 
@@ -28,7 +30,7 @@ export function ReviewWrite() {
         title,
         recommend,
         content,
-        restaurantId,
+        no,
         uploadFiles,
       })
       .then(() => navigate("/review"))
@@ -70,13 +72,6 @@ export function ReviewWrite() {
         <Textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-        />
-      </FormControl>
-      <FormControl>
-        <FormLabel>임시 맛집id</FormLabel>
-        <Input
-          value={restaurantId}
-          onChange={(e) => setRestaurantId(e.target.value)}
         />
       </FormControl>
       <Button onClick={handleSubmit}>확인</Button>

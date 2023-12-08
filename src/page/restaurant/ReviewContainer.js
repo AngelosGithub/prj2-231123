@@ -43,7 +43,7 @@ export function ReviewContainer({ reviews }) {
                 <Td>{reivew.no}</Td>
                 <Td>{reivew.title}</Td>
                 <Td>{reivew.writer}</Td>
-                <Td>{reivew.inserted}</Td>
+                <Td>{reivew.ago}</Td>
                 <Td>
                   <StarRatings
                     rating={reivew.starPoint}

@@ -165,7 +165,10 @@ export function RestaurantView() {
             <Heading>리뷰</Heading>
             <ReviewContainer reviews={reviews} restaurantNo={no} />
             {reviews.length === 0 ? (
-              <Button colorScheme="blue" onClick={() => navigate("/write")}>
+              <Button
+                colorScheme="blue"
+                onClick={() => navigate("/write/" + restaurant.no)}
+              >
                 리뷰작성
               </Button>
             ) : (
@@ -174,7 +177,10 @@ export function RestaurantView() {
                   더보기
                 </Button>
 
-                <Button colorScheme="blue" onClick={() => navigate("/write")}>
+                <Button
+                  colorScheme="blue"
+                  onClick={() => navigate("/write/" + restaurant.no)}
+                >
                   리뷰작성
                 </Button>
               </Flex>
