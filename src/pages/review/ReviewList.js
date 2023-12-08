@@ -112,7 +112,6 @@ export function ReviewList() {
     <Box>
       <Heading>리뷰 보기</Heading>
       <SearchComp />
-      <Button onClick={() => navigate("/write")}>리뷰 쓰기</Button>
       <Box>
         <Table>
           <Thead>

@@ -8,18 +8,41 @@ import {
   Input,
   Textarea,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { FaStar } from "react-icons/fa6";
 
 export function ReviewWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [recommend, setRecommend] = useState("");
   const [uploadFiles, setUploadFiles] = useState(null);
-  const [restaurantId, setRestaurantId] = useState();
+  const ARRAY = [0, 1, 2, 3, 4];
+  const [score, setScore] = useState([false, false, false, false, false]);
+  const [point, setPoint] = useState(0);
+
+  const handleStarClick = (index) => {
+    let star = [...score];
+    for (let i = 0; i < 5; i++) {
+      star[i] = i <= index ? true : false;
+    }
+    setScore(star);
+  };
+
+  useEffect(() => {
+    sendReview();
+  }, [score]);
+
+  const sendReview = () => {
+    let point = score.filter(Boolean).length;
+    // point 값을 할당
+    setPoint(point);
+    // 할당된 값을 서버로 보낼수 있게 함
+  };
 
   const { no } = useParams();
+  // 맛집 id를 받아서 저장
 
   const navigate = useNavigate();
 
@@ -31,6 +54,7 @@ export function ReviewWrite() {
         recommend,
         content,
         no,
+        point,
         uploadFiles,
       })
       .then(() => navigate("/review"))
@@ -52,6 +76,16 @@ export function ReviewWrite() {
             onChange={(e) => setRecommend(e.target.value)}
           />
         </FormControl>
+      </Flex>
+      <Flex>
+        {ARRAY.map((el, index) => (
+          <FaStar
+            key={index}
+            size="30"
+            onClick={() => handleStarClick(el)}
+            className={score[el] && "yellowStar"}
+          ></FaStar>
+        ))}
       </Flex>
       {/* 리뷰 파일첨부 */}
       <FormControl>
