@@ -33,7 +33,7 @@ function Navbar(props) {
 
   return (
     <Center>
-      <Flex w={"3xl"} mb={10} gap={4} borderBottom={"1px solid #778899"}>
+      <Flex w={"5xl"} mb={10} gap={4} borderBottom={"1px solid #778899"}>
         {/* jsb */}
         <Button onClick={() => navigate("/")}>Home</Button>
         <Spacer />

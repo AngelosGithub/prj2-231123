@@ -54,64 +54,73 @@ function RestaurantList(props) {
 
   return (
     <Center>
-      <Box w={"3xl"}>
-        <SearchComponent
-          keyword={keyword}
-          setKeyword={setKeyword}
-          setCheckBoxIds={setCheckBoxIds}
-        />
-        {/*/!*상세 조건 컴포넌트  *!/*/}
-        <DetailedSelect
-          restaurantType={restaurantType}
-          restaurantPurpose={restaurantPurpose}
-          setCheckBoxIds={setCheckBoxIds}
-          checkBoxIds={checkBoxIds}
-        />
-        {/*리뷰 썸네일  */}
-        <SimpleGrid
-          marginTop={5}
-          spacing={"10px"}
-          columns={{ base: 2, md: 3, lg: 3, "2xl": 3 }}
-        >
-          {restaurant.length === 0 ? (
-            <Text>글이 없습니다. </Text>
-          ) : (
-            restaurant.map((restaurant) => (
-              <Card
-                onClick={() => navigate("/restaurant/view/" + restaurant.no)}
-                cursor="pointer"
-                key={restaurant.no}
-                border={"1px solid black"}
-              >
-                <RestaurantImage restaurant={restaurant} />
-
-                <CardBody mt={8} fontSize={"2xl"} textAlign={"center"}>
-                  <Text> {restaurant.place}</Text>
-                </CardBody>
-                <CardFooter fontSize={"md"}>
-                  <Box>
-                    <Box>
-                      {restaurant.starPoint > 0 ? (
-                        <StarRatings
-                          rating={restaurant.starPoint}
-                          starDimension="25px"
-                          starSpacing="8px"
-                          starRatedColor="blue"
-                          numberOfStars={5}
+      <Box w={"5xl"} h={"1200px"}>
+        <Box>
+          <Box>
+            <SearchComponent
+              keyword={keyword}
+              setKeyword={setKeyword}
+              setCheckBoxIds={setCheckBoxIds}
+            />
+          </Box>
+          <Box>
+            <DetailedSelect
+              restaurantType={restaurantType}
+              restaurantPurpose={restaurantPurpose}
+              setCheckBoxIds={setCheckBoxIds}
+              checkBoxIds={checkBoxIds}
+            />
+          </Box>
+        </Box>
+        <Box h={"900px"}>
+          <SimpleGrid
+            marginTop={5}
+            spacing={"10px"}
+            columns={{ base: 2, md: 3, lg: 3, "2xl": 3 }}
+          >
+            {restaurant.length === 0 ? (
+              <Text>글이 없습니다. </Text>
+            ) : (
+              restaurant.map((restaurant) => (
+                <Box
+                  h={"300px"}
+                  onClick={() => navigate("/restaurant/view/" + restaurant.no)}
+                >
+                  <Box h={"180px"}>
+                    {restaurant.files.length > 0 &&
+                      restaurant.files.map((file) => (
+                        <Image
+                          borderRadius="lg"
+                          w={"100%"}
+                          h={"100%"}
+                          key={file.no}
+                          src={file.url}
+                          alt="stay slide"
                         />
-                      ) : (
-                        <Text>평가가 없습니다.</Text>
-                      )}
-                    </Box>
-
-                    {restaurant.address}
+                      ))}
                   </Box>
-                </CardFooter>
-              </Card>
-            ))
-          )}
-        </SimpleGrid>
-        {pageInfo !== null && <Pagination pageInfo={pageInfo} />}
+                  <Box mt={8} h={"120px"}>
+                    {restaurant.starPoint > 0 ? (
+                      <StarRatings
+                        rating={restaurant.starPoint}
+                        starDimension="25px"
+                        starSpacing="8px"
+                        starRatedColor="blue"
+                        numberOfStars={5}
+                      />
+                    ) : (
+                      <Text>평가가 없습니다.</Text>
+                    )}
+                    <Text mt={4} h={"60px"}>
+                      {restaurant.address}
+                    </Text>
+                  </Box>
+                </Box>
+              ))
+            )}
+          </SimpleGrid>
+          {pageInfo !== null && <Pagination pageInfo={pageInfo} />}
+        </Box>
       </Box>
     </Center>
   );

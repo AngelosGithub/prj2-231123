@@ -37,12 +37,6 @@ export function Home() {
 
   return (
     <>
-      <Box bg={"skyblue"} h={"200px"}>
-        <Center>
-          <Text>맛집 사이트</Text>
-        </Center>
-      </Box>
-
       {typeNameList.length === 0 ? (
         <Text>사이트 준비중</Text>
       ) : (
@@ -57,7 +51,7 @@ export function Home() {
                     </Text>
                     <Button
                       onClick={() =>
-                        navigate("/restaurantList?typeNo=" + nameList.no)
+                        navigate("restaurantList?typeNo=" + nameList.no)
                       }
                       colorScheme="blue"
                     >
