@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Center,
+  Flex,
   Heading,
   Image,
   Modal,
@@ -67,26 +68,27 @@ export function ReviewView() {
   return (
     <Center>
       <Box w={"5xl"}>
-        <Heading>리뷰 보기</Heading>
-        <Text>번호 : {review.no}</Text>
+        <Heading>{review.no}번 리뷰 보기</Heading>
         <Text>제목 : {review.title}</Text>
-        {/* 별점 출력 */}
-        <Box lineHeight="50px" ml={5}>
-          {review.starPoint > 0 && (
-            <StarRatings
-              rating={review.starPoint}
-              starDimension="30px"
-              starSpacing="3px"
-              starRatedColor="#fcc419"
-              numberOfStars={5}
-            />
-          )}
-        </Box>
+        <Flex alignItems={"center"} justifyContent={"space-between"}>
+          {/* 별점 출력 */}
+          <Box lineHeight="50px" ml={5}>
+            {review.starPoint > 0 && (
+              <StarRatings
+                rating={review.starPoint}
+                starDimension="30px"
+                starSpacing="3px"
+                starRatedColor="#fcc419"
+                numberOfStars={5}
+              />
+            )}
+          </Box>
+          <Text>추천메뉴 : {review.recommend}</Text>
+        </Flex>
         {/* 이미지 출력 */}
         <Box my={"5px"}>
           <ReviewImage review={review} />
         </Box>
-        <Text>추천메뉴 : {review.recommend}</Text>
         <Text>내용 : {review.content}</Text>
         <Text>작성자 : {review.nickName}</Text>
         <Text>작성일 : {review.inserted}</Text>
