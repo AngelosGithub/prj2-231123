@@ -21,6 +21,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "../../component/LoginProvider";
 import { CommentContainer } from "../../component/CommentContainer";
+import StarRatings from "react-star-ratings/build/star-ratings";
 
 export function ReviewView() {
   const [review, setReview] = useState(null);
@@ -68,6 +69,18 @@ export function ReviewView() {
         <Heading>리뷰 보기</Heading>
         <Text>번호 : {review.no}</Text>
         <Text>제목 : {review.title}</Text>
+        {/* 별점 출력 */}
+        <Box lineHeight="50px" ml={5}>
+          {review.starPoint > 0 && (
+            <StarRatings
+              rating={review.starPoint}
+              starDimension="30px"
+              starSpacing="3px"
+              starRatedColor="blue"
+              numberOfStars={5}
+            />
+          )}
+        </Box>
         {/* 이미지 출력 */}
         {review.files.map((file) => (
           <Box key={file.id} my={"5px"}>
