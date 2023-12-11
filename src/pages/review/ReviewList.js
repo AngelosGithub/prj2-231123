@@ -12,6 +12,7 @@ import {
   Badge,
   Input,
   Flex,
+  Center,
 } from "@chakra-ui/react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -30,35 +31,37 @@ function Pagination({ pageInfo }) {
   }
 
   return (
-    <Box>
-      {pageInfo.prevPage && (
-        <Button
-          variant={"ghost"}
-          onClick={() => navigate("/review?p=" + pageInfo.prevPage)}
-        >
-          <FaAngleLeft />
-        </Button>
-      )}
+    <Center>
+      <Box w={"5xl"}>
+        {pageInfo.prevPage && (
+          <Button
+            variant={"ghost"}
+            onClick={() => navigate("/review?p=" + pageInfo.prevPage)}
+          >
+            <FaAngleLeft />
+          </Button>
+        )}
 
-      {pageNums.map((pageNumber) => (
-        <Button
-          key={pageNumber}
-          variant={pageNumber === pageInfo.currentPage ? "solid" : "ghost"}
-          onClick={() => navigate("/review?p=" + pageNumber)}
-        >
-          {pageNumber}
-        </Button>
-      ))}
+        {pageNums.map((pageNumber) => (
+          <Button
+            key={pageNumber}
+            variant={pageNumber === pageInfo.currentPage ? "solid" : "ghost"}
+            onClick={() => navigate("/review?p=" + pageNumber)}
+          >
+            {pageNumber}
+          </Button>
+        ))}
 
-      {pageInfo.nextPage && (
-        <Button
-          variant={"ghost"}
-          onClick={() => navigate("/review?p=" + pageInfo.nextPage)}
-        >
-          <FaAngleRight />
-        </Button>
-      )}
-    </Box>
+        {pageInfo.nextPage && (
+          <Button
+            variant={"ghost"}
+            onClick={() => navigate("/review?p=" + pageInfo.nextPage)}
+          >
+            <FaAngleRight />
+          </Button>
+        )}
+      </Box>
+    </Center>
   );
 }
 
@@ -77,7 +80,7 @@ function SearchComp() {
   }
 
   return (
-    <Flex>
+    <Flex w={"5xl"}>
       <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
       <Button onClick={handleSearch}>검색</Button>
     </Flex>
@@ -109,46 +112,48 @@ export function ReviewList() {
   }
 
   return (
-    <Box>
-      <Heading>리뷰 보기</Heading>
-      <SearchComp />
-      <Box>
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>글번호</Th>
-              <Th>제목</Th>
-              <Th>작성자</Th>
-              <Th>작성시간</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {reviewList.map((review) => (
-              <Tr
-                key={review.no}
-                _hover={{ cursor: "pointer" }}
-                onClick={() => navigate("/review/" + review.no)}
-              >
-                <Td>{review.no}</Td>
-                <Td>
-                  {review.title}
-                  {review.countComment > 0 && (
-                    <Badge>
-                      {" "}
-                      <ChatIcon />
-                      {review.countComment}
-                    </Badge>
-                  )}
-                </Td>
-                <Td>{review.nickName}</Td>
-                <Td>{review.ago}</Td>
+    <Center>
+      <Box w={"5xl"}>
+        <Heading>리뷰 보기</Heading>
+        <SearchComp />
+        <Box>
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>글번호</Th>
+                <Th>제목</Th>
+                <Th>작성자</Th>
+                <Th>작성시간</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </Box>
+            </Thead>
+            <Tbody>
+              {reviewList.map((review) => (
+                <Tr
+                  key={review.no}
+                  _hover={{ cursor: "pointer" }}
+                  onClick={() => navigate("/review/" + review.no)}
+                >
+                  <Td>{review.no}</Td>
+                  <Td>
+                    {review.title}
+                    {review.countComment > 0 && (
+                      <Badge>
+                        {" "}
+                        <ChatIcon />
+                        {review.countComment}
+                      </Badge>
+                    )}
+                  </Td>
+                  <Td>{review.nickName}</Td>
+                  <Td>{review.ago}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
 
-      <Pagination pageInfo={pageInfo} />
-    </Box>
+        <Pagination pageInfo={pageInfo} />
+      </Box>
+    </Center>
   );
 }

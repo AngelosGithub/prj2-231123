@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Heading,
   Image,
   Modal,
@@ -62,50 +63,52 @@ export function ReviewView() {
   }
 
   return (
-    <Box>
-      <Heading>리뷰 보기</Heading>
-      <Text>번호 : {review.no}</Text>
-      <Text>제목 : {review.title}</Text>
-      {/* 이미지 출력 */}
-      {review.files.map((file) => (
-        <Box key={file.id} my={"5px"}>
-          <Image width={"50%"} src={file.url} alt={file.name} />
-        </Box>
-      ))}
-      <Text>추천메뉴 : {review.recommend}</Text>
-      <Text>내용 : {review.content}</Text>
-      <Text>작성자 : {review.nickName}</Text>
-      <Text>작성일 : {review.inserted}</Text>
+    <Center>
+      <Box w={"5xl"}>
+        <Heading>리뷰 보기</Heading>
+        <Text>번호 : {review.no}</Text>
+        <Text>제목 : {review.title}</Text>
+        {/* 이미지 출력 */}
+        {review.files.map((file) => (
+          <Box key={file.id} my={"5px"}>
+            <Image width={"50%"} src={file.url} alt={file.name} />
+          </Box>
+        ))}
+        <Text>추천메뉴 : {review.recommend}</Text>
+        <Text>내용 : {review.content}</Text>
+        <Text>작성자 : {review.nickName}</Text>
+        <Text>작성일 : {review.inserted}</Text>
 
-      {(hasAccess(review.writer) || isAdmin()) && (
-        <Box>
-          <Button colorScheme="blue" onClick={() => navigate("/edit/" + no)}>
-            수정
-          </Button>
-          <Button onClick={onOpen} colorScheme="red">
-            삭제
-          </Button>
-        </Box>
-      )}
-
-      {/* 삭제 모달 */}
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>삭제 확인</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>삭제 하시겠습니까?</ModalBody>
-
-          <ModalFooter>
-            <Button onClick={onClose}>닫기</Button>
-            <Button onClick={handleDelete} colorScheme="red">
+        {(hasAccess(review.writer) || isAdmin()) && (
+          <Box>
+            <Button colorScheme="blue" onClick={() => navigate("/edit/" + no)}>
+              수정
+            </Button>
+            <Button onClick={onOpen} colorScheme="red">
               삭제
             </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-      {/* 코멘트 컨테이너로 작성된 글의 번호를 넘김 */}
-      <CommentContainer reviewId={no} />
-    </Box>
+          </Box>
+        )}
+
+        {/* 삭제 모달 */}
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>삭제 확인</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>삭제 하시겠습니까?</ModalBody>
+
+            <ModalFooter>
+              <Button onClick={onClose}>닫기</Button>
+              <Button onClick={handleDelete} colorScheme="red">
+                삭제
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+        {/* 코멘트 컨테이너로 작성된 글의 번호를 넘김 */}
+        <CommentContainer reviewId={no} />
+      </Box>
+    </Center>
   );
 }
