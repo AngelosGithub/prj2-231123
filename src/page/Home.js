@@ -87,7 +87,7 @@ export function Home() {
                                 rating={3}
                                 starDimension="20px"
                                 starSpacing="3px"
-                                starRatedColor="blue"
+                                starRatedColor="#fcc419"
                                 numberOfStars={5}
                               />
                             </Box>

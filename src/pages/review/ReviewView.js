@@ -76,7 +76,7 @@ export function ReviewView() {
               rating={review.starPoint}
               starDimension="30px"
               starSpacing="3px"
-              starRatedColor="blue"
+              starRatedColor="#fcc419"
               numberOfStars={5}
             />
           )}

@@ -49,7 +49,7 @@ export function ReviewContainer({ reviews }) {
                     rating={reivew.starPoint}
                     starDimension="13px"
                     starSpacing="4px"
-                    starRatedColor="blue"
+                    starRatedColor="#fcc419"
                     numberOfStars={5}
                   />
                 </Td>

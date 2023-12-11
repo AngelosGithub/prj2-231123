@@ -105,7 +105,7 @@ function RestaurantList(props) {
                         rating={restaurant.starPoint}
                         starDimension="25px"
                         starSpacing="8px"
-                        starRatedColor="blue"
+                        starRatedColor="#fcc419"
                         numberOfStars={5}
                       />
                     ) : (
