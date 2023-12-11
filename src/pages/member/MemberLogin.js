@@ -42,7 +42,7 @@ export function MemberLogin() {
 
   return (
     <Center>
-      <Box w={"2xl"}>
+      <Box w={"1xl"}>
         <FormControl>
           <FormLabel>아이디</FormLabel>
           <Input value={id} onChange={(e) => setId(e.target.value)} />

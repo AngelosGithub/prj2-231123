@@ -82,7 +82,7 @@ export function MemberSignup() {
 
   return (
     <Center>
-      <Box w={"3xl"}>
+      <Box w={"1xl"}>
         <Text>회원가입</Text>
         <FormControl>
           <FormLabel>ID</FormLabel>

@@ -76,7 +76,6 @@ function CommentItem({
           description: "수정되었습니다",
           status: "success",
         });
-        setCommentEdited("");
       })
       .catch((error) => {
         if (error.response.status === 401 || error.response.status === 403) {
