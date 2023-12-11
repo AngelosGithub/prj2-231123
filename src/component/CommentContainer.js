@@ -32,6 +32,7 @@ function CommentForm({ reviewId, isSubmitting, onSubmit }) {
   function handleSubmit() {
     // 상위 컴포넌트에서 함수를 받아서 사용
     onSubmit({ reviewId, comment });
+    setComment("");
   }
 
   return (
@@ -75,6 +76,7 @@ function CommentItem({
           description: "수정되었습니다",
           status: "success",
         });
+        setCommentEdited("");
       })
       .catch((error) => {
         if (error.response.status === 401 || error.response.status === 403) {
