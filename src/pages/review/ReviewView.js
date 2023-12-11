@@ -22,6 +22,7 @@ import axios from "axios";
 import { LoginContext } from "../../component/LoginProvider";
 import { CommentContainer } from "../../component/CommentContainer";
 import StarRatings from "react-star-ratings/build/star-ratings";
+import { ReviewImage } from "./ReviewImage";
 
 export function ReviewView() {
   const [review, setReview] = useState(null);
@@ -82,11 +83,9 @@ export function ReviewView() {
           )}
         </Box>
         {/* 이미지 출력 */}
-        {review.files.map((file) => (
-          <Box key={file.id} my={"5px"}>
-            <Image width={"50%"} src={file.url} alt={file.name} />
-          </Box>
-        ))}
+        <Box my={"5px"}>
+          <ReviewImage review={review} />
+        </Box>
         <Text>추천메뉴 : {review.recommend}</Text>
         <Text>내용 : {review.content}</Text>
         <Text>작성자 : {review.nickName}</Text>
