@@ -20,15 +20,61 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FaStar } from "react-icons/fa6";
+import styled from "@emotion/styled";
+
+const Stars = styled.div`
+  display: flex;
+  padding-top: 5px;
+
+  & svg {
+    color: gray;
+    cursor: pointer;
+  }
+
+  :hover svg {
+    color: #fcc419;
+  }
+
+  & svg:hover ~ svg {
+    color: gray;
+  }
+
+  .yellowStar {
+    color: #fcc419;
+  }
+`;
 
 export function ReviewEdit() {
   const [review, updateReview] = useImmer(null);
   const [removeFileIds, setRemoveFileIds] = useState([]);
   const [uploadFiles, setUploadFiles] = useState(null);
+  const ARRAY = [0, 1, 2, 3, 4];
+  const [score, setScore] = useState([false, false, false, false, false]);
+  const [starPoint, setStarPoint] = useState(0);
 
   const navigate = useNavigate();
   const toast = useToast();
   const { no } = useParams();
+
+  const handleStarClick = (index) => {
+    let star = [...score];
+    for (let i = 0; i < 5; i++) {
+      star[i] = i <= index ? true : false;
+    }
+    setScore(star);
+  };
+
+  useEffect(() => {
+    sendReview();
+  }, [score]);
+
+  const sendReview = () => {
+    let starPoint = score.filter(Boolean).length;
+    // point 값을 할당
+    setStarPoint(starPoint);
+    // 할당된 값을 서버로 보낼수 있게 함
+  };
 
   useEffect(() => {
     axios
@@ -49,6 +95,7 @@ export function ReviewEdit() {
         content: review.content,
         removeFileIds,
         uploadFiles,
+        starPoint,
       })
       .then(() => {
         toast({
@@ -114,6 +161,19 @@ export function ReviewEdit() {
               }}
             />
           </FormControl>
+        </Flex>
+        {/* 별점 출력 */}
+        <Flex>
+          <Stars>
+            {ARRAY.map((el, index) => (
+              <FaStar
+                key={index}
+                size="30"
+                onClick={() => handleStarClick(el)}
+                className={score[el] && "yellowStar"}
+              ></FaStar>
+            ))}
+          </Stars>
         </Flex>
         {/* 이미지 출력 */}
         {review.files.length > 0 &&
