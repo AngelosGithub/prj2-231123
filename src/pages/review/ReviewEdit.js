@@ -51,7 +51,7 @@ export function ReviewEdit() {
   const [uploadFiles, setUploadFiles] = useState(null);
   const ARRAY = [0, 1, 2, 3, 4];
   const [score, setScore] = useState([false, false, false, false, false]);
-  const [starPoint, setStarPoint] = useState(0);
+  const [point, setPoint] = useState(0);
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -70,9 +70,9 @@ export function ReviewEdit() {
   }, [score]);
 
   const sendReview = () => {
-    let starPoint = score.filter(Boolean).length;
+    let point = score.filter(Boolean).length;
     // point 값을 할당
-    setStarPoint(starPoint);
+    setPoint(point);
     // 할당된 값을 서버로 보낼수 있게 함
   };
 
@@ -93,9 +93,10 @@ export function ReviewEdit() {
         no: review.no,
         title: review.title,
         content: review.content,
+        recommend: review.recommend,
         removeFileIds,
         uploadFiles,
-        starPoint,
+        point,
       })
       .then(() => {
         toast({
