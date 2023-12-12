@@ -55,7 +55,7 @@ export function MemberLogin() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </FormControl>
-        <Flex>
+        <Flex justifyContent={"space-between"}>
           <Button onClick={() => navigate("/signup")}>회원 가입</Button>
           <Button onClick={handleLogin}>로그인</Button>
         </Flex>
