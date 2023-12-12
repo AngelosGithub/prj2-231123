@@ -59,7 +59,7 @@ function CommentItem({
   const [commentEdited, setCommentEdited] = useState(comment.comment);
   // 수정하는 textarea에 기존 댓글이 입력되어 있도록 함
 
-  const { hasAccess } = useContext(LoginContext);
+  const { hasAccess, isAdmin } = useContext(LoginContext);
   // 권한 설정을 위한 코드
 
   const toast = useToast();
@@ -126,7 +126,7 @@ function CommentItem({
           )}
         </Box>
 
-        {hasAccess(comment.memberId) && (
+        {(hasAccess(comment.memberId) || isAdmin(comment.memberId)) && (
           <Flex>
             {isEditing || (
               <Button
