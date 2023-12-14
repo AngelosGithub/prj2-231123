@@ -20,6 +20,24 @@ import axios from "axios";
 import { ChatIcon } from "@chakra-ui/icons";
 import { FaAngleLeft, FaAngleRight, FaFileImage } from "react-icons/fa";
 
+function PageButton({ variant, pageNumber, children }) {
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+
+  console.log(params.toString());
+
+  function handleClick() {
+    params.set("p", pageNumber);
+    navigate("/review?" + params);
+  }
+
+  return (
+    <Button variant={variant} onClick={handleClick}>
+      {children}
+    </Button>
+  );
+}
+
 function Pagination({ pageInfo }) {
   // page 컴포넌트
   const navigate = useNavigate();
@@ -43,13 +61,13 @@ function Pagination({ pageInfo }) {
         )}
 
         {pageNums.map((pageNumber) => (
-          <Button
+          <PageButton
             key={pageNumber}
             variant={pageNumber === pageInfo.currentPage ? "solid" : "ghost"}
-            onClick={() => navigate("/review?p=" + pageNumber)}
+            pageNumber={pageNumber}
           >
             {pageNumber}
-          </Button>
+          </PageButton>
         ))}
 
         {pageInfo.nextPage && (
