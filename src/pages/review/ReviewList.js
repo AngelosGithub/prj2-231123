@@ -19,6 +19,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ChatIcon } from "@chakra-ui/icons";
 import { FaAngleLeft, FaAngleRight, FaFileImage } from "react-icons/fa";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function PageButton({ variant, pageNumber, children }) {
   const [params] = useSearchParams();
@@ -49,8 +51,8 @@ function Pagination({ pageInfo }) {
   }
 
   return (
-    <Center>
-      <Box w={"5xl"}>
+    <Center marginTop={5}>
+      <Box>
         {pageInfo.prevPage && (
           <Button
             variant={"ghost"}
@@ -98,10 +100,14 @@ function SearchComp() {
   }
 
   return (
-    <Flex w={"5xl"}>
-      <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-      <Button onClick={handleSearch}>검색</Button>
-    </Flex>
+    <Center>
+      <Flex w={"2xl"}>
+        <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+        <Button onClick={handleSearch}>
+          <FontAwesomeIcon icon={faSearch} />
+        </Button>
+      </Flex>
+    </Center>
   );
 }
 

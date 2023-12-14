@@ -5,6 +5,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Heading,
   Input,
   Radio,
   RadioGroup,
@@ -83,8 +84,8 @@ export function MemberSignup() {
   return (
     <Center>
       <Box w={"1xl"}>
-        <Text>회원가입</Text>
-        <FormControl>
+        <Heading>회원가입</Heading>
+        <FormControl marginTop={5}>
           <FormLabel>ID</FormLabel>
           <Input value={id} onChange={(e) => setId(e.target.value)} />
           <Button onClick={handleCheckId}>중복확인</Button>
@@ -127,10 +128,12 @@ export function MemberSignup() {
             max={today}
           />
         </FormControl>
-        <Button onClick={handleSubmit} isDisabled={!submitAvailable}>
-          가입
-        </Button>
-        <Button onClick={() => navigate("/")}>취소</Button>
+        <Box marginTop={5}>
+          <Button onClick={handleSubmit} isDisabled={!submitAvailable}>
+            가입
+          </Button>
+          <Button onClick={() => navigate("/")}>취소</Button>
+        </Box>
       </Box>
     </Center>
   );
