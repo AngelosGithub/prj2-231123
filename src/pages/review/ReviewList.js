@@ -44,7 +44,7 @@ function Pagination({ pageInfo }) {
 
   const pageNums = [];
 
-  for (let i = pageInfo.startPageNum; i < pageInfo.endPageNum; i++) {
+  for (let i = pageInfo.startPageNum; i <= pageInfo.endPageNum; i++) {
     pageNums.push(i);
   }
 
