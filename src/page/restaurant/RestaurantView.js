@@ -28,7 +28,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { ReviewContainer } from "./ReviewContainer";
 import KakaoMap from "../../component/KakaoMap";
 import RestaurantImage from "../../component/RestaurantImage";
@@ -96,6 +96,13 @@ export function RestaurantView() {
   if (restaurant === null) {
     return <Spinner />;
   }
+
+  function handleClickMore() {
+    const params = new URLSearchParams();
+    params.set("restaurantNo", no);
+    navigate("/review?" + params);
+  }
+
   return (
     <Center>
       <Box w={"5xl"} h={"1200px"}>
@@ -173,7 +180,7 @@ export function RestaurantView() {
               </Button>
             ) : (
               <Flex gap={5} justifyContent={"space-between"} margin={5}>
-                <Button onClick={() => navigate("/review")} colorScheme="blue">
+                <Button onClick={handleClickMore} colorScheme="blue">
                   더보기
                 </Button>
 
