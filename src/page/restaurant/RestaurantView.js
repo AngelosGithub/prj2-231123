@@ -94,7 +94,11 @@ export function RestaurantView() {
   }
 
   if (restaurant === null) {
-    return <Spinner />;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
 
   function handleClickMore() {

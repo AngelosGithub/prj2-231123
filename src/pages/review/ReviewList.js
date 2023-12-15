@@ -13,6 +13,9 @@ import {
   Input,
   Flex,
   Center,
+  Text,
+  Image,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -21,6 +24,8 @@ import { ChatIcon } from "@chakra-ui/icons";
 import { FaAngleLeft, FaAngleRight, FaFileImage } from "react-icons/fa";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import StarRatings from "react-star-ratings/build/star-ratings";
+import { ReviewImage } from "./ReviewImage";
 
 function PageButton({ variant, pageNumber, children }) {
   const [params] = useSearchParams();
@@ -179,6 +184,45 @@ export function ReviewList() {
             </Tbody>
           </Table>
         </Box>
+
+        <SimpleGrid
+          marginTop={5}
+          spacing={"10px"}
+          columns={{ base: 2, md: 3, lg: 3, "2xl": 3 }}
+        >
+          {reviewList.map((review) => (
+            <Box
+              key={review.no}
+              _hover={{ cursor: "pointer" }}
+              onClick={() => navigate("/review/" + review.no)}
+            >
+              <Box my={"5px"}></Box>
+              <Box>
+                {review.title}
+                {review.countComment > 0 && (
+                  <Badge>
+                    {" "}
+                    <ChatIcon />
+                    {review.countComment}
+                  </Badge>
+                )}
+                <Box>
+                  {review.starPoint > 0 && (
+                    <StarRatings
+                      rating={review.starPoint}
+                      starDimension="20px"
+                      starSpacing="2px"
+                      starRatedColor="#fcc419"
+                      numberOfStars={5}
+                    />
+                  )}
+                </Box>
+              </Box>
+              <Box>{review.nickName}</Box>
+              <Box>{review.ago}</Box>
+            </Box>
+          ))}
+        </SimpleGrid>
 
         <Pagination pageInfo={pageInfo} />
       </Box>
