@@ -43,7 +43,11 @@ export function ReviewView() {
   }, []);
 
   if (review === null) {
-    return <Spinner />;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
 
   function handleDelete() {

@@ -32,7 +32,11 @@ export function Home() {
   }, []);
 
   if (restaurantTypeList == null) {
-    return <Spinner />;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
 
   return (

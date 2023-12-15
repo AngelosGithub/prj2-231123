@@ -49,7 +49,11 @@ function RestaurantList(props) {
   }, [location]);
 
   if (restaurant === null) {
-    return <Spinner />;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
 
   return (

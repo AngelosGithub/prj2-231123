@@ -15,7 +15,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ChatIcon } from "@chakra-ui/icons";
 import { FaAngleLeft, FaAngleRight, FaFileImage } from "react-icons/fa";
@@ -132,7 +132,11 @@ export function ReviewList() {
   // dependency를 params에서 location으로 바꿈(react에서 권장)
 
   if (reviewList === null) {
-    return <Spinner />;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
 
   return (
