@@ -149,42 +149,6 @@ export function ReviewList() {
       <Box w={"5xl"}>
         <Heading>리뷰 보기</Heading>
         <SearchComp />
-        <Box>
-          <Table>
-            <Thead>
-              <Tr>
-                <Th>글번호</Th>
-                <Th>제목</Th>
-                <Th>작성자</Th>
-                <Th>작성시간</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {reviewList.map((review) => (
-                <Tr
-                  key={review.no}
-                  _hover={{ cursor: "pointer" }}
-                  onClick={() => navigate("/review/" + review.no)}
-                >
-                  <Td>{review.no}</Td>
-                  <Td>
-                    {review.title}
-                    {review.countComment > 0 && (
-                      <Badge>
-                        {" "}
-                        <ChatIcon />
-                        {review.countComment}
-                      </Badge>
-                    )}
-                  </Td>
-                  <Td>{review.nickName}</Td>
-                  <Td>{review.ago}</Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </Box>
-
         <SimpleGrid
           marginTop={5}
           spacing={"10px"}
@@ -196,7 +160,19 @@ export function ReviewList() {
               _hover={{ cursor: "pointer" }}
               onClick={() => navigate("/review/" + review.no)}
             >
-              <Box my={"5px"}></Box>
+              <Box my={"5px"}>
+                {/*{review.files.length > 0 &&*/}
+                {/*  review.files.map((file) => (*/}
+                {/*    <Image*/}
+                {/*      borderRadius="lg"*/}
+                {/*      w={"100%"}*/}
+                {/*      h={"100%"}*/}
+                {/*      key={file.no}*/}
+                {/*      src={file.url}*/}
+                {/*      alt="stay slide"*/}
+                {/*    />*/}
+                {/*  ))}*/}
+              </Box>
               <Box>
                 {review.title}
                 {review.countComment > 0 && (
