@@ -111,9 +111,19 @@ export function RestaurantView() {
     navigate("/review?" + params);
   }
 
-
   function handleClick(url) {
     setUrl(url);
+  }
+
+  function handleClickWrite() {
+    if (isAuthenticated()) {
+      navigate("/write/" + restaurant.no);
+    } else {
+      toast({
+        description: "로그인 후 이용 가능 합니다",
+        status: "warning",
+      });
+    }
   }
 
   return (
@@ -214,10 +224,7 @@ export function RestaurantView() {
             <Heading>리뷰</Heading>
             <ReviewContainer reviews={reviews} restaurantNo={no} />
             {reviews.length === 0 ? (
-              <Button
-                colorScheme="blue"
-                onClick={() => navigate("/write/" + restaurant.no)}
-              >
+              <Button colorScheme="blue" onClick={handleClickWrite}>
                 리뷰작성
               </Button>
             ) : (
@@ -226,10 +233,7 @@ export function RestaurantView() {
                   더보기
                 </Button>
 
-                <Button
-                  colorScheme="blue"
-                  onClick={() => navigate("/write/" + restaurant.no)}
-                >
+                <Button colorScheme="blue" onClick={handleClickWrite}>
                   리뷰작성
                 </Button>
               </Flex>
