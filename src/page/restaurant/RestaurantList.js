@@ -109,7 +109,7 @@ function RestaurantList(props) {
                       ))}
                   </Box>
                   <Box mt={2} h={"120px"}>
-                    {restaurant.starPoint > 0 ? (
+                    {restaurant.reviewCount !== 0 ? (
                       <StarRatings
                         rating={restaurant.starPoint}
                         starDimension="25px"
@@ -118,7 +118,7 @@ function RestaurantList(props) {
                         numberOfStars={5}
                       />
                     ) : (
-                      <Text>평가가 준비중.</Text>
+                      <Text textAlign={"center"}>평가 준비중.</Text>
                     )}
                     <Text mt={2}>{restaurant.place}</Text>
                     <Text fontSize={"14px"}>{restaurant.address}</Text>

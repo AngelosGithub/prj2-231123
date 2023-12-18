@@ -17,6 +17,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import StarRatings from "react-star-ratings/build/star-ratings";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import BannerSlider, { BannerImg } from "../component/BannerSlider";
 
 export function Home() {
   const [restaurantTypeList, setRestaurantTypeList] = useState(null);
@@ -41,6 +44,12 @@ export function Home() {
 
   return (
     <>
+      <Center>
+        <Box w={"5xl"}>
+          <BannerSlider />
+        </Box>
+      </Center>
+
       {typeNameList.length === 0 ? (
         <Text>사이트 준비중</Text>
       ) : (
@@ -54,6 +63,7 @@ export function Home() {
                       {nameList.name}({nameList.count})
                     </Text>
                     <Button
+                      rightIcon={<FontAwesomeIcon icon={faChevronRight} />}
                       onClick={() =>
                         navigate("restaurantList?typeNo=" + nameList.no)
                       }

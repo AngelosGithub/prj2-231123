@@ -1,8 +1,22 @@
 import React, { useContext, useEffect } from "react";
-import { Button, Center, Flex, Spacer, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  IconButton,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spacer,
+  useToast,
+} from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "./LoginProvider";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 function Navbar(props) {
   const { fetchLogin, login, isAuthenticated, isAdmin } =
@@ -38,37 +52,76 @@ function Navbar(props) {
     <Center>
       <Flex w={"5xl"} mb={10} gap={4} borderBottom={"1px solid #778899"}>
         {/* jsb */}
-        <Button onClick={() => navigate("/")}>Home</Button>
+        <Box
+          w={"150px"}
+          h={"100px"}
+          cursor={"pointer"}
+          mt={2}
+          onClick={() => navigate("/")}
+        >
+          <Image src="img/Logo.png" alt="준비중" />
+        </Box>
         <Spacer />
 
-        <Button onClick={() => navigate("/review")}>리뷰</Button>
-        <Button onClick={() => navigate("/restaurantList")}>맛집찾기</Button>
+        <Button margin={"auto"} onClick={() => navigate("/review")}>
+          리뷰
+        </Button>
+        <Button margin={"auto"} onClick={() => navigate("/restaurantList")}>
+          맛집찾기
+        </Button>
         {/* 로그인 했을때만 보이도록 */}
         {isAuthenticated() && (
-          <Button onClick={() => navigate("/member?" + urlParams.toString())}>
+          <Button
+            margin={"auto"}
+            onClick={() => navigate("/member?" + urlParams.toString())}
+          >
             내 정보
           </Button>
         )}
         {/* 관리자 로그인 했을때만 보이도록 */}
         {isAdmin() && (
           <>
-            <Button onClick={() => navigate("/member/list")}>회원 정보</Button>
-            <Button onClick={() => navigate("/RestaurantForm")}>
-              맛집등록
-            </Button>
-            <Button onClick={() => navigate("/categoryList")}>
-              카테고리 관리
-            </Button>
+            <Menu>
+              <MenuButton
+                margin={"auto"}
+                as={IconButton}
+                aria-label="Options"
+                icon={<HamburgerIcon />}
+                variant="outline"
+              />
+              <MenuList>
+                <MenuItem
+                  onClick={() => navigate("/member/list")}
+                  command="회원정보"
+                />
+                <MenuItem
+                  onClick={() => navigate("/RestaurantForm")}
+                  command="맛집등록"
+                />
+                <MenuItem
+                  onClick={() => navigate("/categoryList")}
+                  command="카테고리 관리"
+                />
+              </MenuList>
+            </Menu>
           </>
         )}
         {/* 로그인 안되어 있을때 보이도록 */}
         {isAuthenticated() || (
-          <Button onClick={() => navigate("/signup")}>회원 가입</Button>
+          <Button margin={"auto"} onClick={() => navigate("/signup")}>
+            회원 가입
+          </Button>
         )}
         {isAuthenticated() || (
-          <Button onClick={() => navigate("/login")}>로그인</Button>
+          <Button margin={"auto"} onClick={() => navigate("/login")}>
+            로그인
+          </Button>
         )}
-        {isAuthenticated() && <Button onClick={handleLogout}>로그아웃</Button>}
+        {isAuthenticated() && (
+          <Button margin={"auto"} onClick={handleLogout}>
+            로그아웃
+          </Button>
+        )}
       </Flex>
     </Center>
   );
