@@ -147,7 +147,6 @@ export function ReviewList() {
   return (
     <Center>
       <Box w={"5xl"}>
-        <Heading>리뷰 보기</Heading>
         <SearchComp />
         <SimpleGrid
           marginTop={5}
@@ -187,7 +186,7 @@ export function ReviewList() {
                   </Badge>
                 )}
                 <Box>
-                  {review.starPoint > 0 && (
+                  {review.starPoint >= 0 && (
                     <StarRatings
                       rating={review.starPoint}
                       starDimension="20px"
