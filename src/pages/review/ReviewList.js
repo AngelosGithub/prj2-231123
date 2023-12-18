@@ -160,21 +160,20 @@ export function ReviewList() {
               _hover={{ cursor: "pointer" }}
               onClick={() => navigate("/review/" + review.no)}
             >
-              <Box my={"5px"}>
+              <Center my={"5px"} w={"100%"} h={"180px"} overflow={"hidden"}>
                 {review.files.length > 0 &&
                   review.files.map((file) => (
                     <Image
                       borderRadius="lg"
                       w={"100%"}
-                      h={"100%"}
                       key={file.no}
                       src={file.url}
                       alt="stay slide"
                     />
                   ))}
-              </Box>
+              </Center>
               <Box>
-                {review.title}
+                [{review.place}] {review.title}
                 {review.countComment > 0 && (
                   <Badge>
                     {" "}
