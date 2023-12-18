@@ -1,14 +1,8 @@
 import {
   Box,
   Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
   Center,
   Flex,
-  FormControl,
-  FormLabel,
   Heading,
   Image,
   Input,
@@ -22,7 +16,6 @@ import {
   SimpleGrid,
   Spinner,
   Text,
-  Textarea,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -32,7 +25,6 @@ import axios from "axios";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { ReviewContainer } from "./ReviewContainer";
 import KakaoMap from "../../component/KakaoMap";
-import RestaurantImage from "../../component/RestaurantImage";
 
 import StarRatings from "react-star-ratings/build/star-ratings";
 import { LoginContext } from "../../component/LoginProvider";
@@ -167,7 +159,7 @@ export function RestaurantView() {
               <Text fontSize="30px">별점 : </Text>
             </Box>
             <Box lineHeight="50px" ml={5}>
-              {restaurant.starPoint > 0 ? (
+              {reviews.length !== 0 ? (
                 <StarRatings
                   rating={restaurant.starPoint}
                   starDimension="30px"
@@ -176,7 +168,7 @@ export function RestaurantView() {
                   numberOfStars={5}
                 />
               ) : (
-                <Text fontSize="25px">평가가 아직없습니다.</Text>
+                <Text fontSize="25px">평가 준비중.</Text>
               )}
             </Box>
           </Flex>
@@ -194,17 +186,17 @@ export function RestaurantView() {
             <Flex>
               <Box w="50%" h="350px">
                 <Box h="210px">
-                  <Text fontSize={"20px"} h={"70px"} lineHeight={"70px"}>
+                  <Text fontSize={"20px"} h={"70px"}>
                     가게 이름 : {restaurant.place}
                   </Text>
-                  <Text fontSize={"20px"} h={"70px"} lineHeight={"70px"}>
+                  <Text fontSize={"18px"} h={"70px"}>
                     주소 : {restaurant.address}
                   </Text>
-                  <Text fontSize={"20px"} h={"70px"} lineHeight={"70px"}>
+                  <Text fontSize={"20px"} h={"70px"}>
                     전화번호 : {restaurant.phone}
                   </Text>
                 </Box>
-                <Box h={"140px"}>
+                <Box mt={3} h={"140px"}>
                   <Heading mb={5}>테마 요소</Heading>
                   <SimpleGrid columns={{ base: 4, md: 3, lg: 4, "2xl": 4 }}>
                     {restaurant.purpose.map((purpose) => (

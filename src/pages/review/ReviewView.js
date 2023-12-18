@@ -4,7 +4,6 @@ import {
   Center,
   Flex,
   Heading,
-  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
