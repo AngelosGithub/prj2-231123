@@ -83,13 +83,17 @@ export function Home() {
                                 alt="stay slide"
                               />
                               <Text>{restaurant.place}</Text>
-                              <StarRatings
-                                rating={3}
-                                starDimension="20px"
-                                starSpacing="3px"
-                                starRatedColor="blue"
-                                numberOfStars={5}
-                              />
+                              {restaurant.starPoint > 0 ? (
+                                <StarRatings
+                                  rating={restaurant.starPoint}
+                                  starDimension="25px"
+                                  starSpacing="8px"
+                                  starRatedColor="blue"
+                                  numberOfStars={5}
+                                />
+                              ) : (
+                                <Text>평가 준비중입니다.</Text>
+                              )}
                             </Box>
                           )),
                       )}

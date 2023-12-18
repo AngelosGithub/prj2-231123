@@ -10,6 +10,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  Image,
   Input,
   Modal,
   ModalBody,
@@ -39,6 +40,8 @@ import { LoginContext } from "../../component/LoginProvider";
 export function RestaurantView() {
   const [restaurant, setRestaurant] = useState(null);
   const [reviews, setReviews] = useState(null);
+  const [url, setUrl] = useState("");
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { no } = useParams();
   const { fetchLogin, login, isAuthenticated, isAdmin } =
@@ -52,6 +55,7 @@ export function RestaurantView() {
       .then((response) => {
         setRestaurant(response.data.restaurant);
         setReviews(response.data.reviews);
+        setUrl(response.data.restaurant.files[0].url);
       })
       .catch(() => console.log("에러"));
   }, []);
@@ -96,12 +100,46 @@ export function RestaurantView() {
   if (restaurant === null) {
     return <Spinner />;
   }
+
+  function handleClick(url) {
+    setUrl(url);
+  }
+
   return (
     <Center>
-      <Box w={"5xl"} h={"1200px"}>
-        <Box h="250px">
-          <RestaurantImage restaurant={restaurant} />
+      <Box w={"5xl"}>
+        <Box h={"500px"}>
+          <Flex>
+            <Box w={"60%"}>
+              <Image w={"100%"} h={"500px"} src={url} />
+            </Box>
+            <Box w={"40%"} h={"500px"} overflowY={"scroll"}>
+              <SimpleGrid
+                marginTop={5}
+                columns={{ base: 2, md: 2, lg: 2, "2xl": 2 }}
+              >
+                {restaurant.files.length > 0 &&
+                  restaurant.files.map((file) => (
+                    <Button
+                      mt={2}
+                      bg={"white"}
+                      h="180px"
+                      key={file.no}
+                      overflow={"hidden"}
+                      onClick={() => handleClick(file.url)}
+                    >
+                      <Image
+                        borderRadius="lg"
+                        src={file.url}
+                        alt="stay slide"
+                      />
+                    </Button>
+                  ))}
+              </SimpleGrid>
+            </Box>
+          </Flex>
         </Box>
+
         <Box h="100px" mt={5} lineHeight="50px">
           <Flex>
             <Box lineHeight="50px">
@@ -126,12 +164,12 @@ export function RestaurantView() {
           </Text>
         </Box>
 
-        <Box h="500px" mt={7}>
-          <Box h="150px">
-            <Heading mb={3}>매장소개</Heading>
-            {restaurant.info}
+        <Box mt={7}>
+          <Box>
+            <Heading>매장소개</Heading>
+            <Text>{restaurant.info}</Text>
           </Box>
-          <Box h="350px">
+          <Box mt={7}>
             <Flex>
               <Box w="50%" h="350px">
                 <Box h="210px">
