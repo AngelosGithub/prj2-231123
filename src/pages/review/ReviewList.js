@@ -161,17 +161,17 @@ export function ReviewList() {
               onClick={() => navigate("/review/" + review.no)}
             >
               <Box my={"5px"}>
-                {/*{review.files.length > 0 &&*/}
-                {/*  review.files.map((file) => (*/}
-                {/*    <Image*/}
-                {/*      borderRadius="lg"*/}
-                {/*      w={"100%"}*/}
-                {/*      h={"100%"}*/}
-                {/*      key={file.no}*/}
-                {/*      src={file.url}*/}
-                {/*      alt="stay slide"*/}
-                {/*    />*/}
-                {/*  ))}*/}
+                {review.files.length > 0 &&
+                  review.files.map((file) => (
+                    <Image
+                      borderRadius="lg"
+                      w={"100%"}
+                      h={"100%"}
+                      key={file.no}
+                      src={file.url}
+                      alt="stay slide"
+                    />
+                  ))}
               </Box>
               <Box>
                 {review.title}
