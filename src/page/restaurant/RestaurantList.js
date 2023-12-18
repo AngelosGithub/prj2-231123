@@ -39,6 +39,10 @@ function RestaurantList(props) {
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
+    // console.log(params.has("purpose"));
+    if (!params.has("purpose")) {
+      setCheckBoxIds([]);
+    }
     axios.get(`/api/restaurant/list?${params}`).then((response) => {
       setRestaurant(response.data.restaurantList);
       setPageInfo(response.data.pageInfo);
@@ -83,6 +87,7 @@ function RestaurantList(props) {
             ) : (
               restaurant.map((restaurant) => (
                 <Box
+                  key={restaurant.no}
                   h={"300px"}
                   onClick={() => navigate("/restaurant/view/" + restaurant.no)}
                 >
@@ -99,7 +104,7 @@ function RestaurantList(props) {
                         />
                       ))}
                   </Box>
-                  <Box mt={8} h={"120px"}>
+                  <Box mt={2} h={"120px"}>
                     {restaurant.starPoint > 0 ? (
                       <StarRatings
                         rating={restaurant.starPoint}
@@ -109,11 +114,10 @@ function RestaurantList(props) {
                         numberOfStars={5}
                       />
                     ) : (
-                      <Text>평가가 없습니다.</Text>
+                      <Text>평가가 준비중.</Text>
                     )}
-                    <Text mt={4} h={"60px"}>
-                      {restaurant.address}
-                    </Text>
+                    <Text mt={2}>{restaurant.place}</Text>
+                    <Text fontSize={"14px"}>{restaurant.address}</Text>
                   </Box>
                 </Box>
               ))
