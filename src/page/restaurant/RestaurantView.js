@@ -29,7 +29,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { ReviewContainer } from "./ReviewContainer";
 import KakaoMap from "../../component/KakaoMap";
 import RestaurantImage from "../../component/RestaurantImage";
@@ -98,8 +98,19 @@ export function RestaurantView() {
   }
 
   if (restaurant === null) {
-    return <Spinner />;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
+
+  function handleClickMore() {
+    const params = new URLSearchParams();
+    params.set("restaurantNo", no);
+    navigate("/review?" + params);
+  }
+
 
   function handleClick(url) {
     setUrl(url);
@@ -151,7 +162,7 @@ export function RestaurantView() {
                   rating={restaurant.starPoint}
                   starDimension="30px"
                   starSpacing="3px"
-                  starRatedColor="blue"
+                  starRatedColor="#fcc419"
                   numberOfStars={5}
                 />
               ) : (
@@ -203,16 +214,22 @@ export function RestaurantView() {
             <Heading>리뷰</Heading>
             <ReviewContainer reviews={reviews} restaurantNo={no} />
             {reviews.length === 0 ? (
-              <Button colorScheme="blue" onClick={() => navigate("/write")}>
+              <Button
+                colorScheme="blue"
+                onClick={() => navigate("/write/" + restaurant.no)}
+              >
                 리뷰작성
               </Button>
             ) : (
               <Flex gap={5} justifyContent={"space-between"} margin={5}>
-                <Button onClick={() => navigate("/review")} colorScheme="blue">
+                <Button onClick={handleClickMore} colorScheme="blue">
                   더보기
                 </Button>
 
-                <Button colorScheme="blue" onClick={() => navigate("/write")}>
+                <Button
+                  colorScheme="blue"
+                  onClick={() => navigate("/write/" + restaurant.no)}
+                >
                   리뷰작성
                 </Button>
               </Flex>

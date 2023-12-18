@@ -33,7 +33,7 @@ import { Home } from "./page/Home";
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
-      {/* 팀장*/}
+      {/* 팀장 */}
       <Route index element={<Home />} />
       <Route path="signup" element={<MemberSignup />} />
       <Route path="login" element={<MemberLogin />} />
@@ -43,8 +43,8 @@ const routes = createBrowserRouter(
       <Route path="review" element={<ReviewList />} />
       <Route path="review/:no" element={<ReviewView />} />
       <Route path="edit/:no" element={<ReviewEdit />} />
-      <Route path="write" element={<ReviewWrite />} />
-      {/* jsb*/}
+      <Route path="write/:no" element={<ReviewWrite />} />
+      {/* jsb */}
       <Route path="/categoryList" element={<CategoryList />} />
       <Route path="/category/insert" element={<CategoryForm />} />
       <Route path="/category/typeEdit/:no" element={<RestaurantTypeEdit />} />

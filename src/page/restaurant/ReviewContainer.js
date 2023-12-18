@@ -18,45 +18,46 @@ import { useNavigate } from "react-router-dom";
 export function ReviewContainer({ reviews }) {
   const navigate = useNavigate();
   return (
-    <Table>
-      <Thead>
-        <Tr>
-          <Th>No</Th>
-          <Th>제목</Th>
-          <Th>작성자</Th>
-          <Th>작성날짜</Th>
-          <Th>평점</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {reviews.length === 0 ? (
+    <Box>
+      <Table>
+        <Thead>
           <Tr>
-            <Td>준비중입니다</Td>
+            <Th>No</Th>
+            <Th>제목</Th>
+            <Th>작성자</Th>
+            <Th>작성날짜</Th>
+            <Th>평점</Th>
           </Tr>
-        ) : (
-          reviews.map((reivew) => (
-            <Tr
-              key={reivew.no}
-              onClick={() => navigate(`/review/${reivew.no}`)}
-            >
-              <Td>{reivew.no}</Td>
-              <Td>{reivew.title}</Td>
-              <Td>{reivew.writer}</Td>
-              <Td>{reivew.inserted}</Td>
-              <Td>
-                {" "}
-                <StarRatings
-                  rating={reivew.starPoint}
-                  starDimension="13px"
-                  starSpacing="4px"
-                  starRatedColor="blue"
-                  numberOfStars={5}
-                />
-              </Td>
+        </Thead>
+        <Tbody>
+          {reviews.length === 0 ? (
+            <Tr>
+              <Td>준비중입니다</Td>
             </Tr>
-          ))
-        )}
-      </Tbody>
-    </Table>
+          ) : (
+            reviews.map((reivew) => (
+              <Tr
+                key={reivew.no}
+                onClick={() => navigate(`/review/${reivew.no}`)}
+              >
+                <Td>{reivew.no}</Td>
+                <Td>{reivew.title}</Td>
+                <Td>{reivew.writer}</Td>
+                <Td>{reivew.ago}</Td>
+                <Td>
+                  <StarRatings
+                    rating={reivew.starPoint}
+                    starDimension="13px"
+                    starSpacing="4px"
+                    starRatedColor="#fcc419"
+                    numberOfStars={5}
+                  />
+                </Td>
+              </Tr>
+            ))
+          )}
+        </Tbody>
+      </Table>
+    </Box>
   );
 }

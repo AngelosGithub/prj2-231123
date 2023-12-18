@@ -32,7 +32,11 @@ export function Home() {
   }, []);
 
   if (restaurantTypeList == null) {
-    return <Spinner />;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
 
   return (
@@ -88,7 +92,7 @@ export function Home() {
                                   rating={restaurant.starPoint}
                                   starDimension="25px"
                                   starSpacing="8px"
-                                  starRatedColor="blue"
+                                  starRatedColor="#fcc419"
                                   numberOfStars={5}
                                 />
                               ) : (
