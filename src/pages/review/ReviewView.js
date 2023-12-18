@@ -71,12 +71,15 @@ export function ReviewView() {
   return (
     <Center>
       <Box w={"5xl"}>
-        <Heading>{review.no}번 리뷰 보기</Heading>
-        <Text>제목 : {review.title}</Text>
+        <Heading>{review.place} 리뷰</Heading>
+        <Text>{review.ago} 등록됨</Text>
+        <Heading size={"lg"} marginTop={"20px"}>
+          제목 : {review.title}
+        </Heading>
         <Flex alignItems={"center"} justifyContent={"space-between"}>
           {/* 별점 출력 */}
           <Box lineHeight="50px" ml={5}>
-            {review.starPoint > 0 && (
+            {review.starPoint >= 0 && (
               <StarRatings
                 rating={review.starPoint}
                 starDimension="30px"
@@ -94,7 +97,6 @@ export function ReviewView() {
         </Box>
         <Text>내용 : {review.content}</Text>
         <Text>작성자 : {review.nickName}</Text>
-        <Text>작성일 : {review.inserted}</Text>
 
         {(hasAccess(review.writer) || isAdmin()) && (
           <Box>
@@ -106,6 +108,7 @@ export function ReviewView() {
             </Button>
           </Box>
         )}
+        <Button onClick={() => navigate(-1)}>목록으로</Button>
 
         {/* 삭제 모달 */}
         <Modal isOpen={isOpen} onClose={onClose}>

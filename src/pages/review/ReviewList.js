@@ -147,7 +147,6 @@ export function ReviewList() {
   return (
     <Center>
       <Box w={"5xl"}>
-        <Heading>리뷰 보기</Heading>
         <SearchComp />
         <SimpleGrid
           marginTop={5}
@@ -160,21 +159,25 @@ export function ReviewList() {
               _hover={{ cursor: "pointer" }}
               onClick={() => navigate("/review/" + review.no)}
             >
-              <Box my={"5px"}>
+              <Center
+                my={"5px"}
+                w={"100%"}
+                h={"180px"}
+                overflow={"hidden"}
+                borderRadius="lg"
+              >
                 {review.files.length > 0 &&
                   review.files.map((file) => (
                     <Image
-                      borderRadius="lg"
                       w={"100%"}
-                      h={"100%"}
                       key={file.no}
                       src={file.url}
                       alt="stay slide"
                     />
                   ))}
-              </Box>
+              </Center>
               <Box>
-                {review.title}
+                [{review.place}] {review.title}
                 {review.countComment > 0 && (
                   <Badge>
                     {" "}
@@ -183,7 +186,7 @@ export function ReviewList() {
                   </Badge>
                 )}
                 <Box>
-                  {review.starPoint > 0 && (
+                  {review.starPoint >= 0 && (
                     <StarRatings
                       rating={review.starPoint}
                       starDimension="20px"
