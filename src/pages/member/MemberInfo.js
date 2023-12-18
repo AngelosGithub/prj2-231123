@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   FormControl,
   FormLabel,
@@ -73,57 +74,59 @@ export function MemberInfo() {
   }
 
   return (
-    <Box>
-      <Heading>{member.id}님 정보</Heading>
-      <FormControl>
-        <FormLabel>닉네임</FormLabel>
-        <Input value={member.nickName} readOnly />
-      </FormControl>
-      <FormControl>
-        <FormLabel>비밀번호</FormLabel>
-        <Input type="text" value={member.password} readOnly />
-      </FormControl>
-      <FormControl>
-        <FormLabel>이메일</FormLabel>
-        <Input value={member.email} readOnly />
-      </FormControl>
-      <FormControl>
-        <FormLabel>전화번호</FormLabel>
-        <Input value={member.phone} readOnly />
-      </FormControl>
-      <FormControl>
-        <FormLabel>생년월일</FormLabel>
-        <Input value={member.birthDate} readOnly />
-      </FormControl>
-      <Flex>
-        <Button
-          colorScheme="blue"
-          onClick={() => navigate("/member/edit?" + params.toString())}
-        >
-          수정
-        </Button>
-        <Button colorScheme="red" onClick={onOpen}>
-          탈퇴
-        </Button>
-        <Button onClick={() => navigate(-1)}>취소</Button>
-      </Flex>
+    <Center>
+      <Box w={"3xl"}>
+        <Heading>{member.id}님 정보</Heading>
+        <FormControl>
+          <FormLabel>닉네임</FormLabel>
+          <Input value={member.nickName} readOnly />
+        </FormControl>
+        <FormControl>
+          <FormLabel>비밀번호</FormLabel>
+          <Input type="text" value={member.password} readOnly />
+        </FormControl>
+        <FormControl>
+          <FormLabel>이메일</FormLabel>
+          <Input value={member.email} readOnly />
+        </FormControl>
+        <FormControl>
+          <FormLabel>전화번호</FormLabel>
+          <Input value={member.phone} readOnly />
+        </FormControl>
+        <FormControl>
+          <FormLabel>생년월일</FormLabel>
+          <Input value={member.birthDate} readOnly />
+        </FormControl>
+        <Flex>
+          <Button
+            colorScheme="blue"
+            onClick={() => navigate("/member/edit?" + params.toString())}
+          >
+            수정
+          </Button>
+          <Button colorScheme="red" onClick={onOpen}>
+            탈퇴
+          </Button>
+          <Button onClick={() => navigate(-1)}>취소</Button>
+        </Flex>
 
-      {/* 탈퇴 모달 */}
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>탈퇴 확인</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>탈퇴 하시겠습니까?</ModalBody>
+        {/* 탈퇴 모달 */}
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>탈퇴 확인</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>탈퇴 하시겠습니까?</ModalBody>
 
-          <ModalFooter>
-            <Button onClick={onClose}>닫기</Button>
-            <Button onClick={handleDelete} colorScheme="red">
-              탈퇴
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </Box>
+            <ModalFooter>
+              <Button onClick={onClose}>닫기</Button>
+              <Button onClick={handleDelete} colorScheme="red">
+                탈퇴
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Box>
+    </Center>
   );
 }

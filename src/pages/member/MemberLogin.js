@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   FormControl,
   FormLabel,
@@ -29,7 +30,7 @@ export function MemberLogin() {
           description: "로그인 되었습니다",
           status: "info",
         });
-        navigate("/");
+        navigate(-1);
       })
       .catch(() => {
         toast({
@@ -40,23 +41,25 @@ export function MemberLogin() {
   }
 
   return (
-    <Box>
-      <FormControl>
-        <FormLabel>아이디</FormLabel>
-        <Input value={id} onChange={(e) => setId(e.target.value)} />
-      </FormControl>
-      <FormControl>
-        <FormLabel>비밀번호</FormLabel>
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </FormControl>
-      <Flex>
-        <Button onClick={() => navigate("/signup")}>회원 가입</Button>
-        <Button onClick={handleLogin}>로그인</Button>
-      </Flex>
-    </Box>
+    <Center>
+      <Box w={"1xl"}>
+        <FormControl>
+          <FormLabel>아이디</FormLabel>
+          <Input value={id} onChange={(e) => setId(e.target.value)} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>비밀번호</FormLabel>
+          <Input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </FormControl>
+        <Flex justifyContent={"space-between"}>
+          <Button onClick={() => navigate("/signup")}>회원 가입</Button>
+          <Button onClick={handleLogin}>로그인</Button>
+        </Flex>
+      </Box>
+    </Center>
   );
 }

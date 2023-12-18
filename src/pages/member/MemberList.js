@@ -1,5 +1,6 @@
 import {
   Box,
+  Center,
   Spinner,
   Table,
   Tbody,
@@ -35,31 +36,33 @@ export function MemberList() {
   }
 
   return (
-    <Box>
-      <Table>
-        <Thead>
-          <Tr>
-            <Th>아이디</Th>
-            <Th>닉네임</Th>
-            <Th>이메일</Th>
-            <Th>가입일자</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {memberList.map((member) => (
-            <Tr
-              key={member.id}
-              onClick={() => handleMemberClick(member.id)}
-              _hover={{ cursor: "pointer" }}
-            >
-              <Td>{member.id}</Td>
-              <Td>{member.nickName}</Td>
-              <Td>{member.email}</Td>
-              <Td>{member.inserted}</Td>
+    <Center>
+      <Box w={"5xl"}>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>아이디</Th>
+              <Th>닉네임</Th>
+              <Th>이메일</Th>
+              <Th>가입일자</Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </Box>
+          </Thead>
+          <Tbody>
+            {memberList.map((member) => (
+              <Tr
+                key={member.id}
+                onClick={() => handleMemberClick(member.id)}
+                _hover={{ cursor: "pointer" }}
+              >
+                <Td>{member.id}</Td>
+                <Td>{member.nickName}</Td>
+                <Td>{member.email}</Td>
+                <Td>{member.inserted}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Box>
+    </Center>
   );
 }

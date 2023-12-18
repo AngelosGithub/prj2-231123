@@ -12,12 +12,38 @@ import {
   Badge,
   Input,
   Flex,
+  Center,
+  Text,
+  Image,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ChatIcon } from "@chakra-ui/icons";
 import { FaAngleLeft, FaAngleRight, FaFileImage } from "react-icons/fa";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import StarRatings from "react-star-ratings/build/star-ratings";
+import { ReviewImage } from "./ReviewImage";
+
+function PageButton({ variant, pageNumber, children }) {
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+
+  console.log(params.toString());
+
+  function handleClick() {
+    params.set("p", pageNumber);
+    navigate("/review?" + params);
+  }
+
+  return (
+    <Button variant={variant} onClick={handleClick}>
+      {children}
+    </Button>
+  );
+}
 
 function Pagination({ pageInfo }) {
   // page 컴포넌트
@@ -25,40 +51,42 @@ function Pagination({ pageInfo }) {
 
   const pageNums = [];
 
-  for (let i = pageInfo.startPageNum; i < pageInfo.endPageNum; i++) {
+  for (let i = pageInfo.startPageNum; i <= pageInfo.endPageNum; i++) {
     pageNums.push(i);
   }
 
   return (
-    <Box>
-      {pageInfo.prevPage && (
-        <Button
-          variant={"ghost"}
-          onClick={() => navigate("/review?p=" + pageInfo.prevPage)}
-        >
-          <FaAngleLeft />
-        </Button>
-      )}
+    <Center marginTop={5}>
+      <Box>
+        {pageInfo.prevPage && (
+          <Button
+            variant={"ghost"}
+            onClick={() => navigate("/review?p=" + pageInfo.prevPage)}
+          >
+            <FaAngleLeft />
+          </Button>
+        )}
 
-      {pageNums.map((pageNumber) => (
-        <Button
-          key={pageNumber}
-          variant={pageNumber === pageInfo.currentPage ? "solid" : "ghost"}
-          onClick={() => navigate("/review?p=" + pageNumber)}
-        >
-          {pageNumber}
-        </Button>
-      ))}
+        {pageNums.map((pageNumber) => (
+          <PageButton
+            key={pageNumber}
+            variant={pageNumber === pageInfo.currentPage ? "solid" : "ghost"}
+            pageNumber={pageNumber}
+          >
+            {pageNumber}
+          </PageButton>
+        ))}
 
-      {pageInfo.nextPage && (
-        <Button
-          variant={"ghost"}
-          onClick={() => navigate("/review?p=" + pageInfo.nextPage)}
-        >
-          <FaAngleRight />
-        </Button>
-      )}
-    </Box>
+        {pageInfo.nextPage && (
+          <Button
+            variant={"ghost"}
+            onClick={() => navigate("/review?p=" + pageInfo.nextPage)}
+          >
+            <FaAngleRight />
+          </Button>
+        )}
+      </Box>
+    </Center>
   );
 }
 
@@ -77,10 +105,14 @@ function SearchComp() {
   }
 
   return (
-    <Flex>
-      <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-      <Button onClick={handleSearch}>검색</Button>
-    </Flex>
+    <Center>
+      <Flex w={"2xl"}>
+        <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+        <Button onClick={handleSearch}>
+          <FontAwesomeIcon icon={faSearch} />
+        </Button>
+      </Flex>
+    </Center>
   );
 }
 
@@ -105,51 +137,71 @@ export function ReviewList() {
   // dependency를 params에서 location으로 바꿈(react에서 권장)
 
   if (reviewList === null) {
-    return <Spinner />;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
 
   return (
-    <Box>
-      <Heading>리뷰 보기</Heading>
-      <SearchComp />
-      <Button onClick={() => navigate("/write")}>리뷰 쓰기</Button>
-      <Box>
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>글번호</Th>
-              <Th>제목</Th>
-              <Th>작성자</Th>
-              <Th>작성시간</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {reviewList.map((review) => (
-              <Tr
-                key={review.no}
-                _hover={{ cursor: "pointer" }}
-                onClick={() => navigate("/review/" + review.no)}
-              >
-                <Td>{review.no}</Td>
-                <Td>
-                  {review.title}
-                  {review.countComment > 0 && (
-                    <Badge>
-                      {" "}
-                      <ChatIcon />
-                      {review.countComment}
-                    </Badge>
+    <Center>
+      <Box w={"5xl"}>
+        <Heading>리뷰 보기</Heading>
+        <SearchComp />
+        <SimpleGrid
+          marginTop={5}
+          spacing={"10px"}
+          columns={{ base: 2, md: 3, lg: 3, "2xl": 3 }}
+        >
+          {reviewList.map((review) => (
+            <Box
+              key={review.no}
+              _hover={{ cursor: "pointer" }}
+              onClick={() => navigate("/review/" + review.no)}
+            >
+              <Box my={"5px"}>
+                {/*{review.files.length > 0 &&*/}
+                {/*  review.files.map((file) => (*/}
+                {/*    <Image*/}
+                {/*      borderRadius="lg"*/}
+                {/*      w={"100%"}*/}
+                {/*      h={"100%"}*/}
+                {/*      key={file.no}*/}
+                {/*      src={file.url}*/}
+                {/*      alt="stay slide"*/}
+                {/*    />*/}
+                {/*  ))}*/}
+              </Box>
+              <Box>
+                {review.title}
+                {review.countComment > 0 && (
+                  <Badge>
+                    {" "}
+                    <ChatIcon />
+                    {review.countComment}
+                  </Badge>
+                )}
+                <Box>
+                  {review.starPoint > 0 && (
+                    <StarRatings
+                      rating={review.starPoint}
+                      starDimension="20px"
+                      starSpacing="2px"
+                      starRatedColor="#fcc419"
+                      numberOfStars={5}
+                    />
                   )}
-                </Td>
-                <Td>{review.nickName}</Td>
-                <Td>{review.ago}</Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </Box>
+                </Box>
+              </Box>
+              <Box>{review.nickName}</Box>
+              <Box>{review.ago}</Box>
+            </Box>
+          ))}
+        </SimpleGrid>
 
-      <Pagination pageInfo={pageInfo} />
-    </Box>
+        <Pagination pageInfo={pageInfo} />
+      </Box>
+    </Center>
   );
 }

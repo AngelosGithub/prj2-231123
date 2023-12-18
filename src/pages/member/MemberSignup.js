@@ -1,9 +1,11 @@
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Heading,
   Input,
   Radio,
   RadioGroup,
@@ -80,53 +82,59 @@ export function MemberSignup() {
   }
 
   return (
-    <Box>
-      <Text>회원가입</Text>
-      <FormControl>
-        <FormLabel>ID</FormLabel>
-        <Input value={id} onChange={(e) => setId(e.target.value)} />
-        <Button onClick={handleCheckId}>중복확인</Button>
-      </FormControl>
-      <FormControl isInvalid={password.length < 6}>
-        <FormLabel>비밀번호</FormLabel>
-        <Input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-        />
-        <FormErrorMessage>비밀번호는 6글자 이상 입력해 주세요</FormErrorMessage>
-      </FormControl>
-      <FormControl>
-        <FormLabel>E-Mail</FormLabel>
-        <Input value={email} onChange={(e) => setEmail(e.target.value)} />
-      </FormControl>
-      <FormControl>
-        <FormLabel>성별</FormLabel>
-        <RadioGroup onChange={setGender} value={gender}>
-          <Stack direction="row">
-            <Radio value="남">남</Radio>
-            <Radio value="여">여</Radio>
-          </Stack>
-        </RadioGroup>
-      </FormControl>
-      <FormControl>
-        <FormLabel>전화번호</FormLabel>
-        <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
-      </FormControl>
-      <FormControl>
-        <FormLabel>생년월일</FormLabel>
-        <Input
-          type="date"
-          value={birthDate}
-          onChange={(e) => setBirthDate(e.target.value)}
-          min={"1900-01-01"}
-          max={today}
-        />
-      </FormControl>
-      <Button onClick={handleSubmit} isDisabled={!submitAvailable}>
-        가입
-      </Button>
-      <Button onClick={() => navigate("/")}>취소</Button>
-    </Box>
+    <Center>
+      <Box w={"1xl"}>
+        <Heading>회원가입</Heading>
+        <FormControl marginTop={5}>
+          <FormLabel>ID</FormLabel>
+          <Input value={id} onChange={(e) => setId(e.target.value)} />
+          <Button onClick={handleCheckId}>중복확인</Button>
+        </FormControl>
+        <FormControl isInvalid={password.length < 6}>
+          <FormLabel>비밀번호</FormLabel>
+          <Input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+          />
+          <FormErrorMessage>
+            비밀번호는 6글자 이상 입력해 주세요
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl>
+          <FormLabel>E-Mail</FormLabel>
+          <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>성별</FormLabel>
+          <RadioGroup onChange={setGender} value={gender}>
+            <Stack direction="row">
+              <Radio value="남">남</Radio>
+              <Radio value="여">여</Radio>
+            </Stack>
+          </RadioGroup>
+        </FormControl>
+        <FormControl>
+          <FormLabel>전화번호</FormLabel>
+          <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>생년월일</FormLabel>
+          <Input
+            type="date"
+            value={birthDate}
+            onChange={(e) => setBirthDate(e.target.value)}
+            min={"1900-01-01"}
+            max={today}
+          />
+        </FormControl>
+        <Box marginTop={5}>
+          <Button onClick={handleSubmit} isDisabled={!submitAvailable}>
+            가입
+          </Button>
+          <Button onClick={() => navigate("/")}>취소</Button>
+        </Box>
+      </Box>
+    </Center>
   );
 }

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -130,86 +131,88 @@ export function MemberEdit() {
   }
 
   return (
-    <Box>
-      <Heading>{id}님 정보 수정</Heading>
-      <FormControl>
-        <FormLabel>닉네임</FormLabel>
-        <Input
-          type="text"
-          value={nickName}
-          onChange={(e) => {
-            setNickName(e.target.value);
-            setNickAvailable(false);
-          }}
-        />
-        <Button
-          isDisabled={checkedNickname || nickBlank}
-          onClick={handleCheckNickname}
-        >
-          중복확인
-        </Button>
-      </FormControl>
-      <FormControl isInvalid={password.length < 6}>
-        <FormLabel>비밀번호</FormLabel>
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {password.length > 0 || (
-          <FormErrorMessage>
-            비밀번호를 입력하지 않으시면 기존 비밀번호로 유지 됩니다
-          </FormErrorMessage>
-        )}
-        {password.length > 0 && (
-          <FormErrorMessage>
-            비밀번호는 6글자 이상 입력해 주세요
-          </FormErrorMessage>
-        )}
-      </FormControl>
-      <FormControl>
-        <FormLabel>전화번호</FormLabel>
-        <Input
-          type="text"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-      </FormControl>
-      <FormControl>
-        <FormLabel>이메일</FormLabel>
-        <Input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </FormControl>
-      <Flex>
-        <Button
-          colorScheme="blue"
-          onClick={onOpen}
-          isDisabled={!checkedNickname || !passwordChecked}
-        >
-          완료
-        </Button>
-        <Button onClick={() => navigate(-1)}>취소</Button>
-      </Flex>
+    <Center>
+      <Box w={"5xl"}>
+        <Heading>{id}님 정보 수정</Heading>
+        <FormControl>
+          <FormLabel>닉네임</FormLabel>
+          <Input
+            type="text"
+            value={nickName}
+            onChange={(e) => {
+              setNickName(e.target.value);
+              setNickAvailable(false);
+            }}
+          />
+          <Button
+            isDisabled={checkedNickname || nickBlank}
+            onClick={handleCheckNickname}
+          >
+            중복확인
+          </Button>
+        </FormControl>
+        <FormControl isInvalid={password.length < 6}>
+          <FormLabel>비밀번호</FormLabel>
+          <Input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {password.length > 0 || (
+            <FormErrorMessage>
+              비밀번호를 입력하지 않으시면 기존 비밀번호로 유지 됩니다
+            </FormErrorMessage>
+          )}
+          {password.length > 0 && (
+            <FormErrorMessage>
+              비밀번호는 6글자 이상 입력해 주세요
+            </FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl>
+          <FormLabel>전화번호</FormLabel>
+          <Input
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>이메일</FormLabel>
+          <Input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </FormControl>
+        <Flex>
+          <Button
+            colorScheme="blue"
+            onClick={onOpen}
+            isDisabled={!checkedNickname || !passwordChecked}
+          >
+            완료
+          </Button>
+          <Button onClick={() => navigate(-1)}>취소</Button>
+        </Flex>
 
-      {/* 수정 모달 */}
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>수정 확인</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>수정 하시겠습니까?</ModalBody>
+        {/* 수정 모달 */}
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>수정 확인</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>수정 하시겠습니까?</ModalBody>
 
-          <ModalFooter>
-            <Button onClick={handleSubmit} colorScheme="blue">
-              수정
-            </Button>
-            <Button onClick={onClose}>닫기</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </Box>
+            <ModalFooter>
+              <Button onClick={handleSubmit} colorScheme="blue">
+                수정
+              </Button>
+              <Button onClick={onClose}>닫기</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Box>
+    </Center>
   );
 }
