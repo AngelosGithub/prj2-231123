@@ -65,8 +65,6 @@ function Navbar(props) {
         </Box>
         <Spacer />
         <SearchComponent />
-        <Button margin={"auto"} onClick={() => navigate("/review")}>
-
         <Button
           w={"100px"}
           h={"73px"}
@@ -108,16 +106,19 @@ function Navbar(props) {
                 icon={<HamburgerIcon />}
                 variant="outline"
               />
-              <MenuList>
+              <MenuList alignItems={"center"} minW={"150px"}>
                 <MenuItem
+                  w={"150px"}
                   onClick={() => navigate("/member/list")}
                   command="회원정보"
                 />
                 <MenuItem
+                  w={"150px"}
                   onClick={() => navigate("/RestaurantForm")}
                   command="맛집등록"
                 />
                 <MenuItem
+                  w={"150px"}
                   onClick={() => navigate("/categoryList")}
                   command="카테고리 관리"
                 />
