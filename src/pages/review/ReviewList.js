@@ -127,6 +127,7 @@ function SearchComp() {
           <option value={"content"}>본문</option>
         </Select>
         <Input
+          marginX={"5px"}
           w={"sm"}
           border={"1px solid black"}
           placeholder="리뷰 내 검색"
