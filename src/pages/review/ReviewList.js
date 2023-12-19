@@ -112,10 +112,11 @@ function SearchComp() {
 
   return (
     <Center>
-      <Flex>
+      <Flex marginTop={"20px"}>
         <Input
           w={"sm"}
           border={"1px solid black"}
+          placeholder="리뷰 내 검색"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           onKeyPress={onSubmitSearch}
@@ -159,7 +160,6 @@ export function ReviewList() {
   return (
     <Center>
       <Box w={"5xl"}>
-        <SearchComp />
         <SimpleGrid
           marginTop={5}
           spacing={"10px"}
@@ -215,6 +215,7 @@ export function ReviewList() {
           ))}
         </SimpleGrid>
 
+        <SearchComp />
         <Pagination pageInfo={pageInfo} />
       </Box>
     </Center>
