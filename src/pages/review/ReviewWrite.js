@@ -127,14 +127,18 @@ export function ReviewWrite() {
             한 개 파일은 1MB, 총 용량은 10MB를 넘길수 없습니다
           </FormHelperText>
         </FormControl>
-        <FormControl>
-          <FormLabel>내용</FormLabel>
+        <FormControl marginY={"20px"}>
+          <FormLabel>리뷰 작성하기</FormLabel>
           <Textarea
+            h={"500px"}
+            resize={"none"}
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
         </FormControl>
-        <Button onClick={handleSubmit}>확인</Button>
+        <Button onClick={handleSubmit} colorScheme="blue">
+          작성하기
+        </Button>
       </Box>
     </Center>
   );

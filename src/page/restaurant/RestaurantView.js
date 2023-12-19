@@ -121,11 +121,12 @@ export function RestaurantView() {
   return (
     <Center>
       <Box w={"5xl"}>
+        <Heading>{restaurant.place}</Heading>
         <Box h={"500px"}>
           <Flex>
-            <Box w={"60%"}>
-              <Image w={"100%"} h={"500px"} src={url} />
-            </Box>
+            <Center w={"60%"}>
+              <Image maxH={"450px"} maxW={"550px"} src={url} />
+            </Center>
             <Box w={"40%"} h={"500px"} overflowY={"scroll"}>
               <SimpleGrid
                 marginTop={5}
@@ -142,6 +143,7 @@ export function RestaurantView() {
                       onClick={() => handleClick(file.url)}
                     >
                       <Image
+                        maxH={"160px"}
                         borderRadius="lg"
                         src={file.url}
                         alt="stay slide"
@@ -156,7 +158,7 @@ export function RestaurantView() {
         <Box h="100px" mt={5} lineHeight="50px">
           <Flex>
             <Box lineHeight="50px">
-              <Text fontSize="30px">별점 : </Text>
+              <Text fontSize="25px">별점 : </Text>
             </Box>
             <Box lineHeight="50px" ml={5}>
               {reviews.length !== 0 ? (
@@ -179,7 +181,9 @@ export function RestaurantView() {
 
         <Box mt={7}>
           <Box>
-            <Heading>매장소개</Heading>
+            <Heading size={"lg"} mb={5}>
+              매장소개
+            </Heading>
             <Text>{restaurant.info}</Text>
           </Box>
           <Box mt={7}>
@@ -189,15 +193,17 @@ export function RestaurantView() {
                   <Text fontSize={"20px"} h={"70px"}>
                     가게 이름 : {restaurant.place}
                   </Text>
-                  <Text fontSize={"18px"} h={"70px"}>
+                  <Text fontSize={"20px"} h={"70px"}>
                     주소 : {restaurant.address}
                   </Text>
                   <Text fontSize={"20px"} h={"70px"}>
                     전화번호 : {restaurant.phone}
                   </Text>
                 </Box>
-                <Box mt={3} h={"140px"}>
-                  <Heading mb={5}>테마 요소</Heading>
+                <Box mt={5} h={"140px"}>
+                  <Heading size={"lg"} mb={3}>
+                    맛집태그
+                  </Heading>
                   <SimpleGrid columns={{ base: 4, md: 3, lg: 4, "2xl": 4 }}>
                     {restaurant.purpose.map((purpose) => (
                       <Text fontSize={"20px"} key={purpose.no}>
@@ -213,7 +219,7 @@ export function RestaurantView() {
             </Flex>
           </Box>
           <Box mt={7}>
-            <Heading>리뷰</Heading>
+            <Heading size={"lg"}>리뷰</Heading>
             <ReviewContainer reviews={reviews} restaurantNo={no} />
             {reviews.length === 0 ? (
               <Button colorScheme="blue" onClick={handleClickWrite}>

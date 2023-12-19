@@ -20,7 +20,6 @@ import StarRatings from "react-star-ratings/build/star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import BannerSlider, { BannerImg } from "../component/BannerSlider";
-
 export function Home() {
   const [restaurantTypeList, setRestaurantTypeList] = useState(null);
   const [typeNameList, setTypeNameList] = useState(null);
@@ -56,7 +55,7 @@ export function Home() {
         typeNameList.map((nameList) => (
           <Box marginTop={20} key={nameList.no}>
             <Center>
-              <Card w={"800px"} h={"300px"} borderRadius="lg">
+              <Card w={"800px"} h={"320px"} borderRadius="lg">
                 <CardHeader borderBottom={"1px solid #D7DBDD"}>
                   <Flex justifyContent={"space-between"}>
                     <Text>
@@ -89,13 +88,20 @@ export function Home() {
                                 navigate("/restaurant/view/" + restaurant.no)
                               }
                             >
-                              <Image
+                              <Center
+                                my={"5px"}
                                 w={"100%"}
-                                h={"100px"}
-                                key={file.no}
-                                src={file.url}
-                                alt="stay slide"
-                              />
+                                h={"130px"}
+                                overflow={"hidden"}
+                                borderRadius="lg"
+                              >
+                                <Image
+                                  w={"100%"}
+                                  key={file.no}
+                                  src={file.url}
+                                  alt="stay slide"
+                                />
+                              </Center>
                               <Text>{restaurant.place}</Text>
                               {restaurant.reviewCount !== 0 ? (
                                 <StarRatings

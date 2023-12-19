@@ -18,6 +18,7 @@ import axios from "axios";
 import { LoginContext } from "./LoginProvider";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { SearchComponent } from "./SearchComponent";
+import mainLogo from "../img/Logo.png";
 
 function Navbar(props) {
   const { fetchLogin, login, isAuthenticated, isAdmin } =
@@ -50,30 +51,47 @@ function Navbar(props) {
   }
 
   return (
-    <Center>
-      <Flex w={"5xl"} mb={10} gap={4} borderBottom={"1px solid #778899"}>
+    <Center mb={10}>
+      <Flex w={"5xl"} h={"75px"} gap={4} borderBottom={"1px solid #778899"}>
         {/* jsb */}
         <Box
-          w={"150px"}
-          h={"100px"}
+          w={"100px"}
+          h={"73px"}
           cursor={"pointer"}
           mt={2}
           onClick={() => navigate("/")}
         >
-          <Image src="img/Logo.png" alt="준비중" />
+          <Image w={"100px"} src={mainLogo} alt="준비중" />
         </Box>
         <Spacer />
         <SearchComponent />
         <Button margin={"auto"} onClick={() => navigate("/review")}>
+
+        <Button
+          w={"100px"}
+          h={"73px"}
+          variant={"ghost"}
+          margin={"auto"}
+          onClick={() => navigate("/review")}
+        >
           리뷰
         </Button>
-        <Button margin={"auto"} onClick={() => navigate("/restaurantList")}>
+        <Button
+          w={"100px"}
+          h={"73px"}
+          variant={"ghost"}
+          margin={"auto"}
+          onClick={() => navigate("/restaurantList")}
+        >
           맛집찾기
         </Button>
         {/* 로그인 했을때만 보이도록 */}
         {isAuthenticated() && (
           <Button
+            w={"100px"}
+            h={"73px"}
             margin={"auto"}
+            variant={"ghost"}
             onClick={() => navigate("/member?" + urlParams.toString())}
           >
             내 정보
@@ -109,17 +127,35 @@ function Navbar(props) {
         )}
         {/* 로그인 안되어 있을때 보이도록 */}
         {isAuthenticated() || (
-          <Button margin={"auto"} onClick={() => navigate("/signup")}>
+          <Button
+            w={"100px"}
+            h={"73px"}
+            variant={"ghost"}
+            margin={"auto"}
+            onClick={() => navigate("/signup")}
+          >
             회원 가입
           </Button>
         )}
         {isAuthenticated() || (
-          <Button margin={"auto"} onClick={() => navigate("/login")}>
+          <Button
+            w={"100px"}
+            h={"73px"}
+            variant={"ghost"}
+            margin={"auto"}
+            onClick={() => navigate("/login")}
+          >
             로그인
           </Button>
         )}
         {isAuthenticated() && (
-          <Button margin={"auto"} onClick={handleLogout}>
+          <Button
+            w={"100px"}
+            h={"73px"}
+            variant={"ghost"}
+            margin={"auto"}
+            onClick={handleLogout}
+          >
             로그아웃
           </Button>
         )}

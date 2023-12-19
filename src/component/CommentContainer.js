@@ -40,7 +40,11 @@ function CommentForm({ reviewId, isSubmitting, onSubmit }) {
       <Textarea value={comment} onChange={(e) => setComment(e.target.value)} />
       {/* 댓글 전송 요청시 isSubmitting이 true가 되어 버튼 비활성화 >>
       >> 전송 완료시 false가 되어 다시 버튼 활성화*/}
-      <Button isDisabled={isSubmitting} onClick={handleSubmit}>
+      <Button
+        marginTop={"10px"}
+        isDisabled={isSubmitting}
+        onClick={handleSubmit}
+      >
         쓰기
       </Button>
     </Box>

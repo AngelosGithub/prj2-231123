@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -136,7 +136,7 @@ export function ReviewEdit() {
 
   return (
     <Center>
-      <Box w={"5xl"}>
+      <Box w={"4xl"}>
         <Heading>리뷰 수정하기</Heading>
 
         <Flex>
@@ -177,24 +177,26 @@ export function ReviewEdit() {
           </Stars>
         </Flex>
         {/* 이미지 출력 */}
-        {review.files.length > 0 &&
-          review.files.map((file) => (
-            <Box>
-              <FormControl display={"flex"} alignItems={"center"}>
-                <FormLabel>
-                  <FontAwesomeIcon color="red" icon={faTrashCan} />
-                </FormLabel>
-                <Switch
-                  value={file.no}
-                  colorScheme="red"
-                  onChange={handleRemoveFile}
-                />
-              </FormControl>
-              <Box>
-                <Image src={file.url} alt={file.name} />
+        <Flex>
+          {review.files.length > 0 &&
+            review.files.map((file) => (
+              <Box margin={"10px"}>
+                <FormControl display={"flex"} alignItems={"center"}>
+                  <FormLabel>
+                    <FontAwesomeIcon color="red" icon={faTrashCan} />
+                  </FormLabel>
+                  <Switch
+                    value={file.no}
+                    colorScheme="red"
+                    onChange={handleRemoveFile}
+                  />
+                </FormControl>
+                <Box w={"150px"} h={"150px"}>
+                  <Image src={file.url} alt={file.name} />
+                </Box>
               </Box>
-            </Box>
-          ))}
+            ))}
+        </Flex>
         {/* 파일 더 추가 하기 */}
         <FormControl>
           <FormLabel>사진 첨부</FormLabel>
@@ -209,9 +211,11 @@ export function ReviewEdit() {
             한 개 파일은 1MB, 총 용량은 10MB를 넘길수 없습니다
           </FormHelperText>
         </FormControl>
-        <FormControl>
-          <FormLabel>내용</FormLabel>
+        <FormControl marginY={"20px"}>
+          <FormLabel>리뷰 작성하기</FormLabel>
           <Textarea
+            h={"500px"}
+            resize={"none"}
             value={review.content}
             onChange={(e) => {
               updateReview((draft) => {

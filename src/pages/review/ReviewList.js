@@ -16,6 +16,7 @@ import {
   Text,
   Image,
   SimpleGrid,
+  Select,
 } from "@chakra-ui/react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -93,6 +94,8 @@ function Pagination({ pageInfo }) {
 function SearchComp() {
   // 검색기능
   const [keyword, setKeyword] = useState("");
+  // 조건 검색
+  const [category, setCategory] = useState("all");
   const navigate = useNavigate();
 
   function handleSearch() {
@@ -100,14 +103,37 @@ function SearchComp() {
     const params = new URLSearchParams();
     params.set("k", keyword);
     // 검색어를 저장할 코드
+    params.set("c", category);
+    // 검색 조건 저장
 
     navigate("/review/?" + params);
   }
 
+  const onSubmitSearch = (e) => {
+    if (e.key === "Enter") {
+      handleSearch(); //키를 눌렀을 때 동작할 코드
+    }
+  };
+
   return (
     <Center>
-      <Flex w={"2xl"}>
-        <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+      <Flex marginTop={"20px"}>
+        {/* 조건 검색용 */}
+        <Select w={"100px"} onChange={(e) => setCategory(e.target.value)}>
+          <option selected value={"all"}>
+            전체
+          </option>
+          <option value={"title"}>제목</option>
+          <option value={"content"}>본문</option>
+        </Select>
+        <Input
+          w={"sm"}
+          border={"1px solid black"}
+          placeholder="리뷰 내 검색"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          onKeyPress={onSubmitSearch}
+        />
         <Button onClick={handleSearch}>
           <FontAwesomeIcon icon={faSearch} />
         </Button>
@@ -147,7 +173,6 @@ export function ReviewList() {
   return (
     <Center>
       <Box w={"5xl"}>
-        <SearchComp />
         <SimpleGrid
           marginTop={5}
           spacing={"10px"}
@@ -203,6 +228,7 @@ export function ReviewList() {
           ))}
         </SimpleGrid>
 
+        <SearchComp />
         <Pagination pageInfo={pageInfo} />
       </Box>
     </Center>

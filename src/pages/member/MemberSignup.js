@@ -84,7 +84,6 @@ export function MemberSignup() {
   return (
     <Center>
       <Box w={"1xl"}>
-        <Heading>회원가입</Heading>
         <FormControl marginTop={5}>
           <FormLabel>ID</FormLabel>
           <Input value={id} onChange={(e) => setId(e.target.value)} />
@@ -129,7 +128,11 @@ export function MemberSignup() {
           />
         </FormControl>
         <Box marginTop={5}>
-          <Button onClick={handleSubmit} isDisabled={!submitAvailable}>
+          <Button
+            colorScheme="green"
+            onClick={handleSubmit}
+            isDisabled={!submitAvailable}
+          >
             가입
           </Button>
           <Button onClick={() => navigate("/")}>취소</Button>
