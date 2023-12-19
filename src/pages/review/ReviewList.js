@@ -104,6 +104,12 @@ function SearchComp() {
     navigate("/review/?" + params);
   }
 
+  const onSubmitSearch = (e) => {
+    if (e.key === "Enter") {
+      handleSearch(); //키를 눌렀을 때 동작할 코드
+    }
+  };
+
   return (
     <Center>
       <Flex>
@@ -112,6 +118,7 @@ function SearchComp() {
           border={"1px solid black"}
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
+          onKeyPress={onSubmitSearch}
         />
         <Button onClick={handleSearch}>
           <FontAwesomeIcon icon={faSearch} />

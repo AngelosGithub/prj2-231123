@@ -63,16 +63,25 @@ function Navbar(props) {
         </Box>
         <Spacer />
 
-        <Button margin={"auto"} onClick={() => navigate("/review")}>
+        <Button
+          variant={"ghost"}
+          margin={"auto"}
+          onClick={() => navigate("/review")}
+        >
           리뷰
         </Button>
-        <Button margin={"auto"} onClick={() => navigate("/restaurantList")}>
+        <Button
+          variant={"ghost"}
+          margin={"auto"}
+          onClick={() => navigate("/restaurantList")}
+        >
           맛집찾기
         </Button>
         {/* 로그인 했을때만 보이도록 */}
         {isAuthenticated() && (
           <Button
             margin={"auto"}
+            variant={"ghost"}
             onClick={() => navigate("/member?" + urlParams.toString())}
           >
             내 정보
@@ -108,17 +117,25 @@ function Navbar(props) {
         )}
         {/* 로그인 안되어 있을때 보이도록 */}
         {isAuthenticated() || (
-          <Button margin={"auto"} onClick={() => navigate("/signup")}>
+          <Button
+            variant={"ghost"}
+            margin={"auto"}
+            onClick={() => navigate("/signup")}
+          >
             회원 가입
           </Button>
         )}
         {isAuthenticated() || (
-          <Button margin={"auto"} onClick={() => navigate("/login")}>
+          <Button
+            variant={"ghost"}
+            margin={"auto"}
+            onClick={() => navigate("/login")}
+          >
             로그인
           </Button>
         )}
         {isAuthenticated() && (
-          <Button margin={"auto"} onClick={handleLogout}>
+          <Button variant={"ghost"} margin={"auto"} onClick={handleLogout}>
             로그아웃
           </Button>
         )}
