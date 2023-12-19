@@ -55,13 +55,14 @@ export function RestaurantEdit() {
   const [removeFileIds, setRemoveFileIds] = useState([]);
   const [checkBoxIds, setCheckBoxIds] = useState([]);
 
+  const [checkfiles, setCheckfiles] = useState(false);
+
   const [location, setLocation] = useState("");
   const [townAddress, setTownAddress] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const open = useDaumPostcodePopup(postcodeScriptUrl);
   const navigate = useNavigate();
-
   const toast = useToast();
   useEffect(() => {
     axios
@@ -224,7 +225,7 @@ export function RestaurantEdit() {
       <Center>
         <Card w={"xl"}>
           <CardHeader>
-            <Heading>{restaurant.no}번맛집 가게 수정</Heading>
+            <Heading>{restaurant.place}맛집 가게 수정</Heading>
           </CardHeader>
           <CardBody>
             <FormControl mb={5}>
