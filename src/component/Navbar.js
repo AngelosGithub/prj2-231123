@@ -50,21 +50,23 @@ function Navbar(props) {
   }
 
   return (
-    <Center>
-      <Flex w={"5xl"} mb={10} gap={4} borderBottom={"1px solid #778899"}>
+    <Center mb={10}>
+      <Flex w={"5xl"} h={"75px"} gap={4} borderBottom={"1px solid #778899"}>
         {/* jsb */}
         <Box
-          w={"150px"}
-          h={"100px"}
+          w={"100px"}
+          h={"73px"}
           cursor={"pointer"}
           mt={2}
           onClick={() => navigate("/")}
         >
-          <Image src={mainLogo} alt="준비중" />
+          <Image w={"100px"} src={mainLogo} alt="준비중" />
         </Box>
         <Spacer />
 
         <Button
+          w={"100px"}
+          h={"73px"}
           variant={"ghost"}
           margin={"auto"}
           onClick={() => navigate("/review")}
@@ -72,6 +74,8 @@ function Navbar(props) {
           리뷰
         </Button>
         <Button
+          w={"100px"}
+          h={"73px"}
           variant={"ghost"}
           margin={"auto"}
           onClick={() => navigate("/restaurantList")}
@@ -81,6 +85,8 @@ function Navbar(props) {
         {/* 로그인 했을때만 보이도록 */}
         {isAuthenticated() && (
           <Button
+            w={"100px"}
+            h={"73px"}
             margin={"auto"}
             variant={"ghost"}
             onClick={() => navigate("/member?" + urlParams.toString())}
@@ -119,6 +125,8 @@ function Navbar(props) {
         {/* 로그인 안되어 있을때 보이도록 */}
         {isAuthenticated() || (
           <Button
+            w={"100px"}
+            h={"73px"}
             variant={"ghost"}
             margin={"auto"}
             onClick={() => navigate("/signup")}
@@ -128,6 +136,8 @@ function Navbar(props) {
         )}
         {isAuthenticated() || (
           <Button
+            w={"100px"}
+            h={"73px"}
             variant={"ghost"}
             margin={"auto"}
             onClick={() => navigate("/login")}
@@ -136,7 +146,13 @@ function Navbar(props) {
           </Button>
         )}
         {isAuthenticated() && (
-          <Button variant={"ghost"} margin={"auto"} onClick={handleLogout}>
+          <Button
+            w={"100px"}
+            h={"73px"}
+            variant={"ghost"}
+            margin={"auto"}
+            onClick={handleLogout}
+          >
             로그아웃
           </Button>
         )}
