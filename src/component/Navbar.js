@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "./LoginProvider";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { SearchComponent } from "./SearchComponent";
 
 function Navbar(props) {
   const { fetchLogin, login, isAuthenticated, isAdmin } =
@@ -62,7 +63,7 @@ function Navbar(props) {
           <Image src="img/Logo.png" alt="준비중" />
         </Box>
         <Spacer />
-
+        <SearchComponent />
         <Button margin={"auto"} onClick={() => navigate("/review")}>
           리뷰
         </Button>

@@ -29,6 +29,7 @@ import RestaurantTypeEdit from "./page/category/RestaurantTypeEdit";
 import RestaurantPurposeEdit from "./page/category/RestaurantPurposeEdit";
 import LoginProvider from "./component/LoginProvider";
 import { Home } from "./page/Home";
+import SearchProvider from "./context/SearchProvider";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -62,9 +63,11 @@ const routes = createBrowserRouter(
 
 function App() {
   return (
-    <LoginProvider>
-      <RouterProvider router={routes} />
-    </LoginProvider>
+    <SearchProvider>
+      <LoginProvider>
+        <RouterProvider router={routes} />
+      </LoginProvider>
+    </SearchProvider>
   );
 }
 
