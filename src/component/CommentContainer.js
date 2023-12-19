@@ -37,7 +37,11 @@ function CommentForm({ reviewId, isSubmitting, onSubmit }) {
 
   return (
     <Box>
-      <Textarea value={comment} onChange={(e) => setComment(e.target.value)} />
+      <Textarea
+        resize={"none"}
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+      />
       {/* 댓글 전송 요청시 isSubmitting이 true가 되어 버튼 비활성화 >>
       >> 전송 완료시 false가 되어 다시 버튼 활성화*/}
       <Button
@@ -116,6 +120,7 @@ function CommentItem({
             <Box>
               {/* 수정버튼 클릭시 작성칸이 생김 */}
               <Textarea
+                resize={"none"}
                 value={commentEdited}
                 onChange={(e) => setCommentEdited(e.target.value)}
               />

@@ -205,8 +205,7 @@ export function ReviewList() {
               <Box>
                 [{review.place}] {review.title}
                 {review.countComment > 0 && (
-                  <Badge>
-                    {" "}
+                  <Badge marginLeft={3}>
                     <ChatIcon />
                     {review.countComment}
                   </Badge>

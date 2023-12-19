@@ -64,7 +64,7 @@ export function ReviewWrite() {
     // 할당된 값을 서버로 보낼수 있게 함
   };
 
-  const { no } = useParams();
+  const { restaurantId } = useParams();
   // 맛집 id를 받아서 저장
 
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ export function ReviewWrite() {
         title,
         recommend,
         content,
-        no,
+        restaurantId,
         point,
         uploadFiles,
       })

@@ -153,7 +153,7 @@ export function ReviewView() {
           </Box>
         )}
         <Flex marginTop={"20px"} justifyContent={"space-between"}>
-          <Button onClick={() => navigate(-1)}>이전으로</Button>
+          <Button onClick={() => navigate("/review")}>목록으로</Button>
           <Button
             onClick={() => navigate("/restaurant/view/" + review.restaurantId)}
             colorScheme="blue"

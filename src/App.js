@@ -44,7 +44,7 @@ const routes = createBrowserRouter(
       <Route path="review" element={<ReviewList />} />
       <Route path="review/:no" element={<ReviewView />} />
       <Route path="edit/:no" element={<ReviewEdit />} />
-      <Route path="write/:no" element={<ReviewWrite />} />
+      <Route path="write/:restaurantId" element={<ReviewWrite />} />
       {/* jsb */}
       <Route path="/categoryList" element={<CategoryList />} />
       <Route path="/category/insert" element={<CategoryForm />} />
