@@ -1,5 +1,5 @@
 import Slider from "react-slick";
-import { Image } from "@chakra-ui/react";
+import { Box, Center, Image } from "@chakra-ui/react";
 import React from "react";
 
 export function ReviewImage({ review }) {
@@ -16,14 +16,15 @@ export function ReviewImage({ review }) {
     <Slider {...settings}>
       {review.files.length > 0 &&
         review.files.map((file) => (
-          <Image
+          <Box
+            textAlign={"center"}
+            overflow={"hidden"}
             borderRadius="lg"
             w={"100%"}
             h={"500px"}
-            key={file.no}
-            src={file.url}
-            alt="stay slide"
-          />
+          >
+            <Image w={"50%"} key={file.no} src={file.url} alt="stay slide" />
+          </Box>
         ))}
     </Slider>
   );

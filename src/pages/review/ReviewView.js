@@ -72,7 +72,9 @@ export function ReviewView() {
     <Center>
       <Box w={"5xl"}>
         <Heading>{review.place} 리뷰</Heading>
-        <Text>{review.ago} 등록됨</Text>
+        <Text>
+          작성자 : {review.nickName} [{review.ago}]
+        </Text>
         <Heading size={"lg"} marginTop={"20px"}>
           제목 : {review.title}
         </Heading>
@@ -95,8 +97,9 @@ export function ReviewView() {
         <Box my={"5px"}>
           <ReviewImage review={review} />
         </Box>
-        <Text>내용 : {review.content}</Text>
-        <Text>작성자 : {review.nickName}</Text>
+        <Text sx={{ whiteSpace: "pre-wrap" }} marginTop={"50px"}>
+          {review.content}
+        </Text>
 
         {(hasAccess(review.writer) || isAdmin()) && (
           <Box>

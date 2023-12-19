@@ -95,19 +95,23 @@ function RestaurantList(props) {
                   h={"300px"}
                   onClick={() => navigate("/restaurant/view/" + restaurant.no)}
                 >
-                  <Box h={"180px"}>
+                  <Center
+                    my={"5px"}
+                    w={"100%"}
+                    h={"180px"}
+                    overflow={"hidden"}
+                    borderRadius="lg"
+                  >
                     {restaurant.files.length > 0 &&
                       restaurant.files.map((file) => (
                         <Image
-                          borderRadius="lg"
                           w={"100%"}
-                          h={"100%"}
                           key={file.no}
                           src={file.url}
                           alt="stay slide"
                         />
                       ))}
-                  </Box>
+                  </Center>
                   <Box mt={2} h={"120px"}>
                     {restaurant.reviewCount !== 0 ? (
                       <StarRatings
