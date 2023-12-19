@@ -37,6 +37,7 @@ export function ReviewContainer({ reviews }) {
           ) : (
             reviews.map((reivew) => (
               <Tr
+                cursor={"pointer"}
                 key={reivew.no}
                 onClick={() => navigate(`/review/${reivew.no}`)}
               >

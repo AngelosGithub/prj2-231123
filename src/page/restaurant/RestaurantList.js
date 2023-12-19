@@ -91,6 +91,7 @@ function RestaurantList(props) {
             ) : (
               restaurant.map((restaurant) => (
                 <Box
+                  cursor={"pointer"}
                   key={restaurant.no}
                   h={"300px"}
                   onClick={() => navigate("/restaurant/view/" + restaurant.no)}
