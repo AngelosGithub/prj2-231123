@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -24,25 +24,26 @@ import { DetailedSelect } from "../../component/DetailedSelect";
 import { SearchComponent } from "../../component/SearchComponent";
 import { Pagination } from "./Pagination";
 import RestaurantImage from "../../component/RestaurantImage";
+import { SearchContext } from "../../context/SearchProvider";
 
 function RestaurantList(props) {
   const [restaurant, setRestaurant] = useState(null);
   const [pageInfo, setPageInfo] = useState(null);
   const [restaurantType, setRestaurntType] = useState(null);
   const [restaurantPurpose, setRestaurantPurpose] = useState(null);
-
+  const { keyword, setKeyword } = useContext(SearchContext);
   const [checkBoxIds, setCheckBoxIds] = useState([]);
 
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const location = useLocation();
-  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     // console.log(params.has("purpose"));
     if (!params.has("purpose")) {
       setCheckBoxIds([]);
     }
+
     axios.get(`/api/restaurant/list?${params}`).then((response) => {
       setRestaurant(response.data.restaurantList);
       setPageInfo(response.data.pageInfo);
@@ -64,13 +65,6 @@ function RestaurantList(props) {
     <Center>
       <Box w={"5xl"} h={"1200px"}>
         <Box>
-          <Box>
-            <SearchComponent
-              keyword={keyword}
-              setKeyword={setKeyword}
-              setCheckBoxIds={setCheckBoxIds}
-            />
-          </Box>
           <Box>
             <DetailedSelect
               restaurantType={restaurantType}

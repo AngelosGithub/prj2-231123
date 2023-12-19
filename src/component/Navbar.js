@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "./LoginProvider";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { SearchComponent } from "./SearchComponent";
 import mainLogo from "../img/Logo.png";
 
 function Navbar(props) {
@@ -63,6 +64,8 @@ function Navbar(props) {
           <Image w={"100px"} src={mainLogo} alt="준비중" />
         </Box>
         <Spacer />
+        <SearchComponent />
+        <Button margin={"auto"} onClick={() => navigate("/review")}>
 
         <Button
           w={"100px"}

@@ -103,7 +103,7 @@ export function Home() {
                                 />
                               </Center>
                               <Text>{restaurant.place}</Text>
-                              {restaurant.starPoint > 0 ? (
+                              {restaurant.reviewCount !== 0 ? (
                                 <StarRatings
                                   rating={restaurant.starPoint}
                                   starDimension="25px"
