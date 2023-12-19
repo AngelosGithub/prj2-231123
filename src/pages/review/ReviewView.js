@@ -4,6 +4,7 @@ import {
   Center,
   Flex,
   Heading,
+  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -11,6 +12,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  SimpleGrid,
   Spinner,
   Text,
   useDisclosure,
@@ -26,6 +28,7 @@ import { ReviewImage } from "./ReviewImage";
 
 export function ReviewView() {
   const [review, setReview] = useState(null);
+  const [url, setUrl] = useState("");
 
   const { hasAccess, isAdmin } = useContext(LoginContext);
 
@@ -36,9 +39,10 @@ export function ReviewView() {
   const { no } = useParams();
 
   useEffect(() => {
-    axios
-      .get("/api/review/no/" + no)
-      .then((response) => setReview(response.data));
+    axios.get("/api/review/no/" + no).then((response) => {
+      setReview(response.data);
+      setUrl(response.data.files[0].url);
+    });
   }, []);
 
   if (review === null) {
@@ -68,6 +72,10 @@ export function ReviewView() {
       .finally(() => onClose());
   }
 
+  function handleClick(url) {
+    setUrl(url);
+  }
+
   return (
     <Center>
       <Box w={"5xl"}>
@@ -94,15 +102,48 @@ export function ReviewView() {
           <Text>추천메뉴 : {review.recommend}</Text>
         </Flex>
         {/* 이미지 출력 */}
-        <Box my={"5px"}>
-          <ReviewImage review={review} />
+        <Box my={"20px"}>
+          <Box w={"5xl"}>
+            <Box h={"500px"}>
+              <Flex>
+                <Center overflow={"hidden"} w={"60%"} h={"500px"}>
+                  <Image maxH={"450px"} maxW={"550px"} src={url} />
+                </Center>
+                <Box w={"40%"} h={"500px"} overflowY={"scroll"}>
+                  <SimpleGrid
+                    marginTop={5}
+                    columns={{ base: 2, md: 2, lg: 2, "2xl": 2 }}
+                  >
+                    {review.files.length > 0 &&
+                      review.files.map((file) => (
+                        <Button
+                          mt={2}
+                          bg={"white"}
+                          h="180px"
+                          key={file.no}
+                          overflow={"hidden"}
+                          onClick={() => handleClick(file.url)}
+                        >
+                          <Image
+                            maxH={"160px"}
+                            borderRadius="lg"
+                            src={file.url}
+                            alt="stay slide"
+                          />
+                        </Button>
+                      ))}
+                  </SimpleGrid>
+                </Box>
+              </Flex>
+            </Box>
+          </Box>
         </Box>
         <Text sx={{ whiteSpace: "pre-wrap" }} marginTop={"50px"}>
           {review.content}
         </Text>
 
         {(hasAccess(review.writer) || isAdmin()) && (
-          <Box>
+          <Box marginTop={"20px"}>
             <Button colorScheme="blue" onClick={() => navigate("/edit/" + no)}>
               수정
             </Button>
@@ -111,7 +152,15 @@ export function ReviewView() {
             </Button>
           </Box>
         )}
-        <Button onClick={() => navigate(-1)}>목록으로</Button>
+        <Flex marginTop={"20px"} justifyContent={"space-between"}>
+          <Button onClick={() => navigate(-1)}>이전으로</Button>
+          <Button
+            onClick={() => navigate("/restaurant/view/" + review.restaurantId)}
+            colorScheme="blue"
+          >
+            이 맛집 더보기
+          </Button>
+        </Flex>
 
         {/* 삭제 모달 */}
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -129,8 +178,10 @@ export function ReviewView() {
             </ModalFooter>
           </ModalContent>
         </Modal>
-        {/* 코멘트 컨테이너로 작성된 글의 번호를 넘김 */}
-        <CommentContainer reviewId={no} />
+        <Box marginTop={"20px"}>
+          {/* 코멘트 컨테이너로 작성된 글의 번호를 넘김 */}
+          <CommentContainer reviewId={no} />
+        </Box>
       </Box>
     </Center>
   );

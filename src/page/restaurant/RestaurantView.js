@@ -123,9 +123,9 @@ export function RestaurantView() {
       <Box w={"5xl"}>
         <Box h={"500px"}>
           <Flex>
-            <Box w={"60%"}>
-              <Image w={"100%"} h={"500px"} src={url} />
-            </Box>
+            <Center w={"60%"}>
+              <Image maxH={"450px"} maxW={"550px"} src={url} />
+            </Center>
             <Box w={"40%"} h={"500px"} overflowY={"scroll"}>
               <SimpleGrid
                 marginTop={5}
@@ -142,6 +142,7 @@ export function RestaurantView() {
                       onClick={() => handleClick(file.url)}
                     >
                       <Image
+                        maxH={"160px"}
                         borderRadius="lg"
                         src={file.url}
                         alt="stay slide"

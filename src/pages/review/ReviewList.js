@@ -106,8 +106,13 @@ function SearchComp() {
 
   return (
     <Center>
-      <Flex w={"2xl"}>
-        <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+      <Flex>
+        <Input
+          w={"sm"}
+          border={"1px solid black"}
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+        />
         <Button onClick={handleSearch}>
           <FontAwesomeIcon icon={faSearch} />
         </Button>
