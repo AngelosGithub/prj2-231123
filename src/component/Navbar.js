@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "./LoginProvider";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import mainLogo from "../img/Logo.png";
 
 function Navbar(props) {
   const { fetchLogin, login, isAuthenticated, isAdmin } =
@@ -59,7 +60,7 @@ function Navbar(props) {
           mt={2}
           onClick={() => navigate("/")}
         >
-          <Image src="img/Logo.png" alt="준비중" />
+          <Image src={mainLogo} alt="준비중" />
         </Box>
         <Spacer />
 

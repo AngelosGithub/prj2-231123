@@ -20,7 +20,6 @@ import StarRatings from "react-star-ratings/build/star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import BannerSlider, { BannerImg } from "../component/BannerSlider";
-
 export function Home() {
   const [restaurantTypeList, setRestaurantTypeList] = useState(null);
   const [typeNameList, setTypeNameList] = useState(null);

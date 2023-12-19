@@ -1,11 +1,14 @@
 import React from "react";
 import Slider from "react-slick";
 import { Image } from "@chakra-ui/react";
+import banner1 from "../img/Banner1.jpg";
+import banner2 from "../img/Banner2.jpg";
+import banner3 from "../img/Banner3.jpg";
 
 export const BannerImg = [
-  { no: 1, src: "img/Banner1.jpg", alt: "준비중" },
-  { no: 2, src: "img/Banner2.jpg", alt: "준비중" },
-  { no: 3, src: "img/Banner3.jpg", alt: "준비중" },
+  { no: 1, src: banner1, alt: "준비중" },
+  { no: 2, src: banner2, alt: "준비중" },
+  { no: 3, src: banner3, alt: "준비중" },
 ];
 
 function BannerSlider(props) {
