@@ -127,7 +127,7 @@ export function RestaurantView() {
             <Center w={"60%"}>
               <Image maxH={"450px"} maxW={"550px"} src={url} />
             </Center>
-            <Box w={"40%"} h={"500px"} overflowY={"scroll"}>
+            <Box w={"40%"} h={"500px"} overflowY={"auto"}>
               <SimpleGrid
                 marginTop={5}
                 columns={{ base: 2, md: 2, lg: 2, "2xl": 2 }}
