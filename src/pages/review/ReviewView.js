@@ -142,16 +142,18 @@ export function ReviewView() {
           {review.content}
         </Text>
 
-        {(hasAccess(review.writer) || isAdmin()) && (
-          <Box marginTop={"20px"}>
+        <Box marginTop={"20px"}>
+          {hasAccess(review.writer) && (
             <Button colorScheme="blue" onClick={() => navigate("/edit/" + no)}>
               수정
             </Button>
+          )}
+          {(hasAccess(review.writer) || isAdmin()) && (
             <Button onClick={onOpen} colorScheme="red">
               삭제
             </Button>
-          </Box>
-        )}
+          )}
+        </Box>
         <Flex marginTop={"20px"} justifyContent={"space-between"}>
           <Button onClick={() => navigate("/review")}>목록으로</Button>
           <Button
