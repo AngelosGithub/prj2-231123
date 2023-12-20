@@ -71,7 +71,11 @@ export function MemberEdit() {
   let checkedNickname = sameBeforeNickname || nickAvailable;
 
   if (member === null) {
-    return <Spinner />;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
 
   function handleSubmit() {

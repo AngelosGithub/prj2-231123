@@ -18,12 +18,15 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { LoginContext } from "../../component/LoginProvider";
 
 export function MemberInfo() {
   const [member, setMember] = useState(null);
+
+  const { hasAccess } = useContext(LoginContext);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -31,6 +34,7 @@ export function MemberInfo() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // 처음 페이지가 로딩될때 한번 랜더링
     axios
       .get("/api/member?" + params.toString())
       .then((response) => setMember(response.data))
@@ -41,10 +45,15 @@ export function MemberInfo() {
           status: "warning",
         });
       });
-  }, []);
+  }, [params]);
+  // 위의 값이 없을 경우 한번만 랜더링하고 값이 있을 경우 그 값이 변경 될 때 마다 다시 랜더링 함
 
   if (member === null) {
-    return <Spinner />;
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
   }
 
   function handleDelete() {
@@ -98,12 +107,14 @@ export function MemberInfo() {
           <Input value={member.birthDate} readOnly />
         </FormControl>
         <Flex>
-          <Button
-            colorScheme="blue"
-            onClick={() => navigate("/member/edit?" + params.toString())}
-          >
-            수정
-          </Button>
+          {hasAccess(member.id) && (
+            <Button
+              colorScheme="blue"
+              onClick={() => navigate("/member/edit?" + params.toString())}
+            >
+              수정
+            </Button>
+          )}
           <Button colorScheme="red" onClick={onOpen}>
             탈퇴
           </Button>
