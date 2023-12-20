@@ -84,9 +84,9 @@ export function MemberInfo() {
 
   return (
     <Center>
-      <Box w={"3xl"}>
+      <Box w={"1xl"}>
         <Heading>{member.id}님 정보</Heading>
-        <FormControl>
+        <FormControl marginTop={5}>
           <FormLabel>닉네임</FormLabel>
           <Input value={member.nickName} readOnly />
         </FormControl>
@@ -106,7 +106,7 @@ export function MemberInfo() {
           <FormLabel>생년월일</FormLabel>
           <Input value={member.birthDate} readOnly />
         </FormControl>
-        <Flex>
+        <Flex marginTop={5}>
           {hasAccess(member.id) && (
             <Button
               colorScheme="blue"

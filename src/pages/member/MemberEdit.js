@@ -136,24 +136,26 @@ export function MemberEdit() {
 
   return (
     <Center>
-      <Box w={"5xl"}>
+      <Box w={"1xl"}>
         <Heading>{id}님 정보 수정</Heading>
-        <FormControl>
+        <FormControl marginTop={5}>
           <FormLabel>닉네임</FormLabel>
-          <Input
-            type="text"
-            value={nickName}
-            onChange={(e) => {
-              setNickName(e.target.value);
-              setNickAvailable(false);
-            }}
-          />
-          <Button
-            isDisabled={checkedNickname || nickBlank}
-            onClick={handleCheckNickname}
-          >
-            중복확인
-          </Button>
+          <Flex>
+            <Input
+              type="text"
+              value={nickName}
+              onChange={(e) => {
+                setNickName(e.target.value);
+                setNickAvailable(false);
+              }}
+            />
+            <Button
+              isDisabled={checkedNickname || nickBlank}
+              onClick={handleCheckNickname}
+            >
+              중복확인
+            </Button>
+          </Flex>
         </FormControl>
         <FormControl isInvalid={password.length < 6}>
           <FormLabel>비밀번호</FormLabel>
@@ -173,7 +175,7 @@ export function MemberEdit() {
             </FormErrorMessage>
           )}
         </FormControl>
-        <FormControl>
+        <FormControl marginTop={5}>
           <FormLabel>전화번호</FormLabel>
           <Input
             type="text"
@@ -189,7 +191,7 @@ export function MemberEdit() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </FormControl>
-        <Flex>
+        <Flex marginTop={5}>
           <Button
             colorScheme="blue"
             onClick={onOpen}

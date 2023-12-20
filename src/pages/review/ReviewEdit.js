@@ -100,7 +100,7 @@ export function ReviewEdit() {
       })
       .then(() => {
         toast({
-          description: review.no + "번 게시글이 수정되었습니다.",
+          description: review.no + "번 게시글이 수정되었습니다",
           status: "success",
         });
 
@@ -109,12 +109,12 @@ export function ReviewEdit() {
       .catch((error) => {
         if (error.response.status === 400) {
           toast({
-            description: "요청이 잘못되었습니다.",
+            description: "빠진 내용이 없는지 확인해 주세요",
             status: "error",
           });
         } else {
           toast({
-            description: "수정 중에 문제가 발생하였습니다.",
+            description: "다시 등록해주세요",
             status: "error",
           });
         }

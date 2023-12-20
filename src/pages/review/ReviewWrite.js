@@ -8,6 +8,7 @@ import {
   FormLabel,
   Input,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -45,6 +46,8 @@ export function ReviewWrite() {
   const [score, setScore] = useState([false, false, false, false, false]);
   const [point, setPoint] = useState(0);
 
+  const toast = useToast();
+
   const handleStarClick = (index) => {
     let star = [...score];
     for (let i = 0; i < 5; i++) {
@@ -80,8 +83,19 @@ export function ReviewWrite() {
         point,
         uploadFiles,
       })
-      .then(() => navigate("/review"))
-      .catch(() => console.log("bad"))
+      .then(() => {
+        toast({
+          description: "리뷰가 등록 되었습니다.",
+          status: "success",
+        });
+        navigate("/review");
+      })
+      .catch(() => {
+        toast({
+          description: "빠진 내용이 없는지 확인해 주세요",
+          status: "warning",
+        });
+      })
       .finally(() => console.log("end"));
   }
 
