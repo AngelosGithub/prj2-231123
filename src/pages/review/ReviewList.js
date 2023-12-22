@@ -32,8 +32,6 @@ function PageButton({ variant, pageNumber, children }) {
   const [params] = useSearchParams();
   const navigate = useNavigate();
 
-  console.log(params.toString());
-
   function handleClick() {
     params.set("p", pageNumber);
     navigate("/review?" + params);
